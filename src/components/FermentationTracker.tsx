@@ -215,6 +215,8 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
   const [formNote, setFormNote] = useLocalStorageState<string>('enology_form_note', '');
   const [formIsTrigger, setFormIsTrigger] = useLocalStorageState<boolean>('enology_form_is_trigger', true);
   const [autoRecordTriggerAddition, setAutoRecordTriggerAddition] = useState<boolean>(true);
+  const [formPhTouched, setFormPhTouched] = useState(false);
+  const [formTaTouched, setFormTaTouched] = useState(false);
 
   // Chemical Addition Modal Form State
   const [selectedChemPresetId, setSelectedChemPresetId] = useState<string>('fermaid-o-sna1');
@@ -588,6 +590,8 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
     setFormIsTrigger(Boolean(detectTriggerWindow(defaultSG, tankId)));
     setAutoRecordTriggerAddition(true);
     setSelectedDailyPresetId('');
+    setFormPhTouched(false);
+    setFormTaTouched(false);
     setShowAddModal(true);
   };
 
@@ -745,8 +749,11 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
       tempCap: Number(formTempCap),
       tempRoom: Number(formTempRoom),
       ph: Number(formPH),
+      phMeasured: formPhTouched,
       ta: formTA ? Number(formTA) : undefined,
+      taMeasured: formTaTouched,
       freeSO2: formFreeSO2 !== undefined && formFreeSO2 !== null && formFreeSO2 >= 0 ? Number(formFreeSO2) : undefined,
+      freeSO2Measured: formFreeSO2 !== undefined && formFreeSO2 >= 0,
       pigeageDone: formPigeage,
       pigeageCount: formPigeage ? formPigeageCount : 0,
       operationNote:
@@ -1516,15 +1523,15 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
       {(() => {
         const activeLog = selectedLog || latestLog;
         const analysis = activeLog ? analyzeLogEntryHealth(activeLog, tankId, additions, flexPlan) : null;
-        const fallbackSO2 = activeLog ? getTargetFreeSO2ByPH(activeLog.ph, tankId === 'tank-rose').target : 25;
+        void getTargetFreeSO2ByPH;
         const scenarioEval = activeLog ? evaluateEnologicalScenario({
           batchVolumeL: (tankId === 'tank-rose' ? flexPlan.volumes.roseClarifiedFermentL : flexPlan.volumes.redLiquidFermentPerTankL),
           currentSG: activeLog.sg,
           currentBrix: activeLog.brix,
           tempCapC: activeLog.tempCap,
-          ph: activeLog.ph,
-          ta: activeLog.ta || 6.8,
-          freeSO2: activeLog.freeSO2 !== undefined ? activeLog.freeSO2 : (activeLog.sg <= 1.005 ? fallbackSO2 : 10),
+          ph: activeLog.phMeasured === false ? (tankId === 'tank-rose' ? flexPlan.params.targetRosePH : flexPlan.params.targetRedPH) : activeLog.ph,
+          ta: activeLog.taMeasured === false ? (tankId === 'tank-rose' ? 6.8 : 6.5) : (activeLog.ta || 6.8),
+          freeSO2: activeLog.freeSO2 !== undefined && activeLog.freeSO2Measured !== false ? activeLog.freeSO2 : 0,
           dayNumber: activeLog.dayNumber,
           isRose: tankId === 'tank-rose'
         }) : null;
@@ -1715,7 +1722,7 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
                         <span className="font-mono tabular-nums font-bold bg-indigo-50 text-indigo-900 border border-indigo-200 text-xs px-2 py-0.5 rounded-lg">
                           مصرف قند: {benchmarkComparison.sugarDepletionPct}٪
                         </span>
-                        <span className="font-mono tabular-nums font-bold bg-indigo-900 text-white text-xs px-2.5 py-0.5 rounded-lg">
+                        <span className="font-mono tabular-nums font-bold bg-wine text-white text-xs px-2.5 py-0.5 rounded-lg">
                           انطباق: {benchmarkComparison.alignmentScore}٪
                         </span>
                       </>
@@ -2340,7 +2347,9 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
                       const benchPts = benchmarkLogs.map((l, idx) => ({ x: getX(benchEffectiveDays[idx]), y: getPY(l.ph), log: l }));
                       const benchPath = benchPts.reduce((acc, p, i) => (i === 0 ? `M ${p.x} ${p.y}` : `${acc} L ${p.x} ${p.y}`), '');
 
-                      const realPts = realLogs.map((l, idx) => ({ x: getX(realEffectiveDays[idx]), y: getPY(l.ph), log: l }));
+                      const realPts = realLogs
+                        .map((l, idx) => ({ x: getX(realEffectiveDays[idx]), y: getPY(l.ph), log: l }))
+                        .filter((pt) => pt.log.phMeasured !== false);
                       const realPath = realPts.reduce((acc, p, i) => (i === 0 ? `M ${p.x} ${p.y}` : `${acc} L ${p.x} ${p.y}`), '');
 
                       const yTarget = getPY(targetOptimalPH);
@@ -2362,7 +2371,7 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
                               <path d={realPath} fill="none" stroke="#6D28D9" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
                               {realPts.map((p, idx) => {
                                 const isSelected = selectedLog?.id === p.log.id;
-                                const isSameDaySecond = idx > 0 && realLogs[idx - 1].dayNumber === p.log.dayNumber;
+                                const isSameDaySecond = idx > 0 && realPts[idx - 1].log.dayNumber === p.log.dayNumber;
                                 return (
                                   <g key={`rph-${idx}`} className="cursor-pointer" onClick={() => setSelectedLogId(p.log.id)}>
                                     <circle
@@ -2508,10 +2517,13 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
                                   x: getSyncX(benchEffectiveDays[i]),
                                   y: 110 - ((l.ph - minP) / (maxP - minP)) * 95
                                 }));
-                                const rPts = realLogs.map((l, i) => ({
-                                  x: getSyncX(realEffectiveDays[i]),
-                                  y: 110 - ((l.ph - minP) / (maxP - minP)) * 95
-                                }));
+                                const rPts = realLogs
+                                  .map((l, i) => ({
+                                    x: getSyncX(realEffectiveDays[i]),
+                                    y: 110 - ((l.ph - minP) / (maxP - minP)) * 95,
+                                    log: l
+                                  }))
+                                  .filter((pt) => pt.log.phMeasured !== false);
                                 const bD = bPts.reduce((a, p, i) => (i === 0 ? `M ${p.x} ${p.y}` : `${a} L ${p.x} ${p.y}`), '');
                                 const rD = rPts.reduce((a, p, i) => (i === 0 ? `M ${p.x} ${p.y}` : `${a} L ${p.x} ${p.y}`), '');
                                 return (
@@ -3426,7 +3438,10 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
                     type="number"
                     step="0.01"
                     value={formPH}
-                    onChange={(e) => setFormPH(Number(e.target.value))}
+                    onChange={(e) => {
+                      setFormPH(Number(e.target.value));
+                      setFormPhTouched(true);
+                    }}
                     className="w-full p-2 rounded-lg border border-stone-300 font-mono tabular-nums text-xs outline-none font-bold text-purple-900"
                     required
                   />
@@ -3440,7 +3455,10 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
                     type="number"
                     step="0.1"
                     value={formTA || ''}
-                    onChange={(e) => setFormTA(Number(e.target.value))}
+                    onChange={(e) => {
+                      setFormTA(Number(e.target.value));
+                      setFormTaTouched(true);
+                    }}
                     placeholder="6.8"
                     className="w-full p-2 rounded-lg border border-stone-300 font-mono tabular-nums text-xs outline-none"
                   />

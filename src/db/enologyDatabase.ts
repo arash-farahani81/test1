@@ -1340,8 +1340,8 @@ class EnologyDatabaseService {
   }
 
   // --- Export Logs to CSV ---
-  public exportLogsToCSV(tankId?: TankId): string {
-    const entries = this.getLogs(tankId);
+  public exportLogsToCSV(tankId?: TankId, batchId?: string): string {
+    const entries = this.getLogs(tankId, false, batchId);
     const headers = [
       'شناسه (ID)',
       'مخزن (Tank)',

@@ -424,11 +424,15 @@ export const PhotoDiaryAndVintagePanel: React.FC<
   const [isCompressing, setIsCompressing] = useState<boolean>(false);
 
   // Scheduled Tasting Checkpoints (Idea 15)
+  const batchKeySuffix =
+    activeBatch?.id && activeBatch.id !== 'batch-rasha-1403'
+      ? `_${activeBatch.id}`
+      : '';
   const [activeCheckpoint, setActiveCheckpoint] =
     useState<TastingCheckpointKey>('day_10');
   const [tastingsByCheckpoint, setTastingsByCheckpoint] = useLocalStorageState<
     Record<string, ScheduledTastingRecord>
-  >('enology_scheduled_tastings_v1', {
+  >(`enology_scheduled_tastings_v1${batchKeySuffix}`, {
     day_10: {
       checkpoint: 'day_10',
       appearance: 4,

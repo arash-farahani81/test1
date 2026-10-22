@@ -550,18 +550,19 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
     if (!hasValidSGInput) return;
 
     const existingLogs = sortFermentationLogs(
-      enologyDb.getLogs(tankId, false, activeBatch?.id)
+      enologyDb.getLogs(tankId, false, activeBatch?.id).filter((l) => !l.isBenchmark)
     );
     const latest = existingLogs[existingLogs.length - 1];
     const previousSG = latest ? latest.sg : 1.092;
-    const nextDayNumber = latest ? Math.max(0, latest.dayNumber + 1) : 1;
 
     const finalSG = Math.round(trueSG * 1000) / 1000;
     const finalBrix = specificGravityToBrix(finalSG);
-    const parsedPh =
-      normalizeEnologyNumericInput(phInput, 'general') ?? (latest?.ph ?? 3.52);
+    const parsedPh = normalizeEnologyNumericInput(phInput, 'general');
+    const isValidPH = hasExplicitPhInput && parsedPh !== null && Number.isFinite(parsedPh);
     const parsedTa = normalizeEnologyNumericInput(taInput, 'general');
+    const isValidTA = hasExplicitTaInput && parsedTa !== null && Number.isFinite(parsedTa);
     const parsedFreeSo2 = normalizeEnologyNumericInput(freeSo2Input, 'general');
+    const isValidSO2 = hasExplicitSo2Input && parsedFreeSo2 !== null && Number.isFinite(parsedFreeSo2);
 
     const nowMs = Date.now();
     const dateStr = getFormattedNowDate(nowMs);
@@ -584,16 +585,29 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
 
     for (let idx = 0; idx < targetTankIds.length; idx++) {
       const tId = targetTankIds[idx];
+      const tankLogs = sortFermentationLogs(
+        enologyDb.getLogs(tId, false, activeBatch?.id).filter((l) => !l.isBenchmark)
+      );
+      const tankLatest = tankLogs[tankLogs.length - 1];
+      const tankNextDayNumber = tankLatest ? Math.max(0, tankLatest.dayNumber + 1) : 1;
+      const tankInheritedPh = isValidPH
+        ? Math.round(parsedPh * 100) / 100
+        : (tankLatest?.ph ?? (tId === 'tank-rose' ? 3.32 : 3.52));
+      const tankInheritedTa = isValidTA
+        ? parsedTa
+        : (tankLatest?.ta ?? (tId === 'tank-rose' ? 7.0 : 6.7));
+      const tankInheritedSo2 = isValidSO2 ? parsedFreeSo2 : tankLatest?.freeSO2;
+
       const entryTimestampMs = nowMs + idx;
       const entryId = `log-quick-${tId}-${entryTimestampMs}-${idx}`;
       const newEntry: FermentationLogEntry = {
         id: entryId,
         batchId: currentBatch?.id,
         tankId: tId,
-        dayNumber: nextDayNumber,
+        dayNumber: tankNextDayNumber,
         dateTime: dateStr,
         timestampMs: entryTimestampMs,
-        stageTitle: `ثبت سریع روز ${nextDayNumber}`,
+        stageTitle: `ثبت سریع روز ${tankNextDayNumber}`,
         sg: finalSG,
         measuredSG: Math.round(normalizedRawSG * 1000) / 1000,
         tempSample,
@@ -601,12 +615,12 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
         tempCap: Math.round(tempCap * 10) / 10,
         tempRoom: Math.round(tempRoom * 10) / 10,
         tempRoomMeasured: hasExplicitRoomTempInput,
-        ph: Math.round(parsedPh * 100) / 100,
-        phMeasured: hasExplicitPhInput,
-        ta: parsedTa !== null ? parsedTa : (latest?.ta ?? 6.7),
-        taMeasured: hasExplicitTaInput && parsedTa !== null,
-        freeSO2: parsedFreeSo2 !== null ? parsedFreeSo2 : latest?.freeSO2,
-        freeSO2Measured: hasExplicitSo2Input && parsedFreeSo2 !== null,
+        ph: tankInheritedPh,
+        phMeasured: isValidPH,
+        ta: tankInheritedTa,
+        taMeasured: isValidTA,
+        freeSO2: tankInheritedSo2,
+        freeSO2Measured: isValidSO2,
         pigeageDone,
         pigeageCount: pigeageDone ? 3 : 0,
         quickTags: selectedTags,

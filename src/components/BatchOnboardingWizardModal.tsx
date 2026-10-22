@@ -105,14 +105,6 @@ export const BatchOnboardingWizardModal: React.FC<
   useEffect(() => {
     if (!isOpen || !isMicroBatchAutoStock) return;
     setScalePrecision(0.1);
-    if (typeof localStorage !== 'undefined') {
-      try {
-        localStorage.setItem('enology_scale_precision_g', JSON.stringify(0.1));
-        localStorage.setItem('enology_global_scale_precision', '0.1');
-      } catch {
-        // Ignore storage errors
-      }
-    }
   }, [isOpen, isMicroBatchAutoStock, setScalePrecision]);
 
   const handleSgInputChange = (val: number) => {

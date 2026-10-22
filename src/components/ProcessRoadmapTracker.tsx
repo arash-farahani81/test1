@@ -277,10 +277,15 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
   const [isQuickLogModalOpen, setIsQuickLogModalOpen] = useState<boolean>(false);
   const [rightNowRefreshKey, setRightNowRefreshKey] = useState<number>(0);
 
+  const batchKeySuffix =
+    activeBatch?.id && activeBatch.id !== 'batch-rasha-1403'
+      ? `_${activeBatch.id}`
+      : '';
+
   // Dynamic Event-Driven Anchor Clock State (Day 0)
-  const [anchorTime, setAnchorTime] = useLocalStorageState<string>('enology_day0_anchor_time', '14:30');
-  const [saigneeOffsetHours, setSaigneeOffsetHours] = useLocalStorageState<number>('enology_day0_saignee_offset_hours', 3.0);
-  const [enzymeOffsetHours, setEnzymeOffsetHours] = useLocalStorageState<number>('enology_day0_enzyme_offset_hours', 7.5);
+  const [anchorTime, setAnchorTime] = useLocalStorageState<string>(`enology_day0_anchor_time${batchKeySuffix}`, '14:30');
+  const [saigneeOffsetHours, setSaigneeOffsetHours] = useLocalStorageState<number>(`enology_day0_saignee_offset_hours${batchKeySuffix}`, 3.0);
+  const [enzymeOffsetHours, setEnzymeOffsetHours] = useLocalStorageState<number>(`enology_day0_enzyme_offset_hours${batchKeySuffix}`, 7.5);
 
   // Custom Workshop Timers State
   const [customTimers, setCustomTimers] = useLocalStorageState<WorkshopTimerConfig[]>('enology_custom_workshop_timers', []);
@@ -343,13 +348,16 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
   };
 
   const adjustTimerMinutes = (timerId: string, deltaMins: number) => {
+    const defaultSecs =
+      ([...WORKSHOP_TIMERS_CONFIG, ...customTimers].find((t) => t.id === timerId)
+        ?.defaultMinutes ?? 15) * 60;
     setTimerDurations((prev) => {
-      const currentSecs = prev[timerId] ?? 0;
+      const currentSecs = prev[timerId] ?? defaultSecs;
       const newSecs = Math.max(60, currentSecs + deltaMins * 60);
       return { ...prev, [timerId]: newSecs };
     });
     const elapsed = timerElapsed[timerId] || 0;
-    const newDur = (timerDurations[timerId] || 0) + deltaMins * 60;
+    const newDur = (timerDurations[timerId] ?? defaultSecs) + deltaMins * 60;
     if (newDur > elapsed) {
       setTimerChimed((prev) => ({ ...prev, [timerId]: false }));
     }
@@ -450,8 +458,8 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
     }
   ];
 
-  const [currentStepId, setCurrentStepId] = useLocalStorageState<number>('enology_active_roadmap_step', 1);
-  const [completedSteps, setCompletedSteps] = useLocalStorageState<number[]>('enology_completed_roadmap_steps', []);
+  const [currentStepId, setCurrentStepId] = useLocalStorageState<number>(`enology_active_roadmap_step${batchKeySuffix}`, 1);
+  const [completedSteps, setCompletedSteps] = useLocalStorageState<number[]>(`enology_completed_roadmap_steps${batchKeySuffix}`, []);
 
   const activePhaseNumber = (() => {
     const firstUncompleted = ZERO_TO_HUNDRED_STEPS.find(
@@ -500,6 +508,8 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
   const [quickTempRoom, setQuickTempRoom] = useState<number>(21.0);
   const [quickPH, setQuickPH] = useState<number>(3.52);
   const [quickTA, setQuickTA] = useState<number>(6.8);
+  const [quickPhTouched, setQuickPhTouched] = useState<boolean>(false);
+  const [quickTaTouched, setQuickTaTouched] = useState<boolean>(false);
   const [quickNote, setQuickNote] = useState<string>('');
 
   // Chemical addition quick state
@@ -647,7 +657,9 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
       tempCap: Number(quickTempCap),
       tempRoom: Number(quickTempRoom),
       ph: Number(quickPH),
+      phMeasured: quickPhTouched,
       ta: Number(quickTA),
+      taMeasured: quickTaTouched,
       pigeageDone: true,
       pigeageCount: 3,
       operationNote: quickNote || `ثبت مستقیم از گام ${currentStep.id}: ${currentStep.title}`,
@@ -1662,7 +1674,10 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
                       type="number"
                       step="0.01"
                       value={quickPH}
-                      onChange={(e) => setQuickPH(Number(e.target.value))}
+                      onChange={(e) => {
+                        setQuickPH(Number(e.target.value));
+                        setQuickPhTouched(true);
+                      }}
                       className="w-full bg-white border border-stone-300 rounded-lg p-1.5 font-mono font-bold text-emerald-900"
                     />
                   </div>
@@ -1673,7 +1688,10 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
                       type="number"
                       step="0.1"
                       value={quickTA}
-                      onChange={(e) => setQuickTA(Number(e.target.value))}
+                      onChange={(e) => {
+                        setQuickTA(Number(e.target.value));
+                        setQuickTaTouched(true);
+                      }}
                       className="w-full bg-white border border-stone-300 rounded-lg p-1.5 font-mono font-bold text-amber-900"
                     />
                   </div>

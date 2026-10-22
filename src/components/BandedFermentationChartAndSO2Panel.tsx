@@ -108,7 +108,10 @@ export const BandedFermentationChartAndSO2Panel: React.FC<
     [tankId, additions, hasDemo, activeBatch?.id]
   );
 
-  const currentPH = latestLog?.ph ?? (isRose ? 3.32 : 3.52);
+  const latestMeasuredPhLog = [...realLogs]
+    .reverse()
+    .find((l) => l.phMeasured !== false && Number.isFinite(l.ph));
+  const currentPH = latestMeasuredPhLog?.ph ?? (isRose ? 3.32 : 3.52);
   const continuousSo2Target = useMemo(
     () => getContinuousTargetFreeSO2ByPH(currentPH, isRose),
     [currentPH, isRose]
@@ -124,9 +127,14 @@ export const BandedFermentationChartAndSO2Panel: React.FC<
         return { value: val, dateFa: tankRipper.date, sourceFa: 'تست ریپر آزمایشگاه' };
       }
     }
-    const logWithSo2 = [...activeSeriesLogs]
+    const logWithSo2 = [...realLogs]
       .reverse()
-      .find((l) => l.freeSO2 !== undefined && l.freeSO2 > 0);
+      .find(
+        (l) =>
+          l.freeSO2Measured !== false &&
+          l.freeSO2 !== undefined &&
+          l.freeSO2 > 0
+      );
     if (logWithSo2 && logWithSo2.freeSO2 !== undefined) {
       return {
         value: logWithSo2.freeSO2,
@@ -135,7 +143,7 @@ export const BandedFermentationChartAndSO2Panel: React.FC<
       };
     }
     return null;
-  }, [labAnalyses, tankId, activeSeriesLogs]);
+  }, [labAnalyses, tankId, realLogs]);
 
   const molecularSO2 = useMemo(() => {
     if (!latestMeasuredFreeSO2) return null;

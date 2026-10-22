@@ -46,7 +46,7 @@ export const BioscienceDatabaseView: React.FC<BioscienceDatabaseViewProps> = ({
   initialActiveTab = 'chemicals',
   hideInternalHeader = false
 }) => {
-  const { notifyDataChanged } = useEnologyUi();
+  const { notifyDataChanged, activeBatch } = useEnologyUi();
   const [activeTab, setActiveTab] = useState<'chemicals' | 'enzymes' | 'backup'>(initialActiveTab);
   const [exportTankId, setExportTankId] = useState<TankId>('tank-a');
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
@@ -127,7 +127,7 @@ export const BioscienceDatabaseView: React.FC<BioscienceDatabaseViewProps> = ({
   };
 
   const handleExportCSV = () => {
-    const csvString = enologyDb.exportLogsToCSV(exportTankId);
+    const csvString = enologyDb.exportLogsToCSV(exportTankId, activeBatch?.id);
     const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
@@ -142,14 +142,12 @@ export const BioscienceDatabaseView: React.FC<BioscienceDatabaseViewProps> = ({
     try {
       await exportDocxReport({
         tankId: exportTankId,
-        logs: enologyDb.getLogs(),
-        additions: enologyDb.getAdditions(),
-        analyses: enologyDb.getLabAnalyses(),
-        batchName:
-          exportTankId === 'tank-rose'
-            ? 'بچ شراب رُزه سانیه سردشت (۳۶ لیتر اولیه ← ۲۹ لیتر نهایی)'
-            : `بچ شراب قرمز رشه سردشت — ${exportTankId === 'tank-a' ? 'مخزن A' : 'مخزن B'} (۱۳۲ لیتر تخمیری)`,
-        vintageYear: 1403
+        batchId: activeBatch?.id,
+        logs: enologyDb.getLogs(exportTankId, false, activeBatch?.id),
+        additions: enologyDb.getAdditions(exportTankId, false, activeBatch?.id),
+        analyses: enologyDb.getLabAnalyses(exportTankId, false, activeBatch?.id),
+        batchName: activeBatch?.name ?? 'بچ شراب رشه سردشت',
+        vintageYear: activeBatch?.vintageYear ?? 1405
       });
       showFeedback(`گزارش رسمی Word (.DOCX) برای ${exportTankId} با موفقیت تولید و دانلود شد.`);
     } catch {

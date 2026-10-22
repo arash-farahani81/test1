@@ -662,3 +662,38 @@ test('BUG-02, BUG-07, BUG-08, BUG-17, BUG-18, BUG-19, BUG-23, BUG-24, BUG-25, BU
   const dayComparison = compareRealLogsWithBenchmark(realDay2, benchMulti, 'tank-a');
   assert.equal(dayComparison.sgDelta, -0.002, 'Day 2 real SG 1.080 vs Day 2 benchmark SG 1.082 must yield -0.002');
 });
+
+test('analyzeLogEntryHealth: BUG-01 does not penalize score for unmeasured TA and notes unmeasured pH on Free SO2', () => {
+  const unmeasuredTaPhLog: FermentationLogEntry = {
+    id: 'bug01-log',
+    tankId: 'tank-a',
+    dayNumber: 3,
+    dateTime: '۱۴۰۵/۰۷/۲۷',
+    stageTitle: 'روز ۳',
+    brix: 17.5,
+    sg: 1.070,
+    tempCap: 24.0,
+    tempRoom: 21.0,
+    ph: 3.75,
+    phMeasured: false,
+    ta: 8.8,
+    taMeasured: false,
+    freeSO2: 28,
+    freeSO2Measured: true,
+    pigeageDone: true,
+    isBenchmark: false
+  };
+
+  const health = analyzeLogEntryHealth(unmeasuredTaPhLog, 'tank-a');
+  assert.equal(health.healthScore, 100, 'Unmeasured TA (8.8) and unmeasured pH (3.75) must not penalize healthScore');
+
+  const taParam = health.parameters.find((p) => p.paramName.includes('TA'));
+  assert.ok(taParam, 'TA parameter must exist');
+  assert.equal(taParam.status, 'good');
+  assert.ok(taParam.note.includes('انتقالی — امروز اندازهگیری نشده'));
+
+  const so2Param = health.parameters.find((p) => p.paramName.includes('Free SO2'));
+  assert.ok(so2Param, 'Free SO2 parameter must exist');
+  assert.ok(so2Param.note.includes('(بر مبنای pH هدف؛ pH واقعی امروز سنجش نشده)'));
+});
+

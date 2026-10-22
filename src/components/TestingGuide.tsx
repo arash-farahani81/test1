@@ -103,7 +103,7 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
   initialSelectedTest = 'all',
   initialActiveSubTab = 'calculators-sops'
 }) => {
-  const { labDeepLink, clearLabDeepLink, setActiveFiveTab } = useEnologyUi();
+  const { labDeepLink, clearLabDeepLink, setActiveFiveTab, activeBatch } = useEnologyUi();
   const [activeSubTab, setActiveSubTab] = useState<LabHubSubTab>(initialActiveSubTab);
   const [selectedFilter, setSelectedFilter] = useState<string>(() =>
     mapTestIdToSopFilter(initialSelectedTest)
@@ -703,7 +703,11 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
   );
   const liveSO2LedgerTankA = enologyDb.getCumulativeSO2Ledger(
     'tank-a',
-    flexPlan.volumes.initialLiquidPerTankL
+    flexPlan.volumes.initialLiquidPerTankL,
+    1.5,
+    undefined,
+    !enologyDb.hasDemoData(),
+    activeBatch?.id
   );
 
   const handleSyncPlanToCalculators = (plan: DynamicProtocolPlan) => {

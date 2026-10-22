@@ -559,18 +559,18 @@ export const EnologyUiProvider: React.FC<{ children: React.ReactNode }> = ({
     writeStorageString(STORAGE_KEY_FONT_SCALE, scale);
   }, []);
 
-  const setScalePrecision = useCallback((precision: ScalePrecisionGrams) => {
-    setScalePrecisionState(precision);
-    const serialized = String(precision);
+  const setScalePrecision = useCallback((val: ScalePrecisionGrams) => {
+    setScalePrecisionState(val);
+    const serialized = JSON.stringify(val);
     writeStorageString(STORAGE_KEY_SCALE_PRECISION, serialized);
     writeStorageString(STORAGE_KEY_SCALE_PRECISION_LEGACY, serialized);
     if (typeof window !== 'undefined' && typeof window.dispatchEvent === 'function') {
       window.dispatchEvent(
         new CustomEvent('enology-localstorage-sync', {
           detail: {
-            key: STORAGE_KEY_SCALE_PRECISION_LEGACY,
-            serialized,
-            value: precision
+            key: 'enology_scale_precision_g',
+            serialized: JSON.stringify(val),
+            value: val
           }
         })
       );

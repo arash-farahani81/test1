@@ -30,6 +30,7 @@ import {
   ENOLOGY_GLOSSARY_DICTIONARY
 } from './context/EnologyUiContext.tsx';
 import { enologyDb } from './db/enologyDatabase.ts';
+import { sortFermentationLogs } from './utils/trackingCalculations.ts';
 import { useLocalStorageState } from './utils/useLocalStorage.ts';
 
 type MoreSubPage =
@@ -59,6 +60,7 @@ function AppWorkspace() {
     closeQuickLog,
     isOnboardingOpen,
     closeOnboardingWizard,
+    activeBatch,
     dataVersion,
     notifyDataChanged
   } = useEnologyUi();
@@ -80,14 +82,16 @@ function AppWorkspace() {
   const [glossarySearch, setGlossarySearch] = useState<string>('');
 
   const hasActiveFermentation = useMemo(() => {
-    const allLogs = enologyDb.getLogs();
+    const allLogs = sortFermentationLogs(
+      enologyDb.getLogs(undefined, false, activeBatch?.id).filter((l) => !l.isBenchmark)
+    );
     const tanks = ['tank-a', 'tank-b', 'tank-rose'] as const;
     return tanks.some((tId) => {
-      const tLogs = allLogs.filter((l) => l.tankId === tId && !l.isBenchmark);
+      const tLogs = allLogs.filter((l) => l.tankId === tId);
       const latest = tLogs[tLogs.length - 1];
       return latest ? latest.sg > 1.0 : true;
     });
-  }, [dataRefreshTick, dataVersion, isQuickLogOpen, cellarMode]);
+  }, [dataRefreshTick, dataVersion, isQuickLogOpen, cellarMode, activeBatch?.id]);
 
   const backupHealth = useMemo(
     () => enologyDb.getBackupHealthStatus(),
@@ -237,7 +241,7 @@ function AppWorkspace() {
 
       {/* Optional Auto Night Cellar Mode Suggestion Banner (19:00 to 06:00) */}
       {autoSuggestNightCellar && isNightHours && !cellarMode && (
-        <div className="bg-stone-900 text-amber-200 border-b border-amber-700/50 px-4 py-2 text-xs font-bold flex items-center justify-between gap-2 no-print">
+        <div className="bg-amber-50 text-amber-950 border-b border-amber-300 px-4 py-2 text-xs font-bold flex items-center justify-between gap-2 no-print">
           <div className="flex items-center gap-2">
             <SunMedium className="w-4 h-4 text-amber-400 shrink-0" />
             <span>
@@ -736,7 +740,7 @@ function AppWorkspace() {
       />
 
       {/* Footer */}
-      <footer className="bg-stone-900 text-stone-400 border-t border-stone-800 text-xs py-4 px-6 text-center no-print">
+      <footer className="bg-surface text-ink-soft border-t border-line text-xs py-4 px-6 text-center no-print">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
           <span>
             سامانه تخصصی مدیریت کارگاهی، مهندسی انولوژی و کنترل کیفی شراب‌سازی | مستر پروتکل رشه سردشت

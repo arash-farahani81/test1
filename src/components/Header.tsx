@@ -232,7 +232,7 @@ export const Header: React.FC<HeaderProps> = ({
 
   const handleOneTapBackup = async () => {
     const jsonStr = enologyDb.buildExportDatabaseJSON();
-    const logs = enologyDb.getLogs();
+    const logs = enologyDb.getLogs(undefined, false, activeBatch?.id).filter((l) => !l.isBenchmark);
     const recentSummaryText = [
       'خلاصه پشتیبان سامانه مهندسی شراب‌سازی (Enology Studio)',
       `تعداد کل رکوردها: ${enologyDb.getDatabaseSummary().totalRecords}`,

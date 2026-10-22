@@ -101,6 +101,8 @@ export const RightNowActionCenter: React.FC<RightNowActionCenterProps> = ({
     tankCount,
     activeBatch,
     setActiveBatchId,
+    scalePrecision,
+    setScalePrecision,
     navigateToLabTest,
     openQuickLog,
     dataVersion,
@@ -108,20 +110,22 @@ export const RightNowActionCenter: React.FC<RightNowActionCenterProps> = ({
   } = useEnologyUi();
 
   const currentTankId: TankId = externalTankId ?? effectiveSingleTankId;
+  const batchKeySuffix =
+    activeBatch?.id && activeBatch.id !== 'batch-rasha-1403'
+      ? `_${activeBatch.id}`
+      : '';
 
   const [refreshTick, setRefreshTick] = useState(0);
   const [completedSteps, setCompletedSteps] = useLocalStorage<number[]>(
-    'enology_completed_roadmap_steps',
+    `enology_completed_roadmap_steps${batchKeySuffix}`,
     [1, 2, 3]
   );
   const [snoozedUntilMsByStepId, setSnoozedUntilMsByStepId] = useLocalStorage<
     Record<string, number>
-  >('enology_rightnow_snoozed_v1', {});
+  >(`enology_rightnow_snoozed_v1${batchKeySuffix}`, {});
   const [skippedReasonsByStepId, setSkippedReasonsByStepId] = useLocalStorage<
     Record<string, string>
-  >('enology_rightnow_skipped_v1', {});
-  const [scalePrecision, setScalePrecision] =
-    useLocalStorage<ScalePrecisionGrams>('enology_scale_precision_g', 0.1);
+  >(`enology_rightnow_skipped_v1${batchKeySuffix}`, {});
   const [showAllDetails, setShowAllDetails] = useLocalStorage<boolean>(
     'enology_show_all_details_v1',
     false
@@ -133,7 +137,7 @@ export const RightNowActionCenter: React.FC<RightNowActionCenterProps> = ({
     sanitationConfirmed?: boolean;
     malicRiskAccepted?: boolean;
     rsConfirmed?: boolean;
-  }>('enology_bottling_gate_confirmations_v1', {});
+  }>(`enology_bottling_gate_confirmations_v1${batchKeySuffix}`, {});
 
   const [showLayer2Why, setShowLayer2Why] = useState(false);
   const [showLayer3Science, setShowLayer3Science] = useState(false);

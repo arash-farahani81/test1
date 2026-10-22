@@ -750,7 +750,7 @@ L475: const [isOnboardingOpen, setIsOnboardingOpen] = useState<boolean>(false);
 L476: const [activeGlossaryKey, setActiveGlossaryKey] = useState<string | null>(null);
 ```
 
-### `src/components/BandedFermentationChartAndSO2Panel.tsx` (963 lines)
+### `src/components/BandedFermentationChartAndSO2Panel.tsx` (971 lines)
 ```ts
 // --- Imports ---
 import React, { useMemo, useState } from 'react';
@@ -774,7 +774,7 @@ L62: const [selectedMilestoneId, setSelectedMilestoneId] = useState<string | nul
 L65: const [visibleLayers, setVisibleLayers] = useState<Array<'sg' | 'temp' | 'so2'>>(['sg', 'so2']);
 ```
 
-### `src/components/BatchOnboardingWizardModal.tsx` (975 lines)
+### `src/components/BatchOnboardingWizardModal.tsx` (967 lines)
 ```ts
 // --- Imports ---
 import React, { useEffect, useMemo, useState } from 'react';
@@ -813,7 +813,7 @@ L86: const [malicStatus, setMalicStatus] = useState<
 L91: const [mlfPolicy, setMlfPolicy] = useState<'no_mlf' | 'spontaneous' | 'inoculated'>(
 ```
 
-### `src/components/BioscienceDatabaseView.tsx` (1028 lines)
+### `src/components/BioscienceDatabaseView.tsx` (1026 lines)
 ```ts
 // --- Imports ---
 import React, { useState } from 'react';
@@ -862,7 +862,7 @@ import { TestingGuide, type TestingGuideProps } from './TestingGuide.tsx';
 // (Stateless component)
 ```
 
-### `src/components/FermentationTracker.tsx` (3982 lines)
+### `src/components/FermentationTracker.tsx` (4000 lines)
 ```ts
 // --- Imports ---
 import React, { useEffect, useMemo, useRef, useState } from 'react';
@@ -943,39 +943,41 @@ L214: const [formPigeageCount, setFormPigeageCount] = useLocalStorageState<numbe
 L215: const [formNote, setFormNote] = useLocalStorageState<string>('enology_form_note', '');
 L216: const [formIsTrigger, setFormIsTrigger] = useLocalStorageState<boolean>('enology_form_is_trigger', true);
 L217: const [autoRecordTriggerAddition, setAutoRecordTriggerAddition] = useState<boolean>(true);
-L220: const [selectedChemPresetId, setSelectedChemPresetId] = useState<string>('fermaid-o-sna1');
-L221: const [chemTankId, setChemTankId] = useState<TankId>(tankId);
-L222: const [chemTimestamp, setChemTimestamp] = useState<string>('');
-L223: const [chemStageTitle, setChemStageTitle] = useState<string>('تغذیه مرحله‌ای / اصلاح شیمیایی');
-L224: const [chemCompoundName, setChemCompoundName] = useState<string>('Fermaid O (نیتروژن ارگانیک)');
-L225: const [chemCompoundType, setChemCompoundType] = useState<StructuredCompoundType>('fermaid_o');
-L226: const [chemReferenceVolumeL, setChemReferenceVolumeL] = useState<number>(defaultRefVol);
-L230: const [chemPubchemCid, setChemPubchemCid] = useState<number | undefined>(undefined);
-L231: const [chemAmount, setChemAmount] = useState<number>(33.0);
-L232: const [chemUnit, setChemUnit] = useState<'g' | 'g/hL' | 'mg/L' | 'mL' | 'kg'>('g');
-L233: const [chemPurpose, setChemPurpose] = useState<string>('تامین اسیدهای آمینه ارگانیک مخمر');
-L234: const [chemNote, setChemNote] = useState<string>('');
-L235: const [chemLotNumber, setChemLotNumber] = useState<string>('');
-L236: const [pendingAdditionConfirm, setPendingAdditionConfirm] = useState<boolean>(false);
-L237: const [undoAdditionId, setUndoAdditionId] = useState<string | null>(null);
-L238: const [undoDeletedRecord, setUndoDeletedRecord] = useState<{
-L247: const [selectedDailyPresetId, setSelectedDailyPresetId] = useState<string>('');
-L248: const [selectedLabPresetId, setSelectedLabPresetId] = useState<string>('lab-ripper-so2');
-L251: const [labTankId, setLabTankId] = useState<TankId>(tankId);
-L252: const [labDate, setLabDate] = useState<string>('');
-L253: const [labTestType, setLabTestType] = useState<LabAnalysisRecord['testType']>('ripper_so2');
-L254: const [labAnalyte, setLabAnalyte] = useState<string>('سولفیت آزاد (Free SO2)');
-L255: const [labValue, setLabValue] = useState<string>('32');
-L256: const [labUnit, setLabUnit] = useState<string>('mg/L (ppm)');
-L257: const [labActionTaken, setLabActionTaken] = useState<string>('در محدوده ایمن؛ نیازی به تزریق KMS نیست');
-L258: const [labNotes, setLabNotes] = useState<string>('');
-L261: const [sensoryClarity, setSensoryClarity] = useState<number>(5);
-L262: const [sensoryAroma, setSensoryAroma] = useState<number>(4);
-L263: const [sensoryAcidity, setSensoryAcidity] = useState<number>(4);
-L264: const [sensoryTannin, setSensoryTannin] = useState<number>(4);
-L265: const [sensoryOverall, setSensoryOverall] = useState<number>(4);
-L266: const [sensoryFaults, setSensoryFaults] = useState<string[]>([]);
-L267: const [sensoryNotes, setSensoryNotes] = useState<string>('');
+L218: const [formPhTouched, setFormPhTouched] = useState(false);
+L219: const [formTaTouched, setFormTaTouched] = useState(false);
+L222: const [selectedChemPresetId, setSelectedChemPresetId] = useState<string>('fermaid-o-sna1');
+L223: const [chemTankId, setChemTankId] = useState<TankId>(tankId);
+L224: const [chemTimestamp, setChemTimestamp] = useState<string>('');
+L225: const [chemStageTitle, setChemStageTitle] = useState<string>('تغذیه مرحله‌ای / اصلاح شیمیایی');
+L226: const [chemCompoundName, setChemCompoundName] = useState<string>('Fermaid O (نیتروژن ارگانیک)');
+L227: const [chemCompoundType, setChemCompoundType] = useState<StructuredCompoundType>('fermaid_o');
+L228: const [chemReferenceVolumeL, setChemReferenceVolumeL] = useState<number>(defaultRefVol);
+L232: const [chemPubchemCid, setChemPubchemCid] = useState<number | undefined>(undefined);
+L233: const [chemAmount, setChemAmount] = useState<number>(33.0);
+L234: const [chemUnit, setChemUnit] = useState<'g' | 'g/hL' | 'mg/L' | 'mL' | 'kg'>('g');
+L235: const [chemPurpose, setChemPurpose] = useState<string>('تامین اسیدهای آمینه ارگانیک مخمر');
+L236: const [chemNote, setChemNote] = useState<string>('');
+L237: const [chemLotNumber, setChemLotNumber] = useState<string>('');
+L238: const [pendingAdditionConfirm, setPendingAdditionConfirm] = useState<boolean>(false);
+L239: const [undoAdditionId, setUndoAdditionId] = useState<string | null>(null);
+L240: const [undoDeletedRecord, setUndoDeletedRecord] = useState<{
+L249: const [selectedDailyPresetId, setSelectedDailyPresetId] = useState<string>('');
+L250: const [selectedLabPresetId, setSelectedLabPresetId] = useState<string>('lab-ripper-so2');
+L253: const [labTankId, setLabTankId] = useState<TankId>(tankId);
+L254: const [labDate, setLabDate] = useState<string>('');
+L255: const [labTestType, setLabTestType] = useState<LabAnalysisRecord['testType']>('ripper_so2');
+L256: const [labAnalyte, setLabAnalyte] = useState<string>('سولفیت آزاد (Free SO2)');
+L257: const [labValue, setLabValue] = useState<string>('32');
+L258: const [labUnit, setLabUnit] = useState<string>('mg/L (ppm)');
+L259: const [labActionTaken, setLabActionTaken] = useState<string>('در محدوده ایمن؛ نیازی به تزریق KMS نیست');
+L260: const [labNotes, setLabNotes] = useState<string>('');
+L263: const [sensoryClarity, setSensoryClarity] = useState<number>(5);
+L264: const [sensoryAroma, setSensoryAroma] = useState<number>(4);
+L265: const [sensoryAcidity, setSensoryAcidity] = useState<number>(4);
+L266: const [sensoryTannin, setSensoryTannin] = useState<number>(4);
+L267: const [sensoryOverall, setSensoryOverall] = useState<number>(4);
+L268: const [sensoryFaults, setSensoryFaults] = useState<string[]>([]);
+L269: const [sensoryNotes, setSensoryNotes] = useState<string>('');
 ```
 
 ### `src/components/FlexibleProtocolCustomizerBar.tsx` (343 lines)
@@ -1094,7 +1096,7 @@ L78: const [useDynamicBomMode, setUseDynamicBomMode] = useLocalStorageState<bool
 L84: const { params: flexParams, plan: flexPlan } = useFlexibleProtocol();
 ```
 
-### `src/components/PhotoDiaryAndVintagePanel.tsx` (1125 lines)
+### `src/components/PhotoDiaryAndVintagePanel.tsx` (1129 lines)
 ```ts
 // --- Imports ---
 import React, { useEffect, useMemo, useRef, useState } from 'react';
@@ -1151,14 +1153,14 @@ L419: const [photoCategory, setPhotoCategory] = useState<
 L422: const [photoNote, setPhotoNote] = useState<string>('');
 L423: const [photoTags, setPhotoTags] = useState<string[]>([]);
 L424: const [isCompressing, setIsCompressing] = useState<boolean>(false);
-L429: const [tastingsByCheckpoint, setTastingsByCheckpoint] = useLocalStorageState<
-L444: const [historicalVintages, setHistoricalVintages] = useLocalStorageState<
-L463: const [visitCount, setVisitCount] = useLocalStorageState<number>(
-L467: const [pwaDismissed, setPwaDismissed] = useLocalStorageState<boolean>(
-L471: const [calendarStartDate, setCalendarStartDate] = useState<string>(() =>
+L433: const [tastingsByCheckpoint, setTastingsByCheckpoint] = useLocalStorageState<
+L448: const [historicalVintages, setHistoricalVintages] = useLocalStorageState<
+L467: const [visitCount, setVisitCount] = useLocalStorageState<number>(
+L471: const [pwaDismissed, setPwaDismissed] = useLocalStorageState<boolean>(
+L475: const [calendarStartDate, setCalendarStartDate] = useState<string>(() =>
 ```
 
-### `src/components/ProcessRoadmapTracker.tsx` (1989 lines)
+### `src/components/ProcessRoadmapTracker.tsx` (2007 lines)
 ```ts
 // --- Imports ---
 import React, { useState, useEffect } from 'react';
@@ -1203,38 +1205,40 @@ L275: const [showFlexibleCustomizer, setShowFlexibleCustomizer] = useState<boole
 L276: const [showTimerHub, setShowTimerHub] = useState<boolean>(false);
 L277: const [isQuickLogModalOpen, setIsQuickLogModalOpen] = useState<boolean>(false);
 L278: const [rightNowRefreshKey, setRightNowRefreshKey] = useState<number>(0);
-L281: const [anchorTime, setAnchorTime] = useLocalStorageState<string>('enology_day0_anchor_time', '14:30');
-L282: const [saigneeOffsetHours, setSaigneeOffsetHours] = useLocalStorageState<number>('enology_day0_saignee_offset_hours', 3.0);
-L283: const [enzymeOffsetHours, setEnzymeOffsetHours] = useLocalStorageState<number>('enology_day0_enzyme_offset_hours', 7.5);
-L286: const [customTimers, setCustomTimers] = useLocalStorageState<WorkshopTimerConfig[]>('enology_custom_workshop_timers', []);
-L287: const [newCustomTitle, setNewCustomTitle] = useState('');
-L288: const [newCustomMins, setNewCustomMins] = useState(15);
-L289: const [newCustomStepId, setNewCustomStepId] = useState(1);
-L292: const [timerDurations, setTimerDurations] = useState<Record<string, number>>(() => {
-L299: const [timerElapsed, setTimerElapsed] = useLocalStorageState<Record<string, number>>('enology_timer_elapsed_v1', {});
-L300: const [timerRunning, setTimerRunning] = useLocalStorageState<Record<string, boolean>>('enology_timer_running_v1', {});
-L301: const [timerChimed, setTimerChimed] = useState<Record<string, boolean>>({});
-L453: const [currentStepId, setCurrentStepId] = useLocalStorageState<number>('enology_active_roadmap_step', 1);
-L454: const [completedSteps, setCompletedSteps] = useLocalStorageState<number[]>('enology_completed_roadmap_steps', []);
-L463: const [filterPhase, setFilterPhase] = useState<number | 'all'>(() => activePhaseNumber);
-L464: const [searchQuery, setSearchQuery] = useState('');
-L465: const [toastMessage, setToastMessage] = useState<string | null>(null);
-L483: const [quickTankState, setQuickTankState] = useState<TankId>(effectiveSingleTankId);
-L496: const [quickDay, setQuickDay] = useState<number>(1);
-L497: const [quickSG, setQuickSG] = useState<number>(1.083);
-L498: const [quickBrix, setQuickBrix] = useState<number>(20.0);
-L499: const [quickTempCap, setQuickTempCap] = useState<number>(23.0);
-L500: const [quickTempRoom, setQuickTempRoom] = useState<number>(21.0);
-L501: const [quickPH, setQuickPH] = useState<number>(3.52);
-L502: const [quickTA, setQuickTA] = useState<number>(6.8);
-L503: const [quickNote, setQuickNote] = useState<string>('');
-L506: const [selectedRoadmapChemPresetId, setSelectedRoadmapChemPresetId] = useState<string>('');
-L507: const [chemName, setChemName] = useState<string>('متابی‌سولفیت پتاسیم (KMS)');
-L508: const [chemAmount, setChemAmount] = useState<string>('6.52g');
-L509: const [chemPurpose, setChemPurpose] = useState<string>('کنترل میکروبی و آنتی‌اکسیدانی اولیه');
+L286: const [anchorTime, setAnchorTime] = useLocalStorageState<string>(`enology_day0_anchor_time${batchKeySuffix}`, '14:30');
+L287: const [saigneeOffsetHours, setSaigneeOffsetHours] = useLocalStorageState<number>(`enology_day0_saignee_offset_hours${batchKeySuffix}`, 3.0);
+L288: const [enzymeOffsetHours, setEnzymeOffsetHours] = useLocalStorageState<number>(`enology_day0_enzyme_offset_hours${batchKeySuffix}`, 7.5);
+L291: const [customTimers, setCustomTimers] = useLocalStorageState<WorkshopTimerConfig[]>('enology_custom_workshop_timers', []);
+L292: const [newCustomTitle, setNewCustomTitle] = useState('');
+L293: const [newCustomMins, setNewCustomMins] = useState(15);
+L294: const [newCustomStepId, setNewCustomStepId] = useState(1);
+L297: const [timerDurations, setTimerDurations] = useState<Record<string, number>>(() => {
+L304: const [timerElapsed, setTimerElapsed] = useLocalStorageState<Record<string, number>>('enology_timer_elapsed_v1', {});
+L305: const [timerRunning, setTimerRunning] = useLocalStorageState<Record<string, boolean>>('enology_timer_running_v1', {});
+L306: const [timerChimed, setTimerChimed] = useState<Record<string, boolean>>({});
+L461: const [currentStepId, setCurrentStepId] = useLocalStorageState<number>(`enology_active_roadmap_step${batchKeySuffix}`, 1);
+L462: const [completedSteps, setCompletedSteps] = useLocalStorageState<number[]>(`enology_completed_roadmap_steps${batchKeySuffix}`, []);
+L471: const [filterPhase, setFilterPhase] = useState<number | 'all'>(() => activePhaseNumber);
+L472: const [searchQuery, setSearchQuery] = useState('');
+L473: const [toastMessage, setToastMessage] = useState<string | null>(null);
+L491: const [quickTankState, setQuickTankState] = useState<TankId>(effectiveSingleTankId);
+L504: const [quickDay, setQuickDay] = useState<number>(1);
+L505: const [quickSG, setQuickSG] = useState<number>(1.083);
+L506: const [quickBrix, setQuickBrix] = useState<number>(20.0);
+L507: const [quickTempCap, setQuickTempCap] = useState<number>(23.0);
+L508: const [quickTempRoom, setQuickTempRoom] = useState<number>(21.0);
+L509: const [quickPH, setQuickPH] = useState<number>(3.52);
+L510: const [quickTA, setQuickTA] = useState<number>(6.8);
+L511: const [quickPhTouched, setQuickPhTouched] = useState<boolean>(false);
+L512: const [quickTaTouched, setQuickTaTouched] = useState<boolean>(false);
+L513: const [quickNote, setQuickNote] = useState<string>('');
+L516: const [selectedRoadmapChemPresetId, setSelectedRoadmapChemPresetId] = useState<string>('');
+L517: const [chemName, setChemName] = useState<string>('متابی‌سولفیت پتاسیم (KMS)');
+L518: const [chemAmount, setChemAmount] = useState<string>('6.52g');
+L519: const [chemPurpose, setChemPurpose] = useState<string>('کنترل میکروبی و آنتی‌اکسیدانی اولیه');
 ```
 
-### `src/components/QuickTenSecondLogModal.tsx` (1809 lines)
+### `src/components/QuickTenSecondLogModal.tsx` (1823 lines)
 ```ts
 // --- Imports ---
 import React, { useEffect, useMemo, useState } from 'react';
@@ -1306,7 +1310,7 @@ L279: const [rawLabValue, setRawLabValue] = useState<string>('');
 L280: const [labNote, setLabNote] = useState<string>('');
 ```
 
-### `src/components/RightNowActionCenter.tsx` (1807 lines)
+### `src/components/RightNowActionCenter.tsx` (1811 lines)
 ```ts
 // --- Imports ---
 import React, { useEffect, useMemo, useState } from 'react';
@@ -1345,22 +1349,22 @@ interface UndoSession {
 }
 // --- State & Protocol Hooks ---
 L96: const { plan } = useFlexibleProtocol();
-L112: const [refreshTick, setRefreshTick] = useState(0);
-L138: const [showLayer2Why, setShowLayer2Why] = useState(false);
-L139: const [showLayer3Science, setShowLayer3Science] = useState(false);
-L140: const [showAllDeadlinesToggle, setShowAllDeadlinesToggle] = useState(false);
-L141: const [skippingMilestoneId, setSkippingMilestoneId] = useState<string | null>(
-L144: const [skipReasonInput, setSkipReasonInput] = useState('');
-L147: const [undoSession, setUndoSession] = useState<UndoSession | null>(null);
-L148: const [showBottlingGate, setShowBottlingGate] = useState(false);
-L149: const [expandedBottlingWhyId, setExpandedBottlingWhyId] = useState<
-L152: const [riskOverrideReason, setRiskOverrideReason] = useState('');
-L153: const [bottlingUnlockedNotice, setBottlingUnlockedNotice] = useState(false);
-L154: const [isOnboardingOpen, setIsOnboardingOpen] = useState(false);
-L155: const [confirmingRealBatchReset, setConfirmingRealBatchReset] = useState(false);
+L118: const [refreshTick, setRefreshTick] = useState(0);
+L142: const [showLayer2Why, setShowLayer2Why] = useState(false);
+L143: const [showLayer3Science, setShowLayer3Science] = useState(false);
+L144: const [showAllDeadlinesToggle, setShowAllDeadlinesToggle] = useState(false);
+L145: const [skippingMilestoneId, setSkippingMilestoneId] = useState<string | null>(
+L148: const [skipReasonInput, setSkipReasonInput] = useState('');
+L151: const [undoSession, setUndoSession] = useState<UndoSession | null>(null);
+L152: const [showBottlingGate, setShowBottlingGate] = useState(false);
+L153: const [expandedBottlingWhyId, setExpandedBottlingWhyId] = useState<
+L156: const [riskOverrideReason, setRiskOverrideReason] = useState('');
+L157: const [bottlingUnlockedNotice, setBottlingUnlockedNotice] = useState(false);
+L158: const [isOnboardingOpen, setIsOnboardingOpen] = useState(false);
+L159: const [confirmingRealBatchReset, setConfirmingRealBatchReset] = useState(false);
 ```
 
-### `src/components/TestingGuide.tsx` (4042 lines)
+### `src/components/TestingGuide.tsx` (4046 lines)
 ```ts
 // --- Imports ---
 import React, { useState, useEffect, useMemo, useRef } from 'react';
@@ -1949,18 +1953,18 @@ export const EnologyUiProvider: React.FC<{ children: React.ReactNode }> = ({
     setFontScaleState(scale);
     writeStorageString(STORAGE_KEY_FONT_SCALE, scale);
   }, []);
-  const setScalePrecision = useCallback((precision: ScalePrecisionGrams) => {
-    setScalePrecisionState(precision);
-    const serialized = String(precision);
+  const setScalePrecision = useCallback((val: ScalePrecisionGrams) => {
+    setScalePrecisionState(val);
+    const serialized = JSON.stringify(val);
     writeStorageString(STORAGE_KEY_SCALE_PRECISION, serialized);
     writeStorageString(STORAGE_KEY_SCALE_PRECISION_LEGACY, serialized);
     if (typeof window !== 'undefined' && typeof window.dispatchEvent === 'function') {
       window.dispatchEvent(
         new CustomEvent('enology-localstorage-sync', {
           detail: {
-            key: STORAGE_KEY_SCALE_PRECISION_LEGACY,
-            serialized,
-            value: precision
+            key: 'enology_scale_precision_g',
+            serialized: JSON.stringify(val),
+            value: val
           }
         })
       );
@@ -4177,7 +4181,7 @@ export function calculateStagedH2O2Plan(
 }
 ```
 
-### `src/utils/trackingCalculations.ts` (911 compact lines)
+### `src/utils/trackingCalculations.ts` (918 compact lines)
 ```ts
 import type { FermentationLogEntry, TankId } from '../types/tracking.ts';
 import type { ChemicalAddition } from '../types/database.ts';
@@ -4461,7 +4465,10 @@ export function analyzeLogEntryHealth(
     const taMax = isRose ? 7.5 : 7.2;
     let taStatus: 'ideal' | 'good' | 'warning' | 'danger' = 'ideal';
     let taNote = 'تعادل اسیدیته کل در محدوده استاندارد پروتکل (بدون MLF)';
-    if (log.ta > 12.0) {
+    if (log.taMeasured === false) {
+      taStatus = 'good';
+      taNote = 'در این نوبت اسیدیته کل آزمایش نشده و مقدار قبلی منتقل شده است (انتقالی — امروز اندازهگیری نشده).';
+    } else if (log.ta > 12.0) {
       taStatus = 'danger';
       taNote = 'خطای بحرانی TA (> 12 g/L): بررسی نرمالیته 0.1N سود یا اوردوز اسید!';
       score -= 45;
@@ -4489,8 +4496,9 @@ export function analyzeLogEntryHealth(
     });
   }
   if (log.freeSO2 !== undefined && log.freeSO2 >= 0) {
-    const pHTarget = getContinuousTargetFreeSO2ByPH(ph, isRose);
-    void getTargetFreeSO2ByPH;
+    const effectivePhForSo2 = log.phMeasured === false ? (isRose ? plan.params.targetRosePH : plan.params.targetRedPH) : ph;
+    const pHTarget = getContinuousTargetFreeSO2ByPH(effectivePhForSo2, isRose);
+    void getTargetFreeSO2ByPH(effectivePhForSo2, isRose);
     let so2Status: 'ideal' | 'good' | 'warning' | 'danger' = 'ideal';
     let so2Note = 'سطح سولفیت آزاد متناسب با pH و مرحله فرآیند';
     let so2TargetStr = sg > 1.005 ? '≤ 35 mg/L (در حین تخمیر)' : `${pHTarget.min}–${pHTarget.max} mg/L (هدف ${pHTarget.target})`;
@@ -4525,6 +4533,9 @@ export function analyzeLogEntryHealth(
         so2Note = `کمتر از حداقل جدول pH (${pHTarget.min} mg/L)؛ نیازمند شارژ KMS`;
         score -= 12;
       }
+    }
+    if (log.phMeasured === false && log.freeSO2Measured !== false) {
+      so2Note += ' (بر مبنای pH هدف؛ pH واقعی امروز سنجش نشده)';
     }
     parameters.push({
       paramName: 'سولفیت آزاد (Free SO2)',
@@ -9379,8 +9390,8 @@ class EnologyDatabaseService {
     }
     return json;
   }
-  public exportLogsToCSV(tankId?: TankId): string {
-    const entries = this.getLogs(tankId);
+  public exportLogsToCSV(tankId?: TankId, batchId?: string): string {
+    const entries = this.getLogs(tankId, false, batchId);
     const headers = [
       'شناسه (ID)',
       'مخزن (Tank)',

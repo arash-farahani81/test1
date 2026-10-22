@@ -325,7 +325,10 @@ export function analyzeLogEntryHealth(
     let taStatus: 'ideal' | 'good' | 'warning' | 'danger' = 'ideal';
     let taNote = 'تعادل اسیدیته کل در محدوده استاندارد پروتکل (بدون MLF)';
 
-    if (log.ta > 12.0) {
+    if (log.taMeasured === false) {
+      taStatus = 'good';
+      taNote = 'در این نوبت اسیدیته کل آزمایش نشده و مقدار قبلی منتقل شده است (انتقالی — امروز اندازهگیری نشده).';
+    } else if (log.ta > 12.0) {
       taStatus = 'danger';
       taNote = 'خطای بحرانی TA (> 12 g/L): بررسی نرمالیته 0.1N سود یا اوردوز اسید!';
       score -= 45;
@@ -356,9 +359,10 @@ export function analyzeLogEntryHealth(
 
   // 5. Free SO2 Analysis (when present)
   if (log.freeSO2 !== undefined && log.freeSO2 >= 0) {
-    const pHTarget = getContinuousTargetFreeSO2ByPH(ph, isRose);
+    const effectivePhForSo2 = log.phMeasured === false ? (isRose ? plan.params.targetRosePH : plan.params.targetRedPH) : ph;
+    const pHTarget = getContinuousTargetFreeSO2ByPH(effectivePhForSo2, isRose);
     // Keep reference to getTargetFreeSO2ByPH so all imports remain utilized
-    void getTargetFreeSO2ByPH;
+    void getTargetFreeSO2ByPH(effectivePhForSo2, isRose);
     let so2Status: 'ideal' | 'good' | 'warning' | 'danger' = 'ideal';
     let so2Note = 'سطح سولفیت آزاد متناسب با pH و مرحله فرآیند';
     let so2TargetStr = sg > 1.005 ? '≤ 35 mg/L (در حین تخمیر)' : `${pHTarget.min}–${pHTarget.max} mg/L (هدف ${pHTarget.target})`;
@@ -394,6 +398,10 @@ export function analyzeLogEntryHealth(
         so2Note = `کمتر از حداقل جدول pH (${pHTarget.min} mg/L)؛ نیازمند شارژ KMS`;
         score -= 12;
       }
+    }
+
+    if (log.phMeasured === false && log.freeSO2Measured !== false) {
+      so2Note += ' (بر مبنای pH هدف؛ pH واقعی امروز سنجش نشده)';
     }
 
     parameters.push({

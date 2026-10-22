@@ -571,7 +571,7 @@ export const MasterProtocolView: React.FC<MasterProtocolViewProps> = ({
                   <div key={sol.num} className="border border-stone-300 rounded-xl p-4 bg-white shadow-xs space-y-2">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
                       <div className="flex items-center gap-2">
-                        <span className="px-2 py-0.5 rounded-md bg-rose-900 text-white text-xs font-bold font-mono">
+                        <span className="px-2 py-0.5 rounded-md bg-wine text-white text-xs font-bold font-mono">
                           {sol.num}
                         </span>
                         <strong className="text-sm font-bold text-stone-900">{sol.title}</strong>
