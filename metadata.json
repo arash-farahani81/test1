@@ -1,0 +1,8 @@
+{
+  "name": "Rasha Sardasht 400kg Enology & Winery Studio",
+  "description": "سامانه جامع مدیریت کارگاهی، مهندسی انولوژی و راهنمای شراب‌سازی با مستر پروتکل رشه سردشت، محاسبه‌گرهای تخصصی و خروجی ورد DOCX",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
