@@ -35,7 +35,6 @@ import {
   computeDynamicProtocolPlan,
   type DynamicProtocolPlan
 } from '../data/masterProtocolConfig.ts';
-import { FlexibleProtocolCustomizerBar } from './FlexibleProtocolCustomizerBar.tsx';
 import { InteractiveLabWizardsPanel } from './InteractiveLabWizardsPanel.tsx';
 import { useEnologyUi } from '../context/EnologyUiContext.tsx';
 import {
@@ -854,16 +853,16 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
     <div className="space-y-6 max-w-6xl mx-auto my-4 font-['Vazirmatn',sans-serif]">
       {/* Deep-Link Referral Return Banner */}
       {labDeepLink && (
-        <div className="bg-emerald-900 text-white p-4 rounded-2xl border-2 border-emerald-400 shadow-lg flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="bg-surface text-ink p-4 rounded-xl border border-line shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-amber-400/20 border border-amber-300/40 flex items-center justify-center text-amber-300 shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-paper border border-line flex items-center justify-center text-wine shrink-0">
               <Sparkles className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-sm sm:text-base font-bold text-white">
+              <h3 className="text-sm sm:text-base font-bold text-ink">
                 آزمایش و بررسی از طریق هشدار ارجاع شده است
               </h3>
-              <p className="text-xs text-emerald-200 mt-0.5">
+              <p className="text-xs text-ink-soft mt-0.5">
                 پارامترهای مخزن به‌صورت خودکار در ابزار آزمایشگاهی و عیب‌یاب بارگذاری شدند. پس از اتمام بررسی می‌توانید با یک کلیک بازگردید.
               </p>
             </div>
@@ -871,7 +870,7 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
           <button
             type="button"
             onClick={returnFromLabDeepLink}
-            className="min-h-[48px] px-5 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-stone-950 text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-md cursor-pointer transition-all shrink-0"
+            className="min-h-[44px] px-4 py-2 rounded-xl bg-wine hover:opacity-95 text-white text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-xs cursor-pointer transition-all shrink-0"
           >
             <span>
               {'بازگشت به ' +
@@ -884,43 +883,44 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
         </div>
       )}
 
-      {/* Top Unified Banner & 3 Main Sub-Tabs */}
-      <div className="bg-stone-900 text-stone-100 p-6 rounded-2xl border-b-4 border-rose-800 shadow-xl space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="space-y-1">
-            <div className="flex items-center gap-2 text-rose-400 text-xs font-bold">
-              <Calculator className="w-4 h-4" />
-              <span>قطب یکپارچه آزمایشگاه انولوژی، ماشین‌حساب‌های مهندسی و مدیریت بحران (SOP & Calculators Hub)</span>
-            </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-white">
-              آزمایشگاه، ۹ ماشین‌حساب تخصصی، راهنمای SOP و عیب‌یاب کارگاهی
-            </h2>
-            <p className="text-xs sm:text-sm text-stone-300 max-w-3xl leading-relaxed">
-              تمامی ۹ ماشین‌حساب مهندسی شراب‌سازی، پروتکل‌های گام‌به‌گام آزمایشگاهی، سیستم هوشمند عیب‌یابی سناریوها و ۵ پروتکل اورژانسی مستر پروتکل رشه سردشت در این بخش یکپارچه شده‌اند و قابلیت ذخیره‌سازی دائم در دیتابیس را دارند.
-            </p>
+      {/* Clean Light Sub-Tab Bar & Protocol Sync Action */}
+      <div className="bg-surface text-ink p-4 rounded-xl border border-line shadow-xs space-y-3">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div className="flex items-center gap-2 text-ink text-sm font-bold">
+            <Calculator className="w-4 h-4 text-wine shrink-0" />
+            <span>آزمایشگاه، ۹ ماشین‌حساب تخصصی، راهنمای SOP و عیب‌یاب کارگاهی</span>
           </div>
 
-          {onNavigateToTracking && (
+          <div className="flex flex-wrap items-center gap-2">
             <button
               type="button"
-              onClick={onNavigateToTracking}
-              className="px-4 py-2 rounded-xl bg-rose-800 hover:bg-rose-700 text-white text-xs font-bold flex items-center gap-1.5 shadow-md self-start sm:self-center shrink-0 cursor-pointer transition-all active:scale-95 whitespace-nowrap"
+              onClick={() => handleSyncPlanToCalculators(flexPlan)}
+              className="px-3 py-1.5 rounded-lg bg-paper hover:bg-stone-200/60 text-ink border border-line text-xs font-bold cursor-pointer transition-colors"
             >
-              <span>مشاهده و ثبت در پایش روزانه</span>
-              <ArrowRight className="w-4 h-4 rotate-180" />
+              همگام‌سازی مقادیر با پروتکل فعال
             </button>
-          )}
+            {onNavigateToTracking && (
+              <button
+                type="button"
+                onClick={onNavigateToTracking}
+                className="px-3 py-1.5 rounded-lg bg-wine text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer transition-all whitespace-nowrap"
+              >
+                <span>مشاهده و ثبت در پایش روزانه</span>
+                <ArrowRight className="w-3.5 h-3.5 rotate-180" />
+              </button>
+            )}
+          </div>
         </div>
 
         {/* 3 Primary Sub-Tabs */}
-        <div className="pt-3 border-t border-stone-800 grid grid-cols-1 md:grid-cols-3 gap-2">
+        <div className="pt-2 border-t border-line grid grid-cols-1 md:grid-cols-3 gap-2">
           <button
             type="button"
             onClick={() => setActiveSubTab('calculators-sops')}
-            className={`px-4 py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all cursor-pointer ${
+            className={`px-4 py-2.5 rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-all cursor-pointer border ${
               activeSubTab === 'calculators-sops'
-                ? 'bg-rose-700 text-white shadow-sm'
-                : 'bg-stone-800 text-stone-300 hover:bg-stone-700 hover:text-white'
+                ? 'bg-wine text-white border-wine shadow-xs'
+                : 'bg-paper text-ink-soft hover:text-ink border-line'
             }`}
           >
             <Calculator className="w-4 h-4 shrink-0" />
@@ -930,10 +930,10 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
           <button
             type="button"
             onClick={() => setActiveSubTab('troubleshooting-crises')}
-            className={`px-4 py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all cursor-pointer ${
+            className={`px-4 py-2.5 rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-all cursor-pointer border ${
               activeSubTab === 'troubleshooting-crises'
-                ? 'bg-rose-700 text-white shadow-sm'
-                : 'bg-stone-800 text-stone-300 hover:bg-stone-700 hover:text-white'
+                ? 'bg-wine text-white border-wine shadow-xs'
+                : 'bg-paper text-ink-soft hover:text-ink border-line'
             }`}
           >
             <Wrench className="w-4 h-4 shrink-0" />
@@ -943,15 +943,21 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
           <button
             type="button"
             onClick={() => setActiveSubTab('saved-history')}
-            className={`px-4 py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all cursor-pointer ${
+            className={`px-4 py-2.5 rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-all cursor-pointer border ${
               activeSubTab === 'saved-history'
-                ? 'bg-rose-700 text-white shadow-sm'
-                : 'bg-stone-800 text-stone-300 hover:bg-stone-700 hover:text-white'
+                ? 'bg-wine text-white border-wine shadow-xs'
+                : 'bg-paper text-ink-soft hover:text-ink border-line'
             }`}
           >
             <Database className="w-4 h-4 shrink-0" />
             <span>۳. تاریخچه محاسبات ذخیره‌شده در دیتابیس</span>
-            <span className="bg-stone-950/80 text-emerald-400 px-2 py-0.5 rounded-md text-xs font-mono tabular-nums border border-stone-700">
+            <span
+              className={`px-2 py-0.5 rounded-md text-xs font-mono tabular-nums border ${
+                activeSubTab === 'saved-history'
+                  ? 'bg-white/20 text-white border-white/30'
+                  : 'bg-surface text-ink border-line'
+              }`}
+            >
               {savedCalculations.length}
             </span>
           </button>
@@ -966,22 +972,19 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
         </div>
       )}
 
-      {/* Interactive Flexible Parameterized Protocol Studio Bar */}
-      <FlexibleProtocolCustomizerBar onSyncToCalculators={handleSyncPlanToCalculators} />
-
       {/* ===================================================================== */}
       {/* SUB-TAB 1: 9 ENGINEERING CALCULATORS & STEP-BY-STEP LABORATORY SOPS   */}
       {/* ===================================================================== */}
       {activeSubTab === 'calculators-sops' && (
         <div className="space-y-6">
           {/* 2x2 Question-Based Entry Cards */}
-          <div className="bg-white p-4 sm:p-5 rounded-2xl border border-stone-200 shadow-xs space-y-3">
+          <div className="bg-surface p-4 sm:p-5 rounded-xl border border-line shadow-xs space-y-3">
             <div className="flex items-center justify-between flex-wrap gap-2">
-              <h3 className="text-sm sm:text-base font-bold text-stone-900 flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-rose-700" />
-                <span>ورود سریع پرسش‌محور به آزمایشگاه (Question-Based Lab Entry)</span>
+              <h3 className="text-sm sm:text-base font-bold text-ink flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-wine" />
+                <span>ورود سریع پرسش‌محور به آزمایشگاه</span>
               </h3>
-              <span className="text-xs font-bold text-stone-500">
+              <span className="text-xs font-bold text-ink-soft">
                 انتخاب هم‌زمان راهنمای گام‌به‌گام + ماشین‌حساب مرتبط
               </span>
             </div>
@@ -995,17 +998,17 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                 }}
                 className={`min-h-[64px] p-3.5 rounded-xl border text-right transition-all cursor-pointer flex items-center justify-between gap-3 ${
                   selectedWizardOverride === 'ripper_so2'
-                    ? 'bg-rose-900 text-white border-rose-950 shadow-sm'
-                    : 'bg-stone-50 hover:bg-rose-50/60 text-stone-900 border-stone-200'
+                    ? 'bg-wine text-white border-wine shadow-xs'
+                    : 'bg-paper hover:bg-stone-200/50 text-ink border-line'
                 }`}
               >
                 <div>
                   <div className="text-sm font-bold">سولفیت کافی است؟</div>
-                  <div className={`text-xs mt-0.5 ${selectedWizardOverride === 'ripper_so2' ? 'text-rose-200' : 'text-stone-500'}`}>
+                  <div className={`text-xs mt-0.5 ${selectedWizardOverride === 'ripper_so2' ? 'text-white/80' : 'text-ink-soft'}`}>
                     تست Ripper و SO2 مولکولی
                   </div>
                 </div>
-                <FlaskConical className={`w-5 h-5 shrink-0 ${selectedWizardOverride === 'ripper_so2' ? 'text-amber-300' : 'text-rose-700'}`} />
+                <FlaskConical className={`w-5 h-5 shrink-0 ${selectedWizardOverride === 'ripper_so2' ? 'text-white' : 'text-wine'}`} />
               </button>
 
               <button
@@ -1017,17 +1020,17 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                 }}
                 className={`min-h-[64px] p-3.5 rounded-xl border text-right transition-all cursor-pointer flex items-center justify-between gap-3 ${
                   selectedWizardOverride === 'ta_titration' || selectedWizardOverride === 'ph_meter'
-                    ? 'bg-rose-900 text-white border-rose-950 shadow-sm'
-                    : 'bg-stone-50 hover:bg-rose-50/60 text-stone-900 border-stone-200'
+                    ? 'bg-wine text-white border-wine shadow-xs'
+                    : 'bg-paper hover:bg-stone-200/50 text-ink border-line'
                 }`}
               >
                 <div>
                   <div className="text-sm font-bold">اسیدیته درست است؟</div>
-                  <div className={`text-xs mt-0.5 ${selectedWizardOverride === 'ta_titration' || selectedWizardOverride === 'ph_meter' ? 'text-rose-200' : 'text-stone-500'}`}>
+                  <div className={`text-xs mt-0.5 ${selectedWizardOverride === 'ta_titration' || selectedWizardOverride === 'ph_meter' ? 'text-white/80' : 'text-ink-soft'}`}>
                     تست TA، pH و کالیبراسیون
                   </div>
                 </div>
-                <Scale className={`w-5 h-5 shrink-0 ${selectedWizardOverride === 'ta_titration' || selectedWizardOverride === 'ph_meter' ? 'text-amber-300' : 'text-rose-700'}`} />
+                <Scale className={`w-5 h-5 shrink-0 ${selectedWizardOverride === 'ta_titration' || selectedWizardOverride === 'ph_meter' ? 'text-white' : 'text-wine'}`} />
               </button>
 
               <button
@@ -1039,17 +1042,17 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                 }}
                 className={`min-h-[64px] p-3.5 rounded-xl border text-right transition-all cursor-pointer flex items-center justify-between gap-3 ${
                   selectedWizardOverride === 'hydrometer_temp'
-                    ? 'bg-rose-900 text-white border-rose-950 shadow-sm'
-                    : 'bg-stone-50 hover:bg-rose-50/60 text-stone-900 border-stone-200'
+                    ? 'bg-wine text-white border-wine shadow-xs'
+                    : 'bg-paper hover:bg-stone-200/50 text-ink border-line'
                 }`}
               >
                 <div>
                   <div className="text-sm font-bold">تخمیر تمام شده؟</div>
-                  <div className={`text-xs mt-0.5 ${selectedWizardOverride === 'hydrometer_temp' ? 'text-rose-200' : 'text-stone-500'}`}>
+                  <div className={`text-xs mt-0.5 ${selectedWizardOverride === 'hydrometer_temp' ? 'text-white/80' : 'text-ink-soft'}`}>
                     هیدرومتر، دمای نمونه و بررسی خشکی
                   </div>
                 </div>
-                <Gauge className={`w-5 h-5 shrink-0 ${selectedWizardOverride === 'hydrometer_temp' ? 'text-amber-300' : 'text-rose-700'}`} />
+                <Gauge className={`w-5 h-5 shrink-0 ${selectedWizardOverride === 'hydrometer_temp' ? 'text-white' : 'text-wine'}`} />
               </button>
 
               <button
@@ -1061,17 +1064,17 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                 }}
                 className={`min-h-[64px] p-3.5 rounded-xl border text-right transition-all cursor-pointer flex items-center justify-between gap-3 ${
                   selectedWizardOverride === 'mlf_chromatography'
-                    ? 'bg-rose-900 text-white border-rose-950 shadow-sm'
-                    : 'bg-stone-50 hover:bg-rose-50/60 text-stone-900 border-stone-200'
+                    ? 'bg-wine text-white border-wine shadow-xs'
+                    : 'bg-paper hover:bg-stone-200/50 text-ink border-line'
                 }`}
               >
                 <div>
                   <div className="text-sm font-bold">مالولاکتیک شروع شده؟</div>
-                  <div className={`text-xs mt-0.5 ${selectedWizardOverride === 'mlf_chromatography' ? 'text-rose-200' : 'text-stone-500'}`}>
+                  <div className={`text-xs mt-0.5 ${selectedWizardOverride === 'mlf_chromatography' ? 'text-white/80' : 'text-ink-soft'}`}>
                     کروماتوگرافی کاغذی اسید مالیک
                   </div>
                 </div>
-                <Activity className={`w-5 h-5 shrink-0 ${selectedWizardOverride === 'mlf_chromatography' ? 'text-amber-300' : 'text-rose-700'}`} />
+                <Activity className={`w-5 h-5 shrink-0 ${selectedWizardOverride === 'mlf_chromatography' ? 'text-white' : 'text-wine'}`} />
               </button>
             </div>
           </div>
@@ -1085,23 +1088,23 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
           />
 
           {/* Category Filter Bar + Expand/Collapse All SOPs */}
-          <div className="bg-white p-4 rounded-2xl border border-stone-200 shadow-xs space-y-3">
+          <div className="bg-surface p-4 rounded-xl border border-line shadow-xs space-y-3">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-              <span className="text-xs font-bold text-stone-800">
+              <span className="text-xs font-bold text-ink">
                 فیلتر سریع ابزارهای محاسباتی و آزمایشگاهی:
               </span>
               <div className="flex items-center gap-2">
                 <button
                   type="button"
                   onClick={() => toggleAllSops(true)}
-                  className="px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-bold transition-colors cursor-pointer"
+                  className="px-2.5 py-1 rounded-lg bg-paper hover:bg-stone-200/60 text-ink border border-line text-xs font-bold transition-colors cursor-pointer"
                 >
                   باز کردن همه راهنماهای SOP
                 </button>
                 <button
                   type="button"
                   onClick={() => toggleAllSops(false)}
-                  className="px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-bold transition-colors cursor-pointer"
+                  className="px-2.5 py-1 rounded-lg bg-paper hover:bg-stone-200/60 text-ink border border-line text-xs font-bold transition-colors cursor-pointer"
                 >
                   بستن همه راهنماهای SOP
                 </button>
@@ -1114,10 +1117,10 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                   key={cat.id}
                   type="button"
                   onClick={() => setSelectedFilter(cat.id)}
-                  className={`px-3 py-1.5 rounded-lg font-bold shrink-0 transition-all cursor-pointer whitespace-nowrap ${
+                  className={`px-3 py-1.5 rounded-lg font-bold shrink-0 transition-all cursor-pointer whitespace-nowrap border ${
                     selectedFilter === cat.id
-                      ? 'bg-stone-900 text-white shadow-xs'
-                      : 'bg-stone-100 text-stone-700 hover:bg-stone-200'
+                      ? 'bg-wine text-white border-wine shadow-xs'
+                      : 'bg-paper text-ink-soft hover:text-ink border-line'
                   }`}
                 >
                   {cat.label}
@@ -1130,19 +1133,19 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
           {/* TOOL 1 (SOP-01): Hydrometer, Brix & Refractometer Calibration     */}
           {/* ----------------------------------------------------------------- */}
           {(selectedFilter === 'all' || selectedFilter === 'sop-01') && (
-            <div className="bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden">
-              <div className="p-4 sm:p-5 bg-stone-900 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="bg-surface rounded-xl border border-line shadow-xs overflow-hidden">
+              <div className="p-4 sm:p-5 bg-paper border-b border-line text-ink flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-rose-800 border border-rose-600 flex items-center justify-center text-white font-bold shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-surface border border-line flex items-center justify-center text-wine font-bold shrink-0">
                     <Gauge className="w-5 h-5" />
                   </div>
                   <div>
-                    <div className="flex items-center gap-2 text-xs text-rose-300 font-mono font-bold">
+                    <div className="flex items-center gap-2 text-xs text-ink-soft font-mono font-bold">
                       <span>SOP-TEST-01</span>
                       <span>·</span>
                       <span>SG_True(20°C) = SG_Measured + ΔSG</span>
                     </div>
-                    <h3 className="font-bold text-sm sm:text-base text-white mt-0.5">
+                    <h3 className="font-bold text-sm sm:text-base text-ink mt-0.5">
                       ۱. سنجش وزن مخصوص (SG)، بریکس و تصحیح دمایی هیدرومتر / رفرکتومتر
                     </h3>
                   </div>
@@ -1150,9 +1153,9 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                 <button
                   type="button"
                   onClick={() => toggleExpand('sop-01')}
-                  className="px-3 py-1.5 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs font-bold flex items-center gap-1.5 self-start sm:self-center cursor-pointer transition-colors whitespace-nowrap"
+                  className="px-3 py-1.5 rounded-xl bg-surface hover:bg-stone-200/60 text-ink border border-line text-xs font-bold flex items-center gap-1.5 self-start sm:self-center cursor-pointer transition-colors whitespace-nowrap"
                 >
-                  <BookOpen className="w-3.5 h-3.5 text-rose-400" />
+                  <BookOpen className="w-3.5 h-3.5 text-wine" />
                   <span>{expandedTests['sop-01'] ? 'بستن راهنمای آزمایشگاهی' : 'نمایش راهنمای گام‌به‌گام آزمایشگاهی و نکات علمی'}</span>
                   {expandedTests['sop-01'] ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                 </button>
@@ -1194,16 +1197,16 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                       </div>
                     </div>
 
-                    <div className="p-3 bg-stone-900 text-white rounded-xl space-y-1.5">
+                    <div className="p-3 bg-surface border border-line text-ink rounded-xl space-y-1.5">
                       <div className="flex items-center justify-between">
-                        <span className="text-stone-300">ضریب تصحیح انبساط دمایی (ΔSG):</span>
-                        <span className="font-mono tabular-nums font-bold text-amber-400">
+                        <span className="text-ink-soft">ضریب تصحیح انبساط دمایی (ΔSG):</span>
+                        <span className="font-mono tabular-nums font-bold text-ink">
                           {hydroCorrection.delta >= 0 ? `+${hydroCorrection.delta}` : hydroCorrection.delta}
                         </span>
                       </div>
-                      <div className="flex items-center justify-between border-t border-stone-700 pt-1.5">
-                        <span className="font-bold text-white">وزن مخصوص واقعی (SG در ۲۰°C):</span>
-                        <span className="text-lg font-bold font-mono tabular-nums text-emerald-400">
+                      <div className="flex items-center justify-between border-t border-line pt-1.5">
+                        <span className="font-bold text-ink">وزن مخصوص واقعی (SG در ۲۰°C):</span>
+                        <span className="text-lg font-bold font-mono tabular-nums text-wine">
                           {hydroCorrection.trueSG.toFixed(4)}
                         </span>
                       </div>
@@ -1229,9 +1232,9 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                     <button
                       type="button"
                       onClick={handleSaveHydro}
-                      className="w-full py-2 px-3 rounded-lg bg-stone-800 hover:bg-stone-900 text-white text-xs font-bold transition-colors cursor-pointer flex items-center justify-center gap-1.5"
+                      className="w-full py-2 px-3 rounded-lg bg-wine hover:opacity-95 text-white text-xs font-bold transition-colors cursor-pointer flex items-center justify-center gap-1.5"
                     >
-                      <Save className="w-3.5 h-3.5 text-emerald-400" />
+                      <Save className="w-3.5 h-3.5 text-white" />
                       <span>ذخیره نتیجه هیدرومتر در پایگاه داده</span>
                     </button>
                   </div>
@@ -1269,22 +1272,22 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                       </div>
                     </div>
 
-                    <div className="p-3 bg-stone-900 text-white rounded-xl space-y-1.5">
+                    <div className="p-3 bg-surface border border-line text-ink rounded-xl space-y-1.5">
                       <div className="flex items-center justify-between">
-                        <span className="text-stone-300">بریکس واقعی بدون اثر الکل:</span>
-                        <span className="font-mono tabular-nums font-bold text-amber-400">
+                        <span className="text-ink-soft">بریکس واقعی بدون اثر الکل:</span>
+                        <span className="font-mono tabular-nums font-bold text-ink">
                           {refractCorrection.trueBrix}° Brix
                         </span>
                       </div>
-                      <div className="flex items-center justify-between border-t border-stone-700 pt-1.5">
-                        <span className="font-bold text-white">وزن مخصوص واقعی (SG):</span>
-                        <span className="font-mono tabular-nums font-bold text-emerald-400">
+                      <div className="flex items-center justify-between border-t border-line pt-1.5">
+                        <span className="font-bold text-ink">وزن مخصوص واقعی (SG):</span>
+                        <span className="font-mono tabular-nums font-bold text-wine">
                           {refractCorrection.trueSG.toFixed(4)}
                         </span>
                       </div>
-                      <div className="flex items-center justify-between border-t border-stone-700 pt-1.5">
-                        <span className="text-stone-300">الکل تولید شده تا این لحظه (ABV):</span>
-                        <span className="font-mono tabular-nums font-bold text-rose-300">
+                      <div className="flex items-center justify-between border-t border-line pt-1.5">
+                        <span className="text-ink-soft">الکل تولید شده تا این لحظه (ABV):</span>
+                        <span className="font-mono tabular-nums font-bold text-ink">
                           {refractCorrection.abv}٪
                         </span>
                       </div>
@@ -1298,9 +1301,9 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                     <button
                       type="button"
                       onClick={handleSaveRefract}
-                      className="w-full py-2 px-3 rounded-lg bg-stone-800 hover:bg-stone-900 text-white text-xs font-bold transition-colors cursor-pointer flex items-center justify-center gap-1.5"
+                      className="w-full py-2 px-3 rounded-lg bg-wine hover:opacity-95 text-white text-xs font-bold transition-colors cursor-pointer flex items-center justify-center gap-1.5"
                     >
-                      <Save className="w-3.5 h-3.5 text-emerald-400" />
+                      <Save className="w-3.5 h-3.5 text-white" />
                       <span>ذخیره نتیجه رفرکتومتر در پایگاه داده</span>
                     </button>
                   </div>
@@ -1415,19 +1418,19 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
           {/* TOOL 2 (SOP-02): Titratable Acidity (TA) & Tartaric Addition      */}
           {/* ----------------------------------------------------------------- */}
           {(selectedFilter === 'all' || selectedFilter === 'sop-02') && (
-            <div className="bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden">
-              <div className="p-4 sm:p-5 bg-stone-900 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="bg-surface rounded-xl border border-line shadow-xs overflow-hidden">
+              <div className="p-4 sm:p-5 bg-paper border-b border-line text-ink flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-amber-700 border border-amber-500 flex items-center justify-center text-white font-bold shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-surface border border-line flex items-center justify-center text-wine font-bold shrink-0">
                     <FlaskConical className="w-5 h-5" />
                   </div>
                   <div>
-                    <div className="flex items-center gap-2 text-xs text-amber-300 font-mono font-bold">
+                    <div className="flex items-center gap-2 text-xs text-ink-soft font-mono font-bold">
                       <span>SOP-TEST-02</span>
                       <span>·</span>
                       <span>TA (g/L) = (V_NaOH × N × 75) / V_sample</span>
                     </div>
-                    <h3 className="font-bold text-sm sm:text-base text-white mt-0.5">
+                    <h3 className="font-bold text-sm sm:text-base text-ink mt-0.5">
                       ۲. تیتراسیون اسیدیته کل قابل تیتر (TA) و محاسبه اسید تارتاریک تکمیلی
                     </h3>
                   </div>
@@ -1435,9 +1438,9 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                 <button
                   type="button"
                   onClick={() => toggleExpand('sop-02')}
-                  className="px-3 py-1.5 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs font-bold flex items-center gap-1.5 self-start sm:self-center cursor-pointer transition-colors whitespace-nowrap"
+                  className="px-3 py-1.5 rounded-xl bg-surface hover:bg-stone-200/60 text-ink border border-line text-xs font-bold flex items-center gap-1.5 self-start sm:self-center cursor-pointer transition-colors whitespace-nowrap"
                 >
-                  <BookOpen className="w-3.5 h-3.5 text-amber-400" />
+                  <BookOpen className="w-3.5 h-3.5 text-wine" />
                   <span>{expandedTests['sop-02'] ? 'بستن راهنمای آزمایشگاهی' : 'نمایش راهنمای گام‌به‌گام آزمایشگاهی و نکات علمی'}</span>
                   {expandedTests['sop-02'] ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                 </button>
@@ -1532,22 +1535,22 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                   )}
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="p-4 bg-stone-900 text-white rounded-xl space-y-2">
+                    <div className="p-4 bg-surface border border-line text-ink rounded-xl space-y-2">
                       <div className="flex items-center justify-between">
-                        <span className="text-stone-300 text-xs">اسیدیته کل محاسبه شده (TA):</span>
-                        <span className="text-xl font-bold font-mono tabular-nums text-amber-400">
+                        <span className="text-ink-soft text-xs">اسیدیته کل محاسبه شده (TA):</span>
+                        <span className="text-xl font-bold font-mono tabular-nums text-wine">
                           {currentTA} g/L
                         </span>
                       </div>
-                      <div className="flex items-center justify-between border-t border-stone-700 pt-2">
-                        <span className="text-stone-300 text-xs">ارزیابی وضعیت:</span>
+                      <div className="flex items-center justify-between border-t border-line pt-2">
+                        <span className="text-ink-soft text-xs">ارزیابی وضعیت:</span>
                         <span
-                          className={`text-xs font-bold px-2.5 py-0.5 rounded ${
+                          className={`text-xs font-bold px-2.5 py-0.5 rounded border ${
                             currentTA >= 5.5 && currentTA <= 7.2
-                              ? 'bg-emerald-900 text-emerald-300'
+                              ? 'bg-emerald-50 text-emerald-900 border-emerald-200'
                               : currentTA < 5.5
-                              ? 'bg-rose-900 text-rose-200'
-                              : 'bg-amber-900 text-amber-200'
+                              ? 'bg-rose-50 text-rose-900 border-rose-200'
+                              : 'bg-amber-50 text-amber-900 border-amber-200'
                           }`}
                         >
                           {currentTA >= 5.5 && currentTA <= 7.2
@@ -1579,9 +1582,9 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                   <button
                     type="button"
                     onClick={handleSaveTA}
-                    className="w-full py-2 px-3 rounded-lg bg-stone-800 hover:bg-stone-900 text-white text-xs font-bold transition-colors cursor-pointer flex items-center justify-center gap-1.5"
+                    className="w-full py-2 px-3 rounded-lg bg-wine hover:opacity-95 text-white text-xs font-bold transition-colors cursor-pointer flex items-center justify-center gap-1.5"
                   >
-                    <Save className="w-3.5 h-3.5 text-emerald-400" />
+                    <Save className="w-3.5 h-3.5 text-white" />
                     <span>ذخیره نتیجه تیتراسیون TA و اسید تارتاریک در پایگاه داده</span>
                   </button>
                 </div>
@@ -1660,19 +1663,19 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
           {/* TOOL 3 (SOP-03): pH Meter Calibration & Bidirectional Adjustment   */}
           {/* ----------------------------------------------------------------- */}
           {(selectedFilter === 'all' || selectedFilter === 'sop-03') && (
-            <div className="bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden">
-              <div className="p-4 sm:p-5 bg-stone-900 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="bg-surface rounded-xl border border-line shadow-xs overflow-hidden">
+              <div className="p-4 sm:p-5 bg-paper border-b border-line text-ink flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-emerald-700 border border-emerald-500 flex items-center justify-center text-white font-bold shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-surface border border-line flex items-center justify-center text-wine font-bold shrink-0">
                     <Gauge className="w-5 h-5" />
                   </div>
                   <div>
-                    <div className="flex items-center gap-2 text-xs text-emerald-300 font-mono font-bold">
+                    <div className="flex items-center gap-2 text-xs text-ink-soft font-mono font-bold">
                       <span>SOP-TEST-03</span>
                       <span>·</span>
                       <span>Δ0.1 pH / Δ1.0 g/L TA: 1.0 g/L Tartaric | 1.33 g/L KHCO3</span>
                     </div>
-                    <h3 className="font-bold text-sm sm:text-base text-white mt-0.5">
+                    <h3 className="font-bold text-sm sm:text-base text-ink mt-0.5">
                       ۳. کالیبراسیون pH سنج و محاسبه دوطرفه اسیدزایی (تارتاریک) یا اسیدزدایی استوکیومتری (KHCO3 / CaCO3)
                     </h3>
                   </div>
@@ -1680,9 +1683,9 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                 <button
                   type="button"
                   onClick={() => toggleExpand('sop-03')}
-                  className="px-3 py-1.5 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs font-bold flex items-center gap-1.5 self-start sm:self-center cursor-pointer transition-colors whitespace-nowrap"
+                  className="px-3 py-1.5 rounded-xl bg-surface hover:bg-stone-200/60 text-ink border border-line text-xs font-bold flex items-center gap-1.5 self-start sm:self-center cursor-pointer transition-colors whitespace-nowrap"
                 >
-                  <BookOpen className="w-3.5 h-3.5 text-emerald-400" />
+                  <BookOpen className="w-3.5 h-3.5 text-wine" />
                   <span>{expandedTests['sop-03'] ? 'بستن راهنمای آزمایشگاهی' : 'نمایش راهنمای گام‌به‌گام آزمایشگاهی و نکات علمی'}</span>
                   {expandedTests['sop-03'] ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                 </button>
@@ -1749,18 +1752,18 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                   )}
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="p-4 bg-stone-900 text-white rounded-xl space-y-2">
+                    <div className="p-4 bg-surface border border-line text-ink rounded-xl space-y-2">
                       <div className="flex items-center justify-between">
-                        <span className="text-stone-300 text-xs">ارزیابی ریسک میکروبی و تخمیری:</span>
+                        <span className="text-ink-soft text-xs">ارزیابی ریسک میکروبی و تخمیری:</span>
                         <span
-                          className={`text-xs font-bold px-2 py-0.5 rounded ${
+                          className={`text-xs font-bold px-2 py-0.5 rounded border ${
                             samplePH < 3.25
-                              ? 'bg-amber-900 text-amber-200'
+                              ? 'bg-amber-50 text-amber-900 border-amber-200'
                               : samplePH <= 3.55
-                              ? 'bg-emerald-900 text-emerald-200'
+                              ? 'bg-emerald-50 text-emerald-900 border-emerald-200'
                               : samplePH <= 3.65
-                              ? 'bg-amber-900 text-amber-200'
-                              : 'bg-rose-900 text-rose-200'
+                              ? 'bg-amber-50 text-amber-900 border-amber-200'
+                              : 'bg-rose-50 text-rose-900 border-rose-200'
                           }`}
                         >
                           {samplePH < 3.25
@@ -1772,11 +1775,11 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                             : 'بحرانی قرمز: ریسک بالای فساد میکروبی'}
                         </span>
                       </div>
-                      <div className="flex items-center justify-between border-t border-stone-700 pt-2 text-xs">
-                        <span className="text-stone-300">
+                      <div className="flex items-center justify-between border-t border-line pt-2 text-xs">
+                        <span className="text-ink-soft">
                           {phRiseNeeded > 0 ? 'افزایش pH مورد نیاز:' : 'افت pH مورد نیاز:'}
                         </span>
-                        <span className="font-mono tabular-nums font-bold text-emerald-400">
+                        <span className="font-mono tabular-nums font-bold text-wine">
                           {(phRiseNeeded > 0 ? phRiseNeeded : phDropNeeded).toFixed(2)} واحد
                         </span>
                       </div>
@@ -1855,9 +1858,9 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                   <button
                     type="button"
                     onClick={handleSavePH}
-                    className="w-full py-2 px-3 rounded-lg bg-stone-800 hover:bg-stone-900 text-white text-xs font-bold transition-colors cursor-pointer flex items-center justify-center gap-1.5"
+                    className="w-full py-2 px-3 rounded-lg bg-wine hover:opacity-95 text-white text-xs font-bold transition-colors cursor-pointer flex items-center justify-center gap-1.5"
                   >
-                    <Save className="w-3.5 h-3.5 text-emerald-400" />
+                    <Save className="w-3.5 h-3.5 text-white" />
                     <span>ذخیره محاسبه تنظیم pH در پایگاه داده</span>
                   </button>
                 </div>
@@ -1936,19 +1939,19 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
           {/* TOOL 4 (SOP-04): Free SO2 Ripper, Molecular SO2 & KMS Calculator   */}
           {/* ----------------------------------------------------------------- */}
           {(selectedFilter === 'all' || selectedFilter === 'sop-04') && (
-            <div className="bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden">
-              <div className="p-4 sm:p-5 bg-stone-900 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="bg-surface rounded-xl border border-line shadow-xs overflow-hidden">
+              <div className="p-4 sm:p-5 bg-paper border-b border-line text-ink flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-rose-700 border border-rose-500 flex items-center justify-center text-white font-bold shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-surface border border-line flex items-center justify-center text-wine font-bold shrink-0">
                     <FlaskConical className="w-5 h-5" />
                   </div>
                   <div>
-                    <div className="flex items-center gap-2 text-xs text-rose-300 font-mono font-bold">
+                    <div className="flex items-center gap-2 text-xs text-ink-soft font-mono font-bold">
                       <span>SOP-TEST-04</span>
                       <span>·</span>
                       <span>KMS (g) = (ΔSO2 × V) / 570 (بازده ۵۷٪ سولفیت فعال)</span>
                     </div>
-                    <h3 className="font-bold text-sm sm:text-base text-white mt-0.5">
+                    <h3 className="font-bold text-sm sm:text-base text-ink mt-0.5">
                       ۴. سنجش سولفیت آزاد به روش ریپر، SO2 مولکولی و محاسبه‌گر متابی‌سولفیت (KMS)
                     </h3>
                   </div>
@@ -1956,9 +1959,9 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                 <button
                   type="button"
                   onClick={() => toggleExpand('sop-04')}
-                  className="px-3 py-1.5 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs font-bold flex items-center gap-1.5 self-start sm:self-center cursor-pointer transition-colors whitespace-nowrap"
+                  className="px-3 py-1.5 rounded-xl bg-surface hover:bg-stone-200/60 text-ink border border-line text-xs font-bold flex items-center gap-1.5 self-start sm:self-center cursor-pointer transition-colors whitespace-nowrap"
                 >
-                  <BookOpen className="w-3.5 h-3.5 text-rose-400" />
+                  <BookOpen className="w-3.5 h-3.5 text-wine" />
                   <span>{expandedTests['sop-04'] ? 'بستن راهنمای آزمایشگاهی' : 'نمایش راهنمای گام‌به‌گام آزمایشگاهی و نکات علمی'}</span>
                   {expandedTests['sop-04'] ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                 </button>
@@ -2102,20 +2105,20 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                   )}
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="p-3.5 bg-stone-900 text-white rounded-xl space-y-1">
-                      <span className="text-stone-400 text-xs">سولفیت آزاد مبنا:</span>
-                      <div className="text-xl font-bold font-mono tabular-nums text-rose-300">
+                    <div className="p-3.5 bg-surface border border-line text-ink rounded-xl space-y-1">
+                      <span className="text-ink-soft text-xs">سولفیت آزاد مبنا:</span>
+                      <div className="text-xl font-bold font-mono tabular-nums text-ink">
                         {activeCurrentSO2} ppm (mg/L)
                       </div>
                     </div>
 
-                    <div className="p-3.5 bg-stone-900 text-white rounded-xl space-y-1">
-                      <span className="text-stone-400 text-xs">سولفیت مولکولی فعال (در pH {winePHForSO2}):</span>
+                    <div className="p-3.5 bg-surface border border-line text-ink rounded-xl space-y-1">
+                      <span className="text-ink-soft text-xs">سولفیت مولکولی فعال (در pH {winePHForSO2}):</span>
                       <div className="flex items-center justify-between">
-                        <span className="text-xl font-bold font-mono tabular-nums text-emerald-400">
+                        <span className="text-xl font-bold font-mono tabular-nums text-wine">
                           {calculatedMolSO2} mg/L
                         </span>
-                        <span className="text-xs text-stone-400">(هدف: 0.6–0.8 mg/L)</span>
+                        <span className="text-xs text-ink-soft">(هدف: 0.6–0.8 mg/L)</span>
                       </div>
                     </div>
 
@@ -2252,9 +2255,9 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                   <button
                     type="button"
                     onClick={handleSaveKMS}
-                    className="w-full py-2 px-3 rounded-lg bg-stone-800 hover:bg-stone-900 text-white text-xs font-bold transition-colors cursor-pointer flex items-center justify-center gap-1.5"
+                    className="w-full py-2 px-3 rounded-lg bg-wine hover:opacity-95 text-white text-xs font-bold transition-colors cursor-pointer flex items-center justify-center gap-1.5"
                   >
-                    <Save className="w-3.5 h-3.5 text-emerald-400" />
+                    <Save className="w-3.5 h-3.5 text-white" />
                     <span>ذخیره نتیجه KMS و SO2 در پایگاه داده</span>
                   </button>
                 </div>
@@ -2331,19 +2334,19 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
           {/* TOOL 5 (SOP-05): YAN Budget & 3-Stage SNA Calculator              */}
           {/* ----------------------------------------------------------------- */}
           {(selectedFilter === 'all' || selectedFilter === 'sop-05') && (
-            <div className="bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden">
-              <div className="p-4 sm:p-5 bg-stone-900 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="bg-surface rounded-xl border border-line shadow-xs overflow-hidden">
+              <div className="p-4 sm:p-5 bg-paper border-b border-line text-ink flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-purple-800 border border-purple-500 flex items-center justify-center text-white font-bold shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-surface border border-line flex items-center justify-center text-wine font-bold shrink-0">
                     <Sparkles className="w-5 h-5" />
                   </div>
                   <div>
-                    <div className="flex items-center gap-2 text-xs text-purple-300 font-mono font-bold">
+                    <div className="flex items-center gap-2 text-xs text-ink-soft font-mono font-bold">
                       <span>SOP-TEST-05</span>
                       <span>·</span>
                       <span>Sugar(g/L) = Brix × 10 × SG | Target YAN = Sugar × 1.05</span>
                     </div>
-                    <h3 className="font-bold text-sm sm:text-base text-white mt-0.5">
+                    <h3 className="font-bold text-sm sm:text-base text-ink mt-0.5">
                       ۵. بودجه‌بندی نیتروژن قابل جذب (YAN) و برنامه تغذیه ۳ مرحله‌ای (SNA)
                     </h3>
                   </div>
@@ -2353,7 +2356,7 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                     href="https://pubchem.ncbi.nlm.nih.gov/compound/24261"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-2.5 py-1.5 rounded-xl bg-stone-800 hover:bg-stone-700 text-purple-300 text-xs font-mono flex items-center gap-1 transition-colors whitespace-nowrap"
+                    className="px-2.5 py-1.5 rounded-xl bg-surface hover:bg-stone-200/60 text-ink border border-line text-xs font-mono flex items-center gap-1 transition-colors whitespace-nowrap"
                     title="مشاهده اطلاعات ساختاری DAP در PubChem"
                   >
                     <span>PubChem CID: 24261 (DAP)</span>
@@ -2362,9 +2365,9 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                   <button
                     type="button"
                     onClick={() => toggleExpand('sop-05')}
-                    className="px-3 py-1.5 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs font-bold flex items-center gap-1.5 cursor-pointer transition-colors whitespace-nowrap"
+                    className="px-3 py-1.5 rounded-xl bg-surface hover:bg-stone-200/60 text-ink border border-line text-xs font-bold flex items-center gap-1.5 cursor-pointer transition-colors whitespace-nowrap"
                   >
-                    <BookOpen className="w-3.5 h-3.5 text-purple-400" />
+                    <BookOpen className="w-3.5 h-3.5 text-wine" />
                     <span>{expandedTests['sop-05'] ? 'بستن راهنمای آزمایشگاهی' : 'نمایش راهنمای گام‌به‌گام آزمایشگاهی و نکات علمی'}</span>
                     {expandedTests['sop-05'] ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                   </button>
@@ -2458,28 +2461,28 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                     (mashL) => setSnaVolume(mashL)
                   )}
 
-                  <div className="grid grid-cols-1 sm:grid-cols-4 gap-2 p-3 bg-stone-900 text-white rounded-xl text-xs">
+                  <div className="grid grid-cols-1 sm:grid-cols-4 gap-2 p-3 bg-surface border border-line text-ink rounded-xl text-xs">
                     <div className="text-center p-1">
-                      <span className="block text-xs text-stone-400">وزن مخصوص اولیه و قند واقعی (% w/v):</span>
-                      <strong className="font-mono tabular-nums text-sm text-white">
+                      <span className="block text-xs text-ink-soft">وزن مخصوص اولیه و قند واقعی (% w/v):</span>
+                      <strong className="font-mono tabular-nums text-sm text-ink">
                         SG {snaResults.initialSG} · {snaResults.sugarGPerL} g/L
                       </strong>
                     </div>
-                    <div className="text-center p-1 sm:border-x border-stone-700">
-                      <span className="block text-xs text-stone-400">کل YAN هدف / کمبود:</span>
-                      <strong className="font-mono tabular-nums text-sm text-amber-400">
+                    <div className="text-center p-1 sm:border-x border-line">
+                      <span className="block text-xs text-ink-soft">کل YAN هدف / کمبود:</span>
+                      <strong className="font-mono tabular-nums text-sm text-wine">
                         {snaResults.targetYAN} / کمبود {snaResults.neededYAN} mg/L
                       </strong>
                     </div>
-                    <div className="text-center p-1 sm:border-l border-stone-700">
-                      <span className="block text-xs text-stone-400">نیتروژن شیمیایی تجمعی:</span>
-                      <strong className="font-mono tabular-nums text-sm text-purple-300">
+                    <div className="text-center p-1 sm:border-l border-line">
+                      <span className="block text-xs text-ink-soft">نیتروژن شیمیایی تجمعی:</span>
+                      <strong className="font-mono tabular-nums text-sm text-ink">
                         {snaResults.suppliedChemicalYAN_mgL} mg N/L
                       </strong>
                     </div>
                     <div className="text-center p-1">
-                      <span className="block text-xs text-stone-400">معادل زیستی لالمند (Bio-Eq):</span>
-                      <strong className="font-mono tabular-nums text-sm text-emerald-400">
+                      <span className="block text-xs text-ink-soft">معادل زیستی لالمند (Bio-Eq):</span>
+                      <strong className="font-mono tabular-nums text-sm text-ink">
                         {snaResults.suppliedBioEquivalentYAN_mgL} mg N eq/L
                       </strong>
                     </div>
@@ -2611,9 +2614,9 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                   <button
                     type="button"
                     onClick={handleSaveYAN}
-                    className="w-full py-2 px-3 rounded-lg bg-stone-800 hover:bg-stone-900 text-white text-xs font-bold transition-colors cursor-pointer flex items-center justify-center gap-1.5"
+                    className="w-full py-2 px-3 rounded-lg bg-wine hover:opacity-95 text-white text-xs font-bold transition-colors cursor-pointer flex items-center justify-center gap-1.5"
                   >
-                    <Save className="w-3.5 h-3.5 text-emerald-400" />
+                    <Save className="w-3.5 h-3.5 text-white" />
                     <span>ذخیره برنامه تغذیه نیتروژن YAN در پایگاه داده</span>
                   </button>
                 </div>
@@ -2692,19 +2695,19 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
           {/* TOOL 6 (SOP-06): Cap Temperature & Thermal Cooling Calculator     */}
           {/* ----------------------------------------------------------------- */}
           {(selectedFilter === 'all' || selectedFilter === 'sop-06') && (
-            <div className="bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden">
-              <div className="p-4 sm:p-5 bg-stone-900 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="bg-surface rounded-xl border border-line shadow-xs overflow-hidden">
+              <div className="p-4 sm:p-5 bg-paper border-b border-line text-ink flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-rose-600 border border-rose-500 flex items-center justify-center text-white font-bold shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-surface border border-line flex items-center justify-center text-wine font-bold shrink-0">
                     <Thermometer className="w-5 h-5" />
                   </div>
                   <div>
-                    <div className="flex items-center gap-2 text-xs text-rose-300 font-mono font-bold">
+                    <div className="flex items-center gap-2 text-xs text-ink-soft font-mono font-bold">
                       <span>SOP-TEST-06</span>
                       <span>·</span>
                       <span>Q = m × Cp × ΔT (Cp = 3.9 kJ/kg·°C)</span>
                     </div>
-                    <h3 className="font-bold text-sm sm:text-base text-white mt-0.5">
+                    <h3 className="font-bold text-sm sm:text-base text-ink mt-0.5">
                       ۶. پایش حرارتی مغز کلاهک و محاسبه یخ خشک یا بطری یخ خنک‌کننده
                     </h3>
                   </div>
@@ -2712,9 +2715,9 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                 <button
                   type="button"
                   onClick={() => toggleExpand('sop-06')}
-                  className="px-3 py-1.5 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs font-bold flex items-center gap-1.5 self-start sm:self-center cursor-pointer transition-colors whitespace-nowrap"
+                  className="px-3 py-1.5 rounded-xl bg-surface hover:bg-stone-200/60 text-ink border border-line text-xs font-bold flex items-center gap-1.5 self-start sm:self-center cursor-pointer transition-colors whitespace-nowrap"
                 >
-                  <BookOpen className="w-3.5 h-3.5 text-rose-400" />
+                  <BookOpen className="w-3.5 h-3.5 text-wine" />
                   <span>{expandedTests['sop-06'] ? 'بستن راهنمای آزمایشگاهی' : 'نمایش راهنمای گام‌به‌گام آزمایشگاهی و نکات علمی'}</span>
                   {expandedTests['sop-06'] ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                 </button>
@@ -2763,15 +2766,15 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="p-4 bg-stone-900 text-white rounded-xl space-y-1">
-                      <span className="text-stone-400 text-xs">وضعیت ایمنی حرارتی کلاهک:</span>
+                    <div className="p-4 bg-surface border border-line text-ink rounded-xl space-y-1">
+                      <span className="text-ink-soft text-xs">وضعیت ایمنی حرارتی کلاهک:</span>
                       <div
                         className={`text-sm sm:text-base font-bold ${
                           capTempCurrent >= 29.5
-                            ? 'text-rose-400'
+                            ? 'text-danger'
                             : capTempCurrent >= 28.5
-                            ? 'text-amber-400'
-                            : 'text-emerald-400'
+                            ? 'text-amber-800'
+                            : 'text-emerald-800'
                         }`}
                       >
                         {capTempCurrent >= 29.5
@@ -2810,9 +2813,9 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                   <button
                     type="button"
                     onClick={handleSaveCooling}
-                    className="w-full py-2 px-3 rounded-lg bg-stone-800 hover:bg-stone-900 text-white text-xs font-bold transition-colors cursor-pointer flex items-center justify-center gap-1.5"
+                    className="w-full py-2 px-3 rounded-lg bg-wine hover:opacity-95 text-white text-xs font-bold transition-colors cursor-pointer flex items-center justify-center gap-1.5"
                   >
-                    <Save className="w-3.5 h-3.5 text-emerald-400" />
+                    <Save className="w-3.5 h-3.5 text-white" />
                     <span>ذخیره محاسبه خنک‌سازی کلاهک در پایگاه داده</span>
                   </button>
                 </div>
@@ -2853,19 +2856,19 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
           {/* TOOL 7 (SOP-07): Dryness & Residual Sugar Verification            */}
           {/* ----------------------------------------------------------------- */}
           {(selectedFilter === 'all' || selectedFilter === 'sop-07') && (
-            <div className="bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden">
-              <div className="p-4 sm:p-5 bg-stone-900 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="bg-surface rounded-xl border border-line shadow-xs overflow-hidden">
+              <div className="p-4 sm:p-5 bg-paper border-b border-line text-ink flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-teal-700 border border-teal-500 flex items-center justify-center text-white font-bold shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-surface border border-line flex items-center justify-center text-wine font-bold shrink-0">
                     <CheckCircle2 className="w-5 h-5" />
                   </div>
                   <div>
-                    <div className="flex items-center gap-2 text-xs text-teal-300 font-mono font-bold">
+                    <div className="flex items-center gap-2 text-xs text-ink-soft font-mono font-bold">
                       <span>SOP-TEST-07</span>
                       <span>·</span>
                       <span>SG(20°C) ≤ 0.993 &amp; Residual Sugar &lt; 2.0 g/L</span>
                     </div>
-                    <h3 className="font-bold text-sm sm:text-base text-white mt-0.5">
+                    <h3 className="font-bold text-sm sm:text-base text-ink mt-0.5">
                       ۷. تست خشکی نهایی شراب (Dryness) و پایش قندهای احیاکننده (Clinitest)
                     </h3>
                   </div>
@@ -2873,9 +2876,9 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                 <button
                   type="button"
                   onClick={() => toggleExpand('sop-07')}
-                  className="px-3 py-1.5 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs font-bold flex items-center gap-1.5 self-start sm:self-center cursor-pointer transition-colors whitespace-nowrap"
+                  className="px-3 py-1.5 rounded-xl bg-surface hover:bg-stone-200/60 text-ink border border-line text-xs font-bold flex items-center gap-1.5 self-start sm:self-center cursor-pointer transition-colors whitespace-nowrap"
                 >
-                  <BookOpen className="w-3.5 h-3.5 text-teal-400" />
+                  <BookOpen className="w-3.5 h-3.5 text-wine" />
                   <span>{expandedTests['sop-07'] ? 'بستن راهنمای آزمایشگاهی' : 'نمایش راهنمای گام‌به‌گام آزمایشگاهی و نکات علمی'}</span>
                   {expandedTests['sop-07'] ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                 </button>
@@ -2924,16 +2927,16 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                     </div>
                   </div>
 
-                  <div className="p-4 bg-stone-900 text-white rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div className="p-4 bg-surface border border-line text-ink rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div className="space-y-1">
-                      <span className="text-xs text-stone-400">حکم آزمایشگاهی پایان تخمیر الکلی:</span>
-                      <div className={`text-sm sm:text-base font-bold ${isDryConfirmed ? 'text-emerald-400' : 'text-amber-400'}`}>
+                      <span className="text-xs text-ink-soft">حکم آزمایشگاهی پایان تخمیر الکلی:</span>
+                      <div className={`text-sm sm:text-base font-bold ${isDryConfirmed ? 'text-emerald-800' : 'text-amber-800'}`}>
                         {isDryConfirmed
                           ? '● خشکی مطلق تایید شد (SG ≤ 0.995 و قند < 2.0 g/L) — مجاز به ۳۰ ساعت سرمایش ۱۵ درجه و سیفون روز دهم'
                           : '▲ تخمیر هنوز به خشکی مطلق نرسیده است — دمای ۲۲–۲۳ درجه حفظ شود و از سرمایش یا سولفیت‌زنی خودداری گردد'}
                       </div>
                     </div>
-                    <span className="font-mono tabular-nums text-xs px-3 py-1 rounded-lg bg-stone-800 border border-stone-700 shrink-0">
+                    <span className="font-mono tabular-nums text-xs px-3 py-1 rounded-lg bg-paper border border-line text-ink shrink-0">
                       RS: {drynessRS} g/L
                     </span>
                   </div>
@@ -2941,9 +2944,9 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                   <button
                     type="button"
                     onClick={handleSaveDryness}
-                    className="w-full py-2 px-3 rounded-lg bg-stone-800 hover:bg-stone-900 text-white text-xs font-bold transition-colors cursor-pointer flex items-center justify-center gap-1.5"
+                    className="w-full py-2 px-3 rounded-lg bg-wine hover:opacity-95 text-white text-xs font-bold transition-colors cursor-pointer flex items-center justify-center gap-1.5"
                   >
-                    <Save className="w-3.5 h-3.5 text-emerald-400" />
+                    <Save className="w-3.5 h-3.5 text-white" />
                     <span>ذخیره نتیجه تست خشکی نهایی در پایگاه داده</span>
                   </button>
                 </div>
@@ -2979,19 +2982,19 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
           {/* TOOL 8 (SOP-08): Bench Fining (Bentonite) & Copper Sulfate Stock  */}
           {/* ----------------------------------------------------------------- */}
           {(selectedFilter === 'all' || selectedFilter === 'sop-08') && (
-            <div className="bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden">
-              <div className="p-4 sm:p-5 bg-stone-900 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="bg-surface rounded-xl border border-line shadow-xs overflow-hidden">
+              <div className="p-4 sm:p-5 bg-paper border-b border-line text-ink flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-indigo-700 border border-indigo-500 flex items-center justify-center text-white font-bold shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-surface border border-line flex items-center justify-center text-wine font-bold shrink-0">
                     <Layers className="w-5 h-5" />
                   </div>
                   <div>
-                    <div className="flex items-center gap-2 text-xs text-indigo-300 font-mono font-bold">
+                    <div className="flex items-center gap-2 text-xs text-ink-soft font-mono font-bold">
                       <span>SOP-TEST-08</span>
                       <span>·</span>
                       <span>Bench Fining &amp; CuSO4 Stock #2 (1.0 mg/mL)</span>
                     </div>
-                    <h3 className="font-bold text-sm sm:text-base text-white mt-0.5">
+                    <h3 className="font-bold text-sm sm:text-base text-ink mt-0.5">
                       ۸. تست سریالی فینینگ بنتونیت و محاسبه‌گر محلول استوک سولفات مس (حذف H2S)
                     </h3>
                   </div>
@@ -2999,9 +3002,9 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                 <button
                   type="button"
                   onClick={() => toggleExpand('sop-08')}
-                  className="px-3 py-1.5 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs font-bold flex items-center gap-1.5 self-start sm:self-center cursor-pointer transition-colors whitespace-nowrap"
+                  className="px-3 py-1.5 rounded-xl bg-surface hover:bg-stone-200/60 text-ink border border-line text-xs font-bold flex items-center gap-1.5 self-start sm:self-center cursor-pointer transition-colors whitespace-nowrap"
                 >
-                  <BookOpen className="w-3.5 h-3.5 text-indigo-400" />
+                  <BookOpen className="w-3.5 h-3.5 text-wine" />
                   <span>{expandedTests['sop-08'] ? 'بستن راهنمای آزمایشگاهی' : 'نمایش راهنمای گام‌به‌گام آزمایشگاهی و نکات علمی'}</span>
                   {expandedTests['sop-08'] ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                 </button>
@@ -3042,14 +3045,14 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                           />
                         </div>
                       </div>
-                      <div className="p-3 bg-stone-900 text-white rounded-xl space-y-1">
+                      <div className="p-3 bg-paper border border-line text-ink rounded-xl space-y-1">
                         <div className="flex justify-between">
-                          <span className="text-stone-300">وزن پودر خشک بنتونیت:</span>
-                          <strong className="font-mono tabular-nums text-base text-indigo-300">{finingGramsNeeded} گرم</strong>
+                          <span className="text-ink-soft">وزن پودر خشک بنتونیت:</span>
+                          <strong className="font-mono tabular-nums text-base text-wine">{finingGramsNeeded} گرم</strong>
                         </div>
-                        <div className="flex justify-between border-t border-stone-700 pt-1 text-xs">
-                          <span className="text-stone-400">معادل حجم دوغاب ۵٪ هیدراته:</span>
-                          <span className="font-mono tabular-nums text-emerald-400">{bentoniteSlurry5PercentMl} mL</span>
+                        <div className="flex justify-between border-t border-line pt-1 text-xs">
+                          <span className="text-ink-soft">معادل حجم دوغاب ۵٪ هیدراته:</span>
+                          <span className="font-mono tabular-nums font-bold text-ink">{bentoniteSlurry5PercentMl} mL</span>
                         </div>
                       </div>
                     </div>
@@ -3087,12 +3090,12 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                           />
                         </div>
                       </div>
-                      <div className="p-3 bg-stone-900 text-white rounded-xl space-y-1">
+                      <div className="p-3 bg-paper border border-line text-ink rounded-xl space-y-1">
                         <div className="flex justify-between">
-                          <span className="text-stone-300">حجم برداشت از بطری استوک ۲ (1 mg/mL):</span>
-                          <strong className="font-mono tabular-nums text-base text-amber-400">{copperStock2Ml} mL</strong>
+                          <span className="text-ink-soft">حجم برداشت از بطری استوک ۲ (1 mg/mL):</span>
+                          <strong className="font-mono tabular-nums text-base text-wine">{copperStock2Ml} mL</strong>
                         </div>
-                        <div className="text-xs text-stone-400 border-t border-stone-700 pt-1">
+                        <div className="text-xs text-ink-soft border-t border-line pt-1">
                           تزریق پیش از افزودن باکتیلس در روز ۱۱ تا مس اضافی توسط کیتوزان جذب و حذف شود (۱۰mL در هر گالن ۲۰L برای دوز 0.5 mg/L).
                         </div>
                       </div>
@@ -3167,9 +3170,9 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                   <button
                     type="button"
                     onClick={handleSaveFining}
-                    className="w-full py-2 px-3 rounded-lg bg-stone-800 hover:bg-stone-900 text-white text-xs font-bold transition-colors cursor-pointer flex items-center justify-center gap-1.5"
+                    className="w-full py-2 px-3 rounded-lg bg-wine hover:opacity-95 text-white text-xs font-bold transition-colors cursor-pointer flex items-center justify-center gap-1.5"
                   >
-                    <Save className="w-3.5 h-3.5 text-emerald-400" />
+                    <Save className="w-3.5 h-3.5 text-white" />
                     <span>ذخیره محاسبه فینینگ بنتونیت و استوک مس در پایگاه داده</span>
                   </button>
                 </div>
@@ -3196,19 +3199,19 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
           {/* TOOL 9 (SOP-09): Batch Mass & Volume Scaling Calculator (400kg)   */}
           {/* ----------------------------------------------------------------- */}
           {(selectedFilter === 'all' || selectedFilter === 'sop-09') && (
-            <div className="bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden">
-              <div className="p-4 sm:p-5 bg-stone-900 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="bg-surface rounded-xl border border-line shadow-xs overflow-hidden">
+              <div className="p-4 sm:p-5 bg-paper border-b border-line text-ink flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-amber-800 border border-amber-500 flex items-center justify-center text-white font-bold shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-surface border border-line flex items-center justify-center text-wine font-bold shrink-0">
                     <Scale className="w-5 h-5" />
                   </div>
                   <div>
-                    <div className="flex items-center gap-2 text-xs text-amber-300 font-mono font-bold">
+                    <div className="flex items-center gap-2 text-xs text-ink-soft font-mono font-bold">
                       <span>SOP-TEST-09</span>
                       <span>·</span>
                       <span>مبنای مرجع: ۴۰۰ کیلوگرم انگور دست‌چین رشه سردشت</span>
                     </div>
-                    <h3 className="font-bold text-sm sm:text-base text-white mt-0.5">
+                    <h3 className="font-bold text-sm sm:text-base text-ink mt-0.5">
                       ۹. موازنه مهندسی جرم و حجم و مقیاس‌پذیری بچ (Batch Mass &amp; Volume Scaling)
                     </h3>
                   </div>
@@ -3216,9 +3219,9 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                 <button
                   type="button"
                   onClick={() => toggleExpand('sop-09')}
-                  className="px-3 py-1.5 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs font-bold flex items-center gap-1.5 self-start sm:self-center cursor-pointer transition-colors whitespace-nowrap"
+                  className="px-3 py-1.5 rounded-xl bg-surface hover:bg-stone-200/60 text-ink border border-line text-xs font-bold flex items-center gap-1.5 self-start sm:self-center cursor-pointer transition-colors whitespace-nowrap"
                 >
-                  <BookOpen className="w-3.5 h-3.5 text-amber-400" />
+                  <BookOpen className="w-3.5 h-3.5 text-wine" />
                   <span>{expandedTests['sop-09'] ? 'بستن راهنمای موازنه حجمی' : 'نمایش جدول کامل موازنه جرم و حجم مستر پروتکل'}</span>
                   {expandedTests['sop-09'] ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                 </button>
@@ -3372,9 +3375,9 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                   <button
                     type="button"
                     onClick={handleSaveBatchScaling}
-                    className="w-full py-2 px-3 rounded-lg bg-stone-800 hover:bg-stone-900 text-white text-xs font-bold transition-colors cursor-pointer flex items-center justify-center gap-1.5"
+                    className="w-full py-2 px-3 rounded-lg bg-wine hover:opacity-95 text-white text-xs font-bold transition-colors cursor-pointer flex items-center justify-center gap-1.5"
                   >
-                    <Save className="w-3.5 h-3.5 text-emerald-400" />
+                    <Save className="w-3.5 h-3.5 text-white" />
                     <span>ذخیره مقادیر موازنه جرم و حجم در پایگاه داده</span>
                   </button>
                 </div>
@@ -3420,34 +3423,34 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
       {activeSubTab === 'troubleshooting-crises' && (
         <div className="space-y-6">
           {/* Interactive Scenario & Troubleshooting Evaluator */}
-          <div className="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm space-y-5">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-stone-200 pb-3">
+          <div className="bg-surface p-6 rounded-xl border border-line shadow-xs space-y-5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-line pb-3">
               <div className="flex items-center gap-2.5">
-                <div className="p-2 bg-rose-900 text-white rounded-xl">
+                <div className="p-2 bg-wine text-white rounded-xl">
                   <Wrench className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-stone-900 text-base sm:text-lg">
+                  <h3 className="font-bold text-ink text-base sm:text-lg">
                     الف) عیب‌یاب هوشمند و سیستم سناریوپردازی اصلاح تمام شرایط کارگاهی
                   </h3>
-                  <p className="text-xs text-stone-500">
+                  <p className="text-xs text-ink-soft">
                     بررسی کلیه شرایط و پارامترها (pH، دما، توقف تخمیر، بوهای نامطبوع) و ارائه فرمول دقیق دوز اصلاحی و دستورالعمل نجات بچ
                   </p>
                 </div>
               </div>
-              <span className="text-xs font-mono text-rose-800 font-bold">
+              <span className="text-xs font-mono text-wine font-bold">
                 موتور تصمیم‌یار انولوژی
               </span>
             </div>
 
             {/* Symptom-Based Troubleshooting Chips (عیب‌یابی علامت‌محور) */}
-            <div className="bg-stone-50 p-3.5 rounded-2xl border border-stone-200 space-y-2.5">
+            <div className="bg-paper p-3.5 rounded-xl border border-line space-y-2.5">
               <div className="flex items-center justify-between flex-wrap gap-2">
-                <span className="text-xs font-bold text-stone-900 flex items-center gap-1.5">
-                  <ShieldAlert className="w-4 h-4 text-rose-700" />
-                  <span>عیب‌یابی علامت‌محور (Symptom Chips — انتخاب سریع علائم مشاهده‌شده):</span>
+                <span className="text-xs font-bold text-ink flex items-center gap-1.5">
+                  <ShieldAlert className="w-4 h-4 text-wine" />
+                  <span>عیب‌یابی علامت‌محور (انتخاب سریع علائم مشاهده‌شده):</span>
                 </span>
-                <span className="text-xs text-stone-500">
+                <span className="text-xs text-ink-soft">
                   با لمس هر علامت، پروتکل نجات و فرمول اصلاحی بلافاصله محاسبه می‌شود
                 </span>
               </div>
@@ -3457,12 +3460,12 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                   onClick={() => setTsH2S(!tsH2S)}
                   className={`min-h-[44px] px-3 py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer flex items-center justify-between gap-2 ${
                     tsH2S
-                      ? 'bg-rose-800 text-white border-rose-950 shadow-xs'
-                      : 'bg-white text-stone-800 border-stone-300 hover:bg-rose-50/50'
+                      ? 'bg-wine text-white border-wine shadow-xs'
+                      : 'bg-surface text-ink border-line hover:bg-stone-200/50'
                   }`}
                 >
                   <span>بوی تخم‌مرغ گندیده (H2S)</span>
-                  <span className={`text-xs px-1.5 py-0.5 rounded-full ${tsH2S ? 'bg-white/20 text-white' : 'bg-stone-100 text-stone-500'}`}>
+                  <span className={`text-xs px-1.5 py-0.5 rounded-full ${tsH2S ? 'bg-white/20 text-white' : 'bg-paper text-ink-soft'}`}>
                     {tsH2S ? 'فعال' : 'غیرفعال'}
                   </span>
                 </button>
@@ -3472,12 +3475,12 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                   onClick={() => setTsStuck(!tsStuck)}
                   className={`min-h-[44px] px-3 py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer flex items-center justify-between gap-2 ${
                     tsStuck
-                      ? 'bg-rose-800 text-white border-rose-950 shadow-xs'
-                      : 'bg-white text-stone-800 border-stone-300 hover:bg-rose-50/50'
+                      ? 'bg-wine text-white border-wine shadow-xs'
+                      : 'bg-surface text-ink border-line hover:bg-stone-200/50'
                   }`}
                 >
                   <span>تخمیر کند شد / ایستاد</span>
-                  <span className={`text-xs px-1.5 py-0.5 rounded-full ${tsStuck ? 'bg-white/20 text-white' : 'bg-stone-100 text-stone-500'}`}>
+                  <span className={`text-xs px-1.5 py-0.5 rounded-full ${tsStuck ? 'bg-white/20 text-white' : 'bg-paper text-ink-soft'}`}>
                     {tsStuck ? 'فعال' : 'غیرفعال'}
                   </span>
                 </button>
@@ -3487,12 +3490,12 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                   onClick={() => setTsVA(!tsVA)}
                   className={`min-h-[44px] px-3 py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer flex items-center justify-between gap-2 ${
                     tsVA
-                      ? 'bg-rose-800 text-white border-rose-950 shadow-xs'
-                      : 'bg-white text-stone-800 border-stone-300 hover:bg-rose-50/50'
+                      ? 'bg-wine text-white border-wine shadow-xs'
+                      : 'bg-surface text-ink border-line hover:bg-stone-200/50'
                   }`}
                 >
                   <span>بوی سرکه / استون (VA)</span>
-                  <span className={`text-xs px-1.5 py-0.5 rounded-full ${tsVA ? 'bg-white/20 text-white' : 'bg-stone-100 text-stone-500'}`}>
+                  <span className={`text-xs px-1.5 py-0.5 rounded-full ${tsVA ? 'bg-white/20 text-white' : 'bg-paper text-ink-soft'}`}>
                     {tsVA ? 'فعال' : 'غیرفعال'}
                   </span>
                 </button>
@@ -3502,12 +3505,12 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                   onClick={() => setTsDryCap(!tsDryCap)}
                   className={`min-h-[44px] px-3 py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer flex items-center justify-between gap-2 ${
                     tsDryCap
-                      ? 'bg-rose-800 text-white border-rose-950 shadow-xs'
-                      : 'bg-white text-stone-800 border-stone-300 hover:bg-rose-50/50'
+                      ? 'bg-wine text-white border-wine shadow-xs'
+                      : 'bg-surface text-ink border-line hover:bg-stone-200/50'
                   }`}
                 >
                   <span>سطح کلاهک خشک شد</span>
-                  <span className={`text-xs px-1.5 py-0.5 rounded-full ${tsDryCap ? 'bg-white/20 text-white' : 'bg-stone-100 text-stone-500'}`}>
+                  <span className={`text-xs px-1.5 py-0.5 rounded-full ${tsDryCap ? 'bg-white/20 text-white' : 'bg-paper text-ink-soft'}`}>
                     {tsDryCap ? 'فعال' : 'غیرفعال'}
                   </span>
                 </button>
@@ -3517,12 +3520,12 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                   onClick={() => setTsBitterSeeds(!tsBitterSeeds)}
                   className={`min-h-[44px] px-3 py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer flex items-center justify-between gap-2 ${
                     tsBitterSeeds
-                      ? 'bg-rose-800 text-white border-rose-950 shadow-xs'
-                      : 'bg-white text-stone-800 border-stone-300 hover:bg-rose-50/50'
+                      ? 'bg-wine text-white border-wine shadow-xs'
+                      : 'bg-surface text-ink border-line hover:bg-stone-200/50'
                   }`}
                 >
                   <span>طعم گس و تلخ هسته</span>
-                  <span className={`text-xs px-1.5 py-0.5 rounded-full ${tsBitterSeeds ? 'bg-white/20 text-white' : 'bg-stone-100 text-stone-500'}`}>
+                  <span className={`text-xs px-1.5 py-0.5 rounded-full ${tsBitterSeeds ? 'bg-white/20 text-white' : 'bg-paper text-ink-soft'}`}>
                     {tsBitterSeeds ? 'فعال' : 'غیرفعال'}
                   </span>
                 </button>
@@ -3532,12 +3535,12 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
                   onClick={() => setTsCloudy(!tsCloudy)}
                   className={`min-h-[44px] px-3 py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer flex items-center justify-between gap-2 ${
                     tsCloudy
-                      ? 'bg-rose-800 text-white border-rose-950 shadow-xs'
-                      : 'bg-white text-stone-800 border-stone-300 hover:bg-rose-50/50'
+                      ? 'bg-wine text-white border-wine shadow-xs'
+                      : 'bg-surface text-ink border-line hover:bg-stone-200/50'
                   }`}
                 >
                   <span>کدورت و ابری بودن</span>
-                  <span className={`text-xs px-1.5 py-0.5 rounded-full ${tsCloudy ? 'bg-white/20 text-white' : 'bg-stone-100 text-stone-500'}`}>
+                  <span className={`text-xs px-1.5 py-0.5 rounded-full ${tsCloudy ? 'bg-white/20 text-white' : 'bg-paper text-ink-soft'}`}>
                     {tsCloudy ? 'فعال' : 'غیرفعال'}
                   </span>
                 </button>
@@ -3888,25 +3891,25 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
               <button
                 type="button"
                 onClick={handleSaveTroubleshooting}
-                className="w-full py-2.5 px-4 rounded-xl bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold transition-colors cursor-pointer flex items-center justify-center gap-2"
+                className="w-full py-2.5 px-4 rounded-xl bg-wine hover:opacity-95 text-white text-xs font-bold transition-colors cursor-pointer flex items-center justify-center gap-2"
               >
-                <Save className="w-4 h-4 text-emerald-400" />
+                <Save className="w-4 h-4 text-white" />
                 <span>ذخیره دستورالعمل مداخله و عیب‌یابی در دیتابیس انولوژی</span>
               </button>
             </div>
           </div>
 
           {/* 5 Master Protocol Crisis Management SOPs */}
-          <div className="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm space-y-4">
-            <div className="flex items-center gap-2.5 border-b border-stone-200 pb-3">
-              <div className="p-2 bg-amber-700 text-white rounded-xl">
+          <div className="bg-surface p-6 rounded-xl border border-line shadow-xs space-y-4">
+            <div className="flex items-center gap-2.5 border-b border-line pb-3">
+              <div className="p-2 bg-wine text-white rounded-xl">
                 <ShieldAlert className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="font-bold text-stone-900 text-base sm:text-lg">
+                <h3 className="font-bold text-ink text-base sm:text-lg">
                   ب) پروتکل‌های واکنش سریع و مدیریت ۵ بحران کارگاهی (مستر پروتکل رشه سردشت)
                 </h3>
-                <p className="text-xs text-stone-500">
+                <p className="text-xs text-ink-soft">
                   دستورالعمل‌های قطعی و گام‌به‌گام برای مهار بحران‌های حرارتی، بوی H2S، فوران CO2، توقف تخمیر و بالا زدن چوب‌پنبه
                 </p>
               </div>
@@ -3916,15 +3919,15 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
               {RASHA_PROTOCOL.crises.map((crisis) => (
                 <div
                   key={crisis.id}
-                  className="p-4 rounded-xl border border-stone-200 bg-stone-50/70 space-y-2.5 text-xs"
+                  className="p-4 rounded-xl border border-line bg-paper space-y-2.5 text-xs"
                 >
-                  <h4 className="text-sm font-bold text-rose-900">{crisis.title}</h4>
+                  <h4 className="text-sm font-bold text-ink">{crisis.title}</h4>
                   <div className="p-2.5 rounded-lg bg-rose-50 border border-rose-200 text-rose-950">
                     <strong>خطر بیوشیمیایی: </strong>
                     <span>{crisis.danger}</span>
                   </div>
-                  <div className="p-3 rounded-lg bg-white border border-stone-200 text-stone-800 leading-relaxed">
-                    <strong className="text-emerald-900 block mb-1">پروتکل اجرایی واکنش سریع:</strong>
+                  <div className="p-3 rounded-lg bg-surface border border-line text-ink leading-relaxed">
+                    <strong className="text-ink block mb-1">پروتکل اجرایی واکنش سریع:</strong>
                     <p>{crisis.action}</p>
                   </div>
                 </div>
@@ -3933,21 +3936,21 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
           </div>
 
           {/* 5 Standard Stock Solutions Reference */}
-          <div className="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm space-y-4">
-            <h3 className="font-bold text-stone-900 text-sm sm:text-base border-b border-stone-200 pb-2">
+          <div className="bg-surface p-6 rounded-xl border border-line shadow-xs space-y-4">
+            <h3 className="font-bold text-ink text-sm sm:text-base border-b border-line pb-2">
               ج) فرمول ساخت ۵ محلول استوک آزمایشگاهی و ضدعفونی (ایستگاه صفر مستر پروتکل)
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
               {RASHA_PROTOCOL.stockSolutions.map((st, idx) => (
-                <div key={idx} className="p-4 rounded-xl border border-stone-200 bg-stone-50 space-y-1.5">
+                <div key={idx} className="p-4 rounded-xl border border-line bg-paper space-y-1.5">
                   <div className="flex items-center justify-between">
-                    <strong className="text-stone-900 text-sm">{st.num}: {st.title}</strong>
-                    <span className="font-mono text-xs text-rose-800 font-bold">{st.concentration}</span>
+                    <strong className="text-ink text-sm">{st.num}: {st.title}</strong>
+                    <span className="font-mono text-xs text-wine font-bold">{st.concentration}</span>
                   </div>
-                  <p className="text-stone-700 leading-relaxed">
+                  <p className="text-ink leading-relaxed">
                     <strong>روش ساخت: </strong>{st.formula}
                   </p>
-                  <p className="text-stone-600 leading-relaxed">
+                  <p className="text-ink-soft leading-relaxed">
                     <strong>کاربرد دقیق: </strong>{st.usage}
                   </p>
                 </div>
@@ -3961,15 +3964,15 @@ export const TestingGuide: React.FC<TestingGuideProps> = ({
       {/* SUB-TAB 3: SAVED CALCULATIONS HISTORY IN DATABASE                     */}
       {/* ===================================================================== */}
       {activeSubTab === 'saved-history' && (
-        <div className="bg-white rounded-2xl border border-stone-200 p-6 shadow-sm space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-stone-200 pb-3">
+        <div className="bg-surface rounded-xl border border-line p-6 shadow-xs space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-line pb-3">
             <div className="flex items-center gap-2">
-              <History className="w-5 h-5 text-emerald-700" />
-              <h3 className="text-base font-bold text-stone-900">
+              <History className="w-5 h-5 text-wine" />
+              <h3 className="text-base font-bold text-ink">
                 تاریخچه محاسبات ثبت‌شده در پایگاه داده انولوژی ({savedCalculations.length} مورد)
               </h3>
             </div>
-            <span className="text-xs text-stone-500 font-mono">
+            <span className="text-xs text-ink-soft font-mono">
               ذخیره‌سازی پایدار در Enology Database
             </span>
           </div>

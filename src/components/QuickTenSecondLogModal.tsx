@@ -848,22 +848,22 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
 
   const contentCard = (
     <div
-      className={`bg-stone-900 text-stone-100 border-2 border-emerald-600/80 rounded-2xl shadow-2xl overflow-hidden font-['Vazirmatn',sans-serif] ${
+      className={`bg-surface text-ink border border-line rounded-2xl shadow-2xl overflow-hidden font-['Vazirmatn',sans-serif] ${
         inlineMode ? 'w-full' : 'w-full max-w-xl max-h-[92vh] overflow-y-auto'
       }`}
     >
       {/* Header */}
-      <div className="bg-gradient-to-r from-stone-950 via-stone-900 to-emerald-950 px-4 py-3.5 border-b border-stone-700 space-y-3">
+      <div className="bg-paper px-4 py-3.5 border-b border-line space-y-3">
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-emerald-500/20 border border-emerald-400/50 text-emerald-300 flex items-center justify-center shrink-0">
+            <div className="w-9 h-9 rounded-xl bg-wine/10 border border-wine/30 text-wine flex items-center justify-center shrink-0">
               <Droplets className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-sm sm:text-base font-bold text-white">
+              <h3 className="text-sm sm:text-base font-bold text-ink">
                 شیت یکپارچه ثبت کارگاهی (مخصوص دست خیس)
               </h3>
-              <p className="text-xs text-stone-300">
+              <p className="text-xs text-ink-soft">
                 بدون مقدار پیش‌فرض خطرناک • اصلاح خودکار دما و پیش‌بینی لحظه‌ای
               </p>
             </div>
@@ -872,7 +872,7 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="min-h-[44px] min-w-[44px] rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-300 hover:text-white flex items-center justify-center cursor-pointer"
+              className="min-h-[44px] min-w-[44px] rounded-xl bg-surface hover:bg-paper border border-line text-ink-soft hover:text-ink flex items-center justify-center cursor-pointer"
               aria-label="بستن پنجره ثبت سریع"
             >
               <X className="w-5 h-5" />
@@ -884,7 +884,7 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
         <div
           role="tablist"
           aria-label="انتخاب نوع ثبت کارگاهی"
-          className="grid grid-cols-3 gap-1.5 bg-stone-950 p-1 rounded-xl border border-stone-800"
+          className="grid grid-cols-3 gap-1.5 bg-surface p-1 rounded-xl border border-line"
         >
           {(
             [
@@ -904,8 +904,8 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
               }}
               className={`py-2 px-2 rounded-lg text-xs font-bold cursor-pointer transition-all ${
                 mode === mId
-                  ? 'bg-emerald-500 text-stone-950 shadow-xs'
-                  : 'text-stone-300 hover:text-white hover:bg-stone-800'
+                  ? 'bg-wine text-white shadow-xs'
+                  : 'text-ink-soft hover:text-ink hover:bg-paper'
               }`}
             >
               {mLabel}
@@ -917,10 +917,10 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
       {/* Body: Either Post-Save Summary Sheet OR Active Mode Form */}
       {postSaveSummary ? (
         <div className="p-4 sm:p-5 space-y-4">
-          <div className="bg-emerald-950/90 border-2 border-emerald-500 rounded-2xl p-4 space-y-3">
+          <div className="bg-emerald-50 border border-emerald-300 rounded-2xl p-4 space-y-3">
             <div className="flex items-center justify-between gap-2 flex-wrap">
-              <div className="flex items-center gap-2 text-emerald-300 font-bold text-sm">
-                <CheckCircle2 className="w-5 h-5 shrink-0" />
+              <div className="flex items-center gap-2 text-emerald-900 font-bold text-sm">
+                <CheckCircle2 className="w-5 h-5 text-emerald-700 shrink-0" />
                 <span>با موفقیت در دفتر کارگاه ثبت شد!</span>
               </div>
 
@@ -929,7 +929,7 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
                 <button
                   type="button"
                   onClick={handleUndoSavedRecord}
-                  className="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 text-xs font-bold flex items-center gap-1.5 cursor-pointer shadow-xs"
+                  className="px-3 py-1.5 rounded-xl bg-amber-100 hover:bg-amber-200 border border-amber-300 text-amber-950 text-xs font-bold flex items-center gap-1.5 cursor-pointer shadow-xs"
                 >
                   <RotateCcw className="w-3.5 h-3.5" />
                   <span>
@@ -940,35 +940,35 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
             </div>
 
             {/* 1-Sentence Contextual Learning Feedback */}
-            <div className="bg-amber-950/80 border border-amber-500/70 rounded-xl p-3 text-xs text-amber-100 font-bold flex items-start gap-2">
-              <Info className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+            <div className="bg-amber-50 border border-amber-300 rounded-xl p-3 text-xs text-amber-950 font-bold flex items-start gap-2">
+              <Info className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
               <span>{postSaveSummary.learningFeedbackFa}</span>
             </div>
 
             {postSaveSummary.mode === 'measurement' &&
               postSaveSummary.savedEntry && (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1 text-xs">
-                  <div className="bg-stone-900/90 border border-stone-700 rounded-xl p-3">
-                    <div className="text-stone-400">
+                  <div className="bg-surface border border-line rounded-xl p-3">
+                    <div className="text-ink-soft">
                       چگالی نهایی اصلاح‌شده (True SG):
                     </div>
-                    <div className="text-base font-mono font-bold text-white mt-0.5">
+                    <div className="text-base font-mono font-bold text-ink mt-0.5">
                       {postSaveSummary.savedEntry.sg.toFixed(3)}
                     </div>
-                    <div className="text-emerald-300 font-bold mt-1">
+                    <div className="text-emerald-800 font-bold mt-1">
                       افت امروز: {postSaveSummary.sgDrop.toFixed(3)} (نسبت به{' '}
                       {postSaveSummary.previousSG.toFixed(3)})
                     </div>
                   </div>
-                  <div className="bg-stone-900/90 border border-stone-700 rounded-xl p-3">
-                    <div className="text-stone-400">
+                  <div className="bg-surface border border-line rounded-xl p-3">
+                    <div className="text-ink-soft">
                       پیش‌بینی رسیدن به خشکی کامل:
                     </div>
-                    <div className="text-sm font-bold text-amber-300 mt-1">
+                    <div className="text-sm font-bold text-wine mt-1">
                       تخمین خشکی: {postSaveSummary.drynessRangeDays.min} تا{' '}
                       {postSaveSummary.drynessRangeDays.max} روز دیگر
                     </div>
-                    <div className="text-xs text-stone-400 mt-1">
+                    <div className="text-xs text-ink-soft mt-1">
                       دمای کلاهک: {postSaveSummary.savedEntry.tempCap}°C | دمای
                       نمونه: {postSaveSummary.savedEntry.tempSample}°C
                     </div>
@@ -979,28 +979,28 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
 
           {/* Active Milestone Card in Post-Save Summary */}
           {postSaveSummary.mode !== 'lab' && (
-            <div className="bg-stone-950 border border-stone-700 rounded-2xl p-4 space-y-2">
-              <div className="text-xs font-bold text-stone-300">
+            <div className="bg-paper border border-line rounded-2xl p-4 space-y-2">
+              <div className="text-xs font-bold text-ink-soft">
                 وضعیت اقدام فوری «همین الان» پس از این ثبت:
               </div>
               {postSaveSummary.primaryActionTitleFa ? (
-                <div className="bg-rose-950/80 border border-rose-500 rounded-xl p-3 space-y-1.5">
+                <div className="bg-surface border border-line rounded-xl p-3 space-y-1.5">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="px-2 py-0.5 rounded-full bg-amber-400 text-stone-950 text-xs font-bold">
+                    <span className="px-2 py-0.5 rounded-full bg-amber-100 border border-amber-300 text-amber-950 text-xs font-bold">
                       {postSaveSummary.primaryActionStateBadgeFa}
                     </span>
-                    <span className="text-xs sm:text-sm font-bold text-white">
+                    <span className="text-xs sm:text-sm font-bold text-ink">
                       {postSaveSummary.primaryActionTitleFa}
                     </span>
                   </div>
                   {postSaveSummary.primaryActionDoseFa && (
-                    <p className="text-xs text-rose-200 font-bold">
+                    <p className="text-xs text-wine font-bold">
                       مقدار دوز مخزن: {postSaveSummary.primaryActionDoseFa}
                     </p>
                   )}
                 </div>
               ) : (
-                <div className="bg-emerald-950/60 border border-emerald-700/70 rounded-xl p-3 text-xs font-bold text-emerald-300">
+                <div className="bg-emerald-50 border border-emerald-300 rounded-xl p-3 text-xs font-bold text-emerald-900">
                   هیچ اقدام فوری لازم نیست </div>
               )}
             </div>
@@ -1013,7 +1013,7 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
                 loadLatestTankDefaults(tankId);
                 setPostSaveSummary(null);
               }}
-              className="min-h-[48px] px-4 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs font-bold cursor-pointer"
+              className="min-h-[48px] px-4 rounded-xl bg-paper hover:bg-surface border border-line text-ink text-xs font-bold cursor-pointer"
             >
               ثبت رکورد دیگر
             </button>
@@ -1021,7 +1021,7 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
               <button
                 type="button"
                 onClick={onClose}
-                className="min-h-[48px] px-5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-stone-950 text-xs font-bold cursor-pointer"
+                className="min-h-[48px] px-5 rounded-xl bg-wine hover:opacity-95 text-white text-xs font-bold cursor-pointer"
               >
                 بستن و بازگشت به میز کار
               </button>
@@ -1032,7 +1032,7 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
         <div className="p-4 sm:p-5 space-y-4">
           {/* Shared Tank Selector across all 3 modes */}
           <div className="space-y-1.5">
-            <label className="block text-xs font-bold text-stone-300">
+            <label className="block text-xs font-bold text-ink">
               انتخاب مخزن هدف:
             </label>
             <div
@@ -1047,8 +1047,8 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
                   onClick={() => handleSelectTank(btn.id)}
                   className={`min-h-[44px] rounded-xl text-xs font-bold border transition-all cursor-pointer ${
                     tankSelection === btn.id
-                      ? 'bg-rose-700 text-white border-rose-400 shadow-md'
-                      : 'bg-stone-800 text-stone-300 border-stone-700 hover:bg-stone-700'
+                      ? 'bg-wine text-white border-wine shadow-xs'
+                      : 'bg-paper text-ink border-line hover:bg-surface'
                   }`}
                 >
                   {btn.labelFa}
@@ -1061,18 +1061,18 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
           {mode === 'measurement' && (
             <form onSubmit={handleSaveMeasurement} className="space-y-4">
               {/* Core Field 1 & 2: SG Input (Safe Empty Default + Gray Placeholder + Explicit Fill Chip) & Sample Temp */}
-              <div className="bg-stone-950/90 border border-stone-700 rounded-2xl p-3.5 space-y-3">
+              <div className="bg-paper border border-line rounded-2xl p-3.5 space-y-3">
                 <div className="flex items-center justify-between gap-2 flex-wrap">
                   <label
                     htmlFor="quick-sg-input"
-                    className="text-xs sm:text-sm font-bold text-amber-300"
+                    className="text-xs sm:text-sm font-bold text-ink"
                   >
                     ۱. قرائت خام هیدرومتر (SG):
                   </label>
                   <button
                     type="button"
                     onClick={() => setRawSGInput(lastSG.toFixed(3))}
-                    className="px-2.5 py-1 rounded-lg bg-stone-800 hover:bg-stone-700 border border-stone-600 text-xs font-bold text-amber-200 cursor-pointer"
+                    className="px-2.5 py-1 rounded-lg bg-surface hover:bg-paper border border-line text-xs font-bold text-wine cursor-pointer"
                   >
                     {'استفاده از مقدار قبلی (' + lastSG.toFixed(3) + ')'}
                   </button>
@@ -1084,7 +1084,7 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
                     onClick={() =>
                       setRawSGInput((normalizedRawSG - 0.002).toFixed(3))
                     }
-                    className="min-h-[48px] px-3.5 rounded-xl bg-stone-800 hover:bg-stone-700 border border-stone-600 text-white font-mono font-bold text-sm cursor-pointer"
+                    className="min-h-[48px] px-3.5 rounded-xl bg-surface hover:bg-paper border border-line text-ink font-mono font-bold text-sm cursor-pointer"
                   >
                     -0.002
                   </button>
@@ -1104,28 +1104,28 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
                         setRawSGInput(norm.toFixed(3));
                       }
                     }}
-                    className="flex-1 min-h-[52px] bg-stone-900 border-2 border-amber-500/80 rounded-xl px-3 text-center text-xl font-mono font-bold text-white placeholder:text-stone-500 placeholder:text-xs"
+                    className="flex-1 min-h-[52px] bg-surface border-2 border-wine/60 rounded-xl px-3 text-center text-xl font-mono font-bold text-ink placeholder:text-ink-soft placeholder:text-xs"
                   />
                   <button
                     type="button"
                     onClick={() =>
                       setRawSGInput((normalizedRawSG + 0.002).toFixed(3))
                     }
-                    className="min-h-[48px] px-3.5 rounded-xl bg-stone-800 hover:bg-stone-700 border border-stone-600 text-white font-mono font-bold text-sm cursor-pointer"
+                    className="min-h-[48px] px-3.5 rounded-xl bg-surface hover:bg-paper border border-line text-ink font-mono font-bold text-sm cursor-pointer"
                   >
                     +0.002
                   </button>
                 </div>
 
                 {/* Core Field 2: Sample Temperature (دمای نمونه) */}
-                <div className="pt-2 border-t border-stone-800 space-y-2">
+                <div className="pt-2 border-t border-line space-y-2">
                   <div className="flex items-center justify-between gap-2 flex-wrap">
-                    <span className="text-xs font-bold text-stone-200 flex items-center gap-1.5">
-                      <Thermometer className="w-4 h-4 text-emerald-400" />
+                    <span className="text-xs font-bold text-ink flex items-center gap-1.5">
+                      <Thermometer className="w-4 h-4 text-wine" />
                       <span>۲. دمای نمونه (داخل استوانه هیدرومتر):</span>
                     </span>
-                    <div className="flex items-center gap-1 bg-stone-900 px-2 py-1 rounded-lg border border-stone-700 text-xs">
-                      <span className="text-stone-400">کالیبراسیون:</span>
+                    <div className="flex items-center gap-1 bg-surface px-2 py-1 rounded-lg border border-line text-xs">
+                      <span className="text-ink-soft">کالیبراسیون:</span>
                       {([20, 15.5] as const).map((cal) => (
                         <button
                           key={cal}
@@ -1133,8 +1133,8 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
                           onClick={() => setCalibrationTemp(cal)}
                           className={`px-2 py-0.5 rounded font-mono font-bold cursor-pointer ${
                             calibrationTemp === cal
-                              ? 'bg-emerald-600 text-white'
-                              : 'text-stone-400 hover:text-white'
+                              ? 'bg-wine text-white'
+                              : 'text-ink-soft hover:text-ink'
                           }`}
                         >
                           {cal} °C
@@ -1149,7 +1149,7 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
                       onClick={() =>
                         setTempSample((t) => Math.round((t - 0.5) * 10) / 10)
                       }
-                      className="min-h-[48px] px-4 rounded-xl bg-stone-800 hover:bg-stone-700 border border-stone-600 text-white font-mono font-bold text-xs sm:text-sm cursor-pointer"
+                      className="min-h-[48px] px-4 rounded-xl bg-surface hover:bg-paper border border-line text-ink font-mono font-bold text-xs sm:text-sm cursor-pointer"
                     >
                       -0.5 °C
                     </button>
@@ -1165,21 +1165,21 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
                         );
                         if (v !== null) setTempSample(v);
                       }}
-                      className="flex-1 min-h-[48px] bg-stone-900 border border-stone-600 rounded-xl px-3 text-center text-base font-mono font-bold text-emerald-300"
+                      className="flex-1 min-h-[48px] bg-surface border border-line rounded-xl px-3 text-center text-base font-mono font-bold text-ink"
                     />
                     <button
                       type="button"
                       onClick={() =>
                         setTempSample((t) => Math.round((t + 0.5) * 10) / 10)
                       }
-                      className="min-h-[48px] px-4 rounded-xl bg-stone-800 hover:bg-stone-700 border border-stone-600 text-white font-mono font-bold text-xs sm:text-sm cursor-pointer"
+                      className="min-h-[48px] px-4 rounded-xl bg-surface hover:bg-paper border border-line text-ink font-mono font-bold text-xs sm:text-sm cursor-pointer"
                     >
                       +0.5 °C
                     </button>
                   </div>
 
                   {/* Live Preview Box right below SG: True SG AND Equivalent Brix */}
-                  <div className="bg-emerald-950/70 border border-emerald-600/70 rounded-xl p-2.5 text-xs text-emerald-200 font-bold flex flex-wrap items-center justify-between gap-2">
+                  <div className="bg-surface border border-line rounded-xl p-2.5 text-xs text-ink font-bold flex flex-wrap items-center justify-between gap-2">
                     <span>
                       {'SG تصحیح‌شده: ' +
                         trueSG.toFixed(4) +
@@ -1188,15 +1188,15 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
                         hydrometerResult.delta.toFixed(4) +
                         ')'}
                     </span>
-                    <span className="text-amber-300 font-mono">
+                    <span className="text-wine font-mono">
                       {'Brix معادل: ' + equivalentBrix.toFixed(1) + ' °Bx'}
                     </span>
                   </div>
 
                   {/* >32 °C Hydrometer Cooling Warning */}
                   {hydrometerResult.isAbove32CWarning && (
-                    <div className="bg-amber-950 border border-amber-500 rounded-xl p-2.5 text-xs font-bold text-amber-200 flex items-center gap-2">
-                      <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
+                    <div className="bg-amber-50 border border-amber-300 rounded-xl p-2.5 text-xs font-bold text-amber-950 flex items-center gap-2">
+                      <AlertTriangle className="w-4 h-4 text-amber-700 shrink-0" />
                       <span>
                         {hydrometerResult.warningFa ??
                           'نمونه را خنک کنید؛ فرمول فقط تا ۳۲ °C دقیق است'}
@@ -1206,8 +1206,8 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
 
                   {/* Soft Validation Warning for SG */}
                   {isSgOutOfNormalRange && (
-                    <div className="bg-amber-950/90 border border-amber-400 rounded-xl p-2.5 text-xs text-amber-200 flex items-center gap-2">
-                      <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
+                    <div className="bg-amber-50 border border-amber-300 rounded-xl p-2.5 text-xs text-amber-950 flex items-center gap-2">
+                      <AlertTriangle className="w-4 h-4 text-amber-700 shrink-0" />
                       <span>
                         هشدار نرم: مقدار SG ({trueSG.toFixed(3)}) خارج از بازه
                         متعارف شراب‌سازی (0.980 تا 1.130) است، اما دکمه ذخیره
@@ -1220,8 +1220,8 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
 
               {/* Core Field 3 (دمای کلاهک) & Core Field 4 (پیژاژ انجام شد؟) */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div className="bg-stone-950/80 border border-stone-700 rounded-2xl p-3 space-y-2">
-                  <label className="block text-xs font-bold text-rose-300">
+                <div className="bg-paper border border-line rounded-2xl p-3 space-y-2">
+                  <label className="block text-xs font-bold text-ink">
                     ۳. دمای کلاهک (Cap °C):
                   </label>
                   <div className="flex items-center gap-1.5">
@@ -1230,7 +1230,7 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
                       onClick={() =>
                         setTempCap((t) => Math.round((t - 0.5) * 10) / 10)
                       }
-                      className="min-h-[48px] px-3 rounded-xl bg-stone-800 hover:bg-stone-700 border border-stone-600 text-white font-mono font-bold text-xs cursor-pointer"
+                      className="min-h-[48px] px-3 rounded-xl bg-surface hover:bg-paper border border-line text-ink font-mono font-bold text-xs cursor-pointer"
                     >
                       -0.5 °C
                     </button>
@@ -1246,28 +1246,28 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
                         );
                         if (v !== null) setTempCap(v);
                       }}
-                      className="flex-1 min-h-[48px] bg-stone-900 border border-stone-600 rounded-xl px-2 text-center text-base font-mono font-bold text-white"
+                      className="flex-1 min-h-[48px] bg-surface border border-line rounded-xl px-2 text-center text-base font-mono font-bold text-ink"
                     />
                     <button
                       type="button"
                       onClick={() =>
                         setTempCap((t) => Math.round((t + 0.5) * 10) / 10)
                       }
-                      className="min-h-[48px] px-3 rounded-xl bg-stone-800 hover:bg-stone-700 border border-stone-600 text-white font-mono font-bold text-xs cursor-pointer"
+                      className="min-h-[48px] px-3 rounded-xl bg-surface hover:bg-paper border border-line text-ink font-mono font-bold text-xs cursor-pointer"
                     >
                       +0.5 °C
                     </button>
                   </div>
                   {isTempCapOutOfNormalRange && (
-                    <div className="bg-amber-950/90 border border-amber-400 rounded-lg p-2 text-xs text-amber-200">
+                    <div className="bg-amber-50 border border-amber-300 rounded-lg p-2 text-xs text-amber-950">
                       هشدار نرم: دمای کلاهک ({tempCap}°C) خارج از بازه ۵ تا ۴۲
                       درجه است (ذخیره مجاز است).
                     </div>
                   )}
                 </div>
 
-                <div className="bg-stone-950/80 border border-stone-700 rounded-2xl p-3 flex flex-col justify-between">
-                  <span className="text-xs font-bold text-stone-300">
+                <div className="bg-paper border border-line rounded-2xl p-3 flex flex-col justify-between">
+                  <span className="text-xs font-bold text-ink">
                     ۴. پیژاژ انجام شد؟
                   </span>
                   <button
@@ -1275,8 +1275,8 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
                     onClick={() => setPigeageDone((v) => !v)}
                     className={`mt-2 min-h-[48px] w-full rounded-xl font-bold text-xs sm:text-sm border flex items-center justify-center gap-2 cursor-pointer transition-all ${
                       pigeageDone
-                        ? 'bg-emerald-600 text-white border-emerald-400'
-                        : 'bg-stone-800 text-stone-300 border-stone-600'
+                        ? 'bg-emerald-700 text-white border-emerald-700'
+                        : 'bg-surface text-ink-soft border-line'
                     }`}
                   >
                     <CheckCircle2 className="w-4 h-4" />
@@ -1291,7 +1291,7 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
 
               {/* Clean Collapsible Accordion Chips for Optional Sections (Section 3B.3) */}
               <div className="space-y-2">
-                <div className="text-xs font-bold text-stone-400">
+                <div className="text-xs font-bold text-ink-soft">
                   بخش‌های تکمیلی (اختیاری — برای باز کردن کلیک کنید):
                 </div>
                 <div className="flex flex-wrap gap-1.5">
@@ -1300,8 +1300,8 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
                     onClick={() => setOpenPhTaSection((v) => !v)}
                     className={`px-3 py-1.5 rounded-xl text-xs font-bold border flex items-center gap-1 cursor-pointer ${
                       openPhTaSection
-                        ? 'bg-amber-500 text-stone-950 border-amber-300 font-bold'
-                        : 'bg-stone-800 text-stone-300 border-stone-700 hover:bg-stone-700'
+                        ? 'bg-wine text-white border-wine font-bold'
+                        : 'bg-paper text-ink border-line hover:bg-surface'
                     }`}
                   >
                     <span>pH و TA</span>
@@ -1317,8 +1317,8 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
                     onClick={() => setOpenFreeSo2Section((v) => !v)}
                     className={`px-3 py-1.5 rounded-xl text-xs font-bold border flex items-center gap-1 cursor-pointer ${
                       openFreeSo2Section
-                        ? 'bg-amber-500 text-stone-950 border-amber-300 font-bold'
-                        : 'bg-stone-800 text-stone-300 border-stone-700 hover:bg-stone-700'
+                        ? 'bg-wine text-white border-wine font-bold'
+                        : 'bg-paper text-ink border-line hover:bg-surface'
                     }`}
                   >
                     <span>سولفیت آزاد</span>
@@ -1334,8 +1334,8 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
                     onClick={() => setOpenRefractSection((v) => !v)}
                     className={`px-3 py-1.5 rounded-xl text-xs font-bold border flex items-center gap-1 cursor-pointer ${
                       openRefractSection
-                        ? 'bg-amber-500 text-stone-950 border-amber-300 font-bold'
-                        : 'bg-stone-800 text-stone-300 border-stone-700 hover:bg-stone-700'
+                        ? 'bg-wine text-white border-wine font-bold'
+                        : 'bg-paper text-ink border-line hover:bg-surface'
                     }`}
                   >
                     <span>رفراکتومتر</span>
@@ -1351,8 +1351,8 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
                     onClick={() => setOpenTagsNoteSection((v) => !v)}
                     className={`px-3 py-1.5 rounded-xl text-xs font-bold border flex items-center gap-1 cursor-pointer ${
                       openTagsNoteSection
-                        ? 'bg-amber-500 text-stone-950 border-amber-300 font-bold'
-                        : 'bg-stone-800 text-stone-300 border-stone-700 hover:bg-stone-700'
+                        ? 'bg-wine text-white border-wine font-bold'
+                        : 'bg-paper text-ink border-line hover:bg-surface'
                     }`}
                   >
                     <span>برچسب‌ها و یادداشت</span>
@@ -1366,17 +1366,17 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
 
                 {/* Collapsible 1: pH, TA & Room Temp */}
                 {openPhTaSection && (
-                  <div className="bg-stone-950/80 border border-stone-700 rounded-2xl p-3 space-y-3">
+                  <div className="bg-paper border border-line rounded-2xl p-3 space-y-3">
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                       <div>
-                        <label className="block text-xs font-bold text-amber-300 mb-1">
+                        <label className="block text-xs font-bold text-ink mb-1">
                           اسیدیته فعال (pH):
                         </label>
                         <div className="flex items-center gap-1">
                           <button
                             type="button"
                             onClick={() => adjustPh(-0.02)}
-                            className="min-h-[40px] px-2 rounded-lg bg-stone-800 border border-stone-600 text-white font-mono text-xs cursor-pointer"
+                            className="min-h-[40px] px-2 rounded-lg bg-surface border border-line text-ink font-mono text-xs cursor-pointer"
                           >
                             <Minus className="w-3 h-3" />
                           </button>
@@ -1390,12 +1390,12 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
                                 e.target.value.trim().length > 0
                               );
                             }}
-                            className="flex-1 min-h-[40px] bg-stone-900 border border-stone-600 rounded-lg px-2 text-center text-sm font-mono font-bold text-white"
+                            className="flex-1 min-h-[40px] bg-surface border border-line rounded-lg px-2 text-center text-sm font-mono font-bold text-ink"
                           />
                           <button
                             type="button"
                             onClick={() => adjustPh(0.02)}
-                            className="min-h-[40px] px-2 rounded-lg bg-stone-800 border border-stone-600 text-white font-mono text-xs cursor-pointer"
+                            className="min-h-[40px] px-2 rounded-lg bg-surface border border-line text-ink font-mono text-xs cursor-pointer"
                           >
                             <Plus className="w-3 h-3" />
                           </button>
@@ -1403,7 +1403,7 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
                       </div>
 
                       <div>
-                        <label className="block text-xs font-bold text-stone-300 mb-1">
+                        <label className="block text-xs font-bold text-ink mb-1">
                           اسیدیته کل (TA g/L):
                         </label>
                         <input
@@ -1417,12 +1417,12 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
                             );
                           }}
                           placeholder="مثلاً 6.5"
-                          className="w-full min-h-[40px] bg-stone-900 border border-stone-600 rounded-lg px-2 text-center text-sm font-mono font-bold text-white"
+                          className="w-full min-h-[40px] bg-surface border border-line rounded-lg px-2 text-center text-sm font-mono font-bold text-ink"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-xs font-bold text-stone-300 mb-1">
+                        <label className="block text-xs font-bold text-ink mb-1">
                           دمای کارگاه (Room °C):
                         </label>
                         <input
@@ -1446,7 +1446,7 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
                             }
                           }}
                           placeholder="مثلاً 21.0"
-                          className="w-full min-h-[40px] bg-stone-900 border border-stone-600 rounded-lg px-2 text-center text-sm font-mono font-bold text-white"
+                          className="w-full min-h-[40px] bg-surface border border-line rounded-lg px-2 text-center text-sm font-mono font-bold text-ink"
                         />
                       </div>
                     </div>
@@ -1455,8 +1455,8 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
 
                 {/* Collapsible 2: Free SO2 */}
                 {openFreeSo2Section && (
-                  <div className="bg-stone-950/80 border border-stone-700 rounded-2xl p-3 space-y-1.5">
-                    <label className="block text-xs font-bold text-emerald-300">
+                  <div className="bg-paper border border-line rounded-2xl p-3 space-y-1.5">
+                    <label className="block text-xs font-bold text-ink">
                       سولفیت آزاد اندازه‌گیری‌شده (Free SO₂ بر حسب mg/L):
                     </label>
                     <input
@@ -1468,15 +1468,15 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
                         setHasExplicitSo2Input(e.target.value.trim().length > 0);
                       }}
                       placeholder="مثلاً 38 (اختیاری)"
-                      className="w-full min-h-[44px] bg-stone-900 border border-stone-700 rounded-xl px-3 text-xs font-mono text-white"
+                      className="w-full min-h-[44px] bg-surface border border-line rounded-xl px-3 text-xs font-mono text-ink"
                     />
                   </div>
                 )}
 
                 {/* Collapsible 3: Refractometer */}
                 {openRefractSection && (
-                  <div className="bg-stone-950/80 border border-stone-700 rounded-2xl p-3 space-y-2">
-                    <label className="block text-xs font-bold text-sky-300">
+                  <div className="bg-paper border border-line rounded-2xl p-3 space-y-2">
+                    <label className="block text-xs font-bold text-ink">
                       قرائت رفراکتومتر نوری (اصلاح خطای الکل Sean Terrill):
                     </label>
                     <input
@@ -1485,11 +1485,11 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
                       value={refractBrixInput}
                       onChange={(e) => setRefractBrixInput(e.target.value)}
                       placeholder="مثلاً 10.5 (بریکس ظاهری رفراکتومتر)"
-                      className="w-full min-h-[44px] bg-stone-900 border border-stone-700 rounded-xl px-3 text-xs font-mono text-white"
+                      className="w-full min-h-[44px] bg-surface border border-line rounded-xl px-3 text-xs font-mono text-ink"
                     />
                     {refractResult && (
-                      <div className="bg-sky-950/90 border border-sky-500/70 rounded-xl p-2.5 text-xs text-sky-100 space-y-1">
-                        <div className="flex items-center gap-1.5 font-bold text-sky-300">
+                      <div className="bg-surface border border-line rounded-xl p-2.5 text-xs text-ink space-y-1">
+                        <div className="flex items-center gap-1.5 font-bold text-ink-soft">
                           <Info className="w-4 h-4 shrink-0" />
                           <span>
                             توضیح اطلاعاتی: الکل ضریب شکست نور را تغییر می‌دهد —
@@ -1498,11 +1498,11 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
                         </div>
                         <div>
                           تخمین Sean Terrill: SG واقعی ≈{' '}
-                          <span className="font-mono font-bold">
+                          <span className="font-mono font-bold text-wine">
                             {refractResult.trueSG.toFixed(3)}
                           </span>{' '}
                           | الکل تخمینی ≈{' '}
-                          <span className="font-mono font-bold">
+                          <span className="font-mono font-bold text-wine">
                             {refractResult.abv.toFixed(1)}%
                           </span>
                         </div>
@@ -1513,8 +1513,8 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
 
                 {/* Collapsible 4: Quick Sensory Tags & Note */}
                 {openTagsNoteSection && (
-                  <div className="bg-stone-950/80 border border-stone-700 rounded-2xl p-3 space-y-2">
-                    <label className="block text-xs font-bold text-stone-300">
+                  <div className="bg-paper border border-line rounded-2xl p-3 space-y-2">
+                    <label className="block text-xs font-bold text-ink">
                       برچسب‌های حسی سریع و یادداشت روزانه:
                     </label>
                     <div className="flex flex-wrap gap-1.5">
@@ -1527,8 +1527,8 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
                             onClick={() => toggleQuickTag(tag)}
                             className={`px-3 py-1.5 rounded-xl text-xs font-bold border cursor-pointer transition-all ${
                               active
-                                ? 'bg-amber-500 text-stone-950 border-amber-300 font-bold'
-                                : 'bg-stone-800 text-stone-300 border-stone-700 hover:bg-stone-700'
+                                ? 'bg-wine text-white border-wine font-bold'
+                                : 'bg-surface text-ink border-line hover:bg-paper'
                             }`}
                           >
                             {tag}
@@ -1541,18 +1541,18 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
                       value={operationNote}
                       onChange={(e) => setOperationNote(e.target.value)}
                       placeholder="یادداشت تکمیلی کارگاه (اختیاری)..."
-                      className="w-full min-h-[44px] bg-stone-950 border border-stone-700 rounded-xl px-3 text-xs text-white"
+                      className="w-full min-h-[44px] bg-surface border border-line rounded-xl px-3 text-xs text-ink"
                     />
                   </div>
                 )}
 
                 {/* Provenance Preview Notice when pH is not explicitly measured today */}
-                <div className="bg-stone-950/70 border border-stone-800 rounded-xl px-3 py-2 text-xs flex items-center justify-between gap-2 flex-wrap">
+                <div className="bg-paper border border-line rounded-xl px-3 py-2 text-xs flex items-center justify-between gap-2 flex-wrap">
                   <span
                     className={
                       hasExplicitPhInput
-                        ? 'text-emerald-300 font-bold'
-                        : 'text-stone-400 font-medium'
+                        ? 'text-emerald-800 font-bold'
+                        : 'text-ink-soft font-medium'
                     }
                   >
                     {hasExplicitPhInput
@@ -1566,7 +1566,7 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
                         setOpenPhTaSection(true);
                         setHasExplicitPhInput(true);
                       }}
-                      className="text-amber-300 hover:underline font-bold cursor-pointer"
+                      className="text-wine hover:underline font-bold cursor-pointer"
                     >
                       تأیید یا ویرایش pH امروز
                     </button>
@@ -1578,7 +1578,7 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
               <button
                 type="submit"
                 disabled={!hasValidSGInput}
-                className="w-full min-h-[52px] rounded-2xl bg-emerald-500 hover:bg-emerald-400 disabled:bg-stone-700 disabled:text-stone-400 disabled:cursor-not-allowed text-stone-950 text-sm font-bold flex items-center justify-center gap-2 shadow-lg cursor-pointer transition-all"
+                className="w-full min-h-[52px] rounded-2xl bg-wine hover:opacity-95 disabled:bg-paper disabled:text-ink-soft disabled:border disabled:border-line disabled:cursor-not-allowed text-white text-sm font-bold flex items-center justify-center gap-2 shadow-sm cursor-pointer transition-all"
               >
                 <Save className="w-5 h-5" />
                 <span>
@@ -1593,8 +1593,8 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
           {/* MODE 2: ADDITION ('ثبت سریع افزودنی') */}
           {mode === 'addition' && (
             <form onSubmit={handleSaveAddition} className="space-y-4">
-              <div className="bg-stone-950/90 border border-stone-700 rounded-2xl p-3.5 space-y-3">
-                <label className="block text-xs font-bold text-amber-300">
+              <div className="bg-paper border border-line rounded-2xl p-3.5 space-y-3">
+                <label className="block text-xs font-bold text-ink">
                   ۱. انتخاب ماده افزودنی شراب‌سازی:
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
@@ -1608,8 +1608,8 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
                       }}
                       className={`p-2.5 rounded-xl border text-right text-xs font-bold cursor-pointer transition-all ${
                         selectedCompoundType === item.type
-                          ? 'bg-amber-500 text-stone-950 border-amber-300 font-bold'
-                          : 'bg-stone-900 text-stone-300 border-stone-700 hover:bg-stone-800'
+                          ? 'bg-wine text-white border-wine font-bold'
+                          : 'bg-surface text-ink border-line hover:bg-paper'
                       }`}
                     >
                       {item.nameFa}
@@ -1618,11 +1618,11 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
                 </div>
 
                 {/* Safe Empty Input + Gray Placeholder + Explicit Chip */}
-                <div className="pt-2 border-t border-stone-800 space-y-2">
+                <div className="pt-2 border-t border-line space-y-2">
                   <div className="flex items-center justify-between gap-2 flex-wrap">
                     <label
                       htmlFor="quick-addition-amount"
-                      className="text-xs font-bold text-emerald-300"
+                      className="text-xs font-bold text-ink"
                     >
                       ۲. مقدار توزین‌شده ({currentCompoundPreset.unit}):
                     </label>
@@ -1633,7 +1633,7 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
                           String(currentCompoundPreset.defaultDoseG)
                         )
                       }
-                      className="px-2.5 py-1 rounded-lg bg-stone-800 hover:bg-stone-700 border border-stone-600 text-xs font-bold text-amber-200 cursor-pointer"
+                      className="px-2.5 py-1 rounded-lg bg-surface hover:bg-paper border border-line text-xs font-bold text-wine cursor-pointer"
                     >
                       {'استفاده از مقدار قبلی/پروتکل (' +
                         currentCompoundPreset.defaultDoseG +
@@ -1654,7 +1654,7 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
                     }
                     value={rawAdditionAmount}
                     onChange={(e) => setRawAdditionAmount(e.target.value)}
-                    className="w-full min-h-[52px] bg-stone-900 border-2 border-amber-500/80 rounded-xl px-3 text-center text-xl font-mono font-bold text-white placeholder:text-stone-500 placeholder:text-xs"
+                    className="w-full min-h-[52px] bg-surface border-2 border-wine/60 rounded-xl px-3 text-center text-xl font-mono font-bold text-ink placeholder:text-ink-soft placeholder:text-xs"
                   />
                 </div>
 
@@ -1664,14 +1664,14 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
                     value={additionLotNumber}
                     onChange={(e) => setAdditionLotNumber(e.target.value)}
                     placeholder="شماره بچ/لات ماده (اختیاری)..."
-                    className="min-h-[42px] bg-stone-900 border border-stone-700 rounded-xl px-3 text-xs text-white"
+                    className="min-h-[42px] bg-surface border border-line rounded-xl px-3 text-xs text-ink"
                   />
                   <input
                     type="text"
                     value={additionNote}
                     onChange={(e) => setAdditionNote(e.target.value)}
                     placeholder="یادداشت اپراتور (اختیاری)..."
-                    className="min-h-[42px] bg-stone-900 border border-stone-700 rounded-xl px-3 text-xs text-white"
+                    className="min-h-[42px] bg-surface border border-line rounded-xl px-3 text-xs text-ink"
                   />
                 </div>
               </div>
@@ -1679,7 +1679,7 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
               <button
                 type="submit"
                 disabled={parsedAdditionAmount === null}
-                className="w-full min-h-[52px] rounded-2xl bg-emerald-500 hover:bg-emerald-400 disabled:bg-stone-700 disabled:text-stone-400 disabled:cursor-not-allowed text-stone-950 text-sm font-bold flex items-center justify-center gap-2 shadow-lg cursor-pointer transition-all"
+                className="w-full min-h-[52px] rounded-2xl bg-wine hover:opacity-95 disabled:bg-paper disabled:text-ink-soft disabled:border disabled:border-line disabled:cursor-not-allowed text-white text-sm font-bold flex items-center justify-center gap-2 shadow-sm cursor-pointer transition-all"
               >
                 <Sparkles className="w-5 h-5" />
                 <span>
@@ -1694,8 +1694,8 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
           {/* MODE 3: LAB ('ثبت سریع آزمایش') */}
           {mode === 'lab' && (
             <form onSubmit={handleSaveLabAnalysis} className="space-y-4">
-              <div className="bg-stone-950/90 border border-stone-700 rounded-2xl p-3.5 space-y-3">
-                <label className="block text-xs font-bold text-amber-300">
+              <div className="bg-paper border border-line rounded-2xl p-3.5 space-y-3">
+                <label className="block text-xs font-bold text-ink">
                   ۱. انتخاب نوع آزمایش کنترل کیفیت:
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
@@ -1709,8 +1709,8 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
                       }}
                       className={`p-2.5 rounded-xl border text-right text-xs font-bold cursor-pointer transition-all ${
                         selectedLabTestType === item.testType
-                          ? 'bg-amber-500 text-stone-950 border-amber-300 font-bold'
-                          : 'bg-stone-900 text-stone-300 border-stone-700 hover:bg-stone-800'
+                          ? 'bg-wine text-white border-wine font-bold'
+                          : 'bg-surface text-ink border-line hover:bg-paper'
                       }`}
                     >
                       {item.titleFa}
@@ -1719,18 +1719,18 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
                 </div>
 
                 {/* Safe Empty Input + Gray Placeholder + Explicit Chip */}
-                <div className="pt-2 border-t border-stone-800 space-y-2">
+                <div className="pt-2 border-t border-line space-y-2">
                   <div className="flex items-center justify-between gap-2 flex-wrap">
                     <label
                       htmlFor="quick-lab-value"
-                      className="text-xs font-bold text-emerald-300"
+                      className="text-xs font-bold text-ink"
                     >
                       ۲. نتیجه آزمایش ({currentLabPreset.unit}):
                     </label>
                     <button
                       type="button"
                       onClick={() => setRawLabValue(currentLabPreset.defaultVal)}
-                      className="px-2.5 py-1 rounded-lg bg-stone-800 hover:bg-stone-700 border border-stone-600 text-xs font-bold text-amber-200 cursor-pointer"
+                      className="px-2.5 py-1 rounded-lg bg-surface hover:bg-paper border border-line text-xs font-bold text-wine cursor-pointer"
                     >
                       {'استفاده از مقدار قبلی/هدف (' +
                         currentLabPreset.defaultVal +
@@ -1753,7 +1753,7 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
                     }
                     value={rawLabValue}
                     onChange={(e) => setRawLabValue(e.target.value)}
-                    className="w-full min-h-[52px] bg-stone-900 border-2 border-amber-500/80 rounded-xl px-3 text-center text-xl font-mono font-bold text-white placeholder:text-stone-500 placeholder:text-xs"
+                    className="w-full min-h-[52px] bg-surface border-2 border-wine/60 rounded-xl px-3 text-center text-xl font-mono font-bold text-ink placeholder:text-ink-soft placeholder:text-xs"
                   />
                 </div>
 
@@ -1762,14 +1762,14 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
                   value={labNote}
                   onChange={(e) => setLabNote(e.target.value)}
                   placeholder="توضیحات آزمایشگاهی (اختیاری)..."
-                  className="w-full min-h-[42px] bg-stone-900 border border-stone-700 rounded-xl px-3 text-xs text-white"
+                  className="w-full min-h-[42px] bg-surface border border-line rounded-xl px-3 text-xs text-ink"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={!hasValidLabInput}
-                className="w-full min-h-[52px] rounded-2xl bg-emerald-500 hover:bg-emerald-400 disabled:bg-stone-700 disabled:text-stone-400 disabled:cursor-not-allowed text-stone-950 text-sm font-bold flex items-center justify-center gap-2 shadow-lg cursor-pointer transition-all"
+                className="w-full min-h-[52px] rounded-2xl bg-wine hover:opacity-95 disabled:bg-paper disabled:text-ink-soft disabled:border disabled:border-line disabled:cursor-not-allowed text-white text-sm font-bold flex items-center justify-center gap-2 shadow-sm cursor-pointer transition-all"
               >
                 <FlaskConical className="w-5 h-5" />
                 <span>
@@ -1799,7 +1799,7 @@ export const QuickTenSecondLogModal: React.FC<QuickTenSecondLogModalProps> = ({
           onClose();
         }
       }}
-      className="fixed inset-0 z-50 bg-black/75 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4"
+      className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4"
     >
       {contentCard}
     </div>

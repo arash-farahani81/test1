@@ -40,8 +40,6 @@ import { useFlexibleProtocol, type DynamicProtocolPlan } from '../data/masterPro
 import { useEnologyUi } from '../context/EnologyUiContext.tsx';
 import { getCurrentPersianDateTimeStr } from '../utils/persianDate.ts';
 import { normalizeEnologyNumericInput } from '../utils/enologyUtils.ts';
-import { FlexibleProtocolCustomizerBar } from './FlexibleProtocolCustomizerBar.tsx';
-import { RightNowActionCenter } from './RightNowActionCenter.tsx';
 import { QuickTenSecondLogModal } from './QuickTenSecondLogModal.tsx';
 import type { TankId, FermentationLogEntry } from '../types/tracking.ts';
 import type { ChemicalAddition, LabAnalysisRecord } from '../types/database.ts';
@@ -792,92 +790,32 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
     <div className="space-y-6 font-['Vazirmatn',sans-serif]">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-5 left-5 z-50 bg-stone-900 text-white border-r-4 border-emerald-500 px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 text-xs">
-          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+        <div className="fixed bottom-5 left-5 z-50 bg-surface text-ink border border-line border-r-4 border-r-emerald-600 px-4 py-3 rounded-xl shadow-lg flex items-center gap-2 text-xs font-bold">
+          <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
           <span>{toastMessage}</span>
         </div>
       )}
 
-      {/* Clean Header Bar with Overall Progress & Direct Link to Unified Tank Logbook (Pillar 2) */}
-      <div className="bg-stone-900 text-stone-100 p-4 sm:p-5 rounded-2xl border-b-4 border-rose-800 shadow-xl flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-        <div className="flex items-start sm:items-center gap-3">
-          <div className="w-11 h-11 rounded-xl bg-amber-600/20 border border-amber-500/40 text-amber-300 flex items-center justify-center shrink-0">
-            <Compass className="w-6 h-6" />
-          </div>
-          <div>
-            <div className="flex items-center gap-2 flex-wrap">
-              <h2 className="text-base sm:text-lg font-bold text-white">
-                میز کار عملیاتی و نقشه راه اجرایی صفر تا صد (۴۶ گام استاندارد)
-              </h2>
-              <span className="text-xs font-mono tabular-nums bg-emerald-950 text-emerald-300 border border-emerald-700 px-3 py-0.5 rounded-full font-bold">
-                پیشرفت کل: {progressPercent}٪ ({completedCount} از {totalStepsCount} گام)
-              </span>
-            </div>
-            <p className="text-xs text-stone-400 mt-1">
-              اجرای گام‌به‌گام مستر پروتکل ۴۰۰ کیلوگرم انگور رشه سردشت از روز صفر (پذیرش) تا روز ۱۰۳ (بطری‌گذاری و موم‌بندی)
-            </p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-2 flex-wrap shrink-0">
-          <button
-            type="button"
-            onClick={() => setShowFlexibleCustomizer((prev) => !prev)}
-            className={`px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 border ${
-              showFlexibleCustomizer || isModifiedFromIdeal
-                ? 'bg-amber-500/20 border-amber-400 text-amber-200'
-                : 'bg-stone-800 hover:bg-stone-700 border-stone-700 text-stone-200'
-            }`}
-          >
-            <Sliders className="w-4 h-4 text-amber-400" />
-            <span>تنظیمات منعطف مقیاس و ضرایب پروتکل ({flexParams.grapeWeightKg}kg)</span>
-            {showFlexibleCustomizer ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setShowTimerHub((prev) => !prev)}
-            className={`px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 border ${
-              showTimerHub || Object.values(timerRunning).some(Boolean)
-                ? 'bg-emerald-600/25 border-emerald-400 text-emerald-200'
-                : 'bg-stone-800 hover:bg-stone-700 border-stone-700 text-stone-200'
-            }`}
-          >
-            <Timer className="w-4 h-4 text-emerald-400" />
-            <span>⏱️ سیستم زمان‌بندی شناور و تایمرهای کارگاه ({allTimers.length})</span>
-            {showTimerHub ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
-          </button>
-
-          {onNavigateToTracking && (
-            <button
-              type="button"
-              onClick={onNavigateToTracking}
-              className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-rose-700 to-rose-800 hover:from-rose-800 hover:to-rose-900 text-white text-xs font-bold transition-all cursor-pointer flex items-center gap-2 shadow-md shadow-rose-950/50"
-            >
-              <span>مشاهده دفتر ثبت جامع و نمودارهای مخازن (لاگ‌شیت)</span>
-              <ArrowLeft className="w-3.5 h-3.5" />
-            </button>
-          )}
-        </div>
-      </div>
-
       {/* 5-Stage Connected Phase Stepper Bar at Top (کراش ← تخمیر ← پرس ← پس از تخمیر ← بطری‌گذاری) */}
-      <div className="bg-white border border-stone-200 rounded-2xl p-4 shadow-sm space-y-3">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <Layers className="w-4 h-4 text-rose-700" />
-            <h3 className="text-xs sm:text-sm font-bold text-stone-900">
+      <div className="bg-surface border border-line rounded-2xl p-4 sm:p-5 shadow-sm space-y-3">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5 flex-wrap">
+            <Layers className="w-4 h-4 text-wine shrink-0" />
+            <h2 className="text-sm sm:text-base font-bold text-ink">
               نوار پیشرفت ۵ مرحله‌ای نقشه راه (کراش ← تخمیر ← پرس ← پس از تخمیر ← بطری‌گذاری)
-            </h3>
+            </h2>
+            <span className="text-xs font-mono tabular-nums bg-emerald-50 text-emerald-900 border border-emerald-300 px-2.5 py-0.5 rounded-full font-bold">
+              پیشرفت کل: {progressPercent}٪ ({completedCount} از {totalStepsCount} گام)
+            </span>
           </div>
           <div className="flex items-center gap-1.5 flex-wrap">
             <button
               type="button"
               onClick={() => setFilterPhase(activePhaseNumber)}
-              className={`px-3 py-1 rounded-lg text-xs font-bold cursor-pointer transition-all ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold cursor-pointer transition-all ${
                 filterPhase === activePhaseNumber
-                  ? 'bg-rose-800 text-white shadow-xs'
-                  : 'bg-rose-50 text-rose-900 border border-rose-200 hover:bg-rose-100'
+                  ? 'bg-wine text-white shadow-xs'
+                  : 'bg-paper text-ink border border-line hover:bg-surface'
               }`}
             >
               فاز فعال فعلی (فاز {activePhaseNumber})
@@ -885,14 +823,37 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
             <button
               type="button"
               onClick={() => setFilterPhase('all')}
-              className={`px-3 py-1 rounded-lg text-xs font-bold cursor-pointer transition-all ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold cursor-pointer transition-all ${
                 filterPhase === 'all'
-                  ? 'bg-stone-900 text-white shadow-xs'
-                  : 'bg-stone-100 text-stone-700 border border-stone-300 hover:bg-stone-200'
+                  ? 'bg-wine text-white shadow-xs'
+                  : 'bg-paper text-ink border border-line hover:bg-surface'
               }`}
             >
               نمایش همه فازها (All)
             </button>
+            <button
+              type="button"
+              onClick={() => setShowTimerHub((prev) => !prev)}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 border ${
+                showTimerHub || Object.values(timerRunning).some(Boolean)
+                  ? 'bg-wine text-white border-wine'
+                  : 'bg-paper hover:bg-surface border-line text-ink'
+              }`}
+            >
+              <Timer className="w-3.5 h-3.5" />
+              <span>تایمرهای کارگاه ({allTimers.length})</span>
+              {showTimerHub ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+            </button>
+            {onNavigateToTracking && (
+              <button
+                type="button"
+                onClick={onNavigateToTracking}
+                className="px-3 py-1.5 rounded-lg bg-paper hover:bg-surface border border-line text-ink text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5"
+              >
+                <span>مشاهده دفتر ثبت و نمودارهای مخازن</span>
+                <ArrowLeft className="w-3.5 h-3.5" />
+              </button>
+            )}
           </div>
         </div>
 
@@ -955,38 +916,38 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
                 onClick={() => setFilterPhase(stage.primaryPhaseId)}
                 className={`p-3 rounded-xl border text-right transition-all cursor-pointer flex flex-col justify-between gap-2 relative ${
                   isStageActive
-                    ? 'bg-rose-50/90 border-rose-500 ring-2 ring-rose-200 shadow-xs'
+                    ? 'bg-paper border-wine ring-1 ring-wine/30 shadow-xs'
                     : isStageCompleted
                     ? 'bg-emerald-50/70 border-emerald-300'
-                    : 'bg-stone-50 border-stone-200 hover:border-stone-300'
+                    : 'bg-paper border-line hover:bg-surface'
                 }`}
               >
                 <div className="flex items-center justify-between gap-1.5">
-                  <span className="text-xs font-bold text-stone-900 flex items-center gap-1">
+                  <span className="text-xs font-bold text-ink flex items-center gap-1">
                     {isStageCompleted ? (
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
                     ) : isStageActive ? (
-                      <PlayCircle className="w-4 h-4 text-rose-700 shrink-0" />
+                      <PlayCircle className="w-4 h-4 text-wine shrink-0" />
                     ) : (
-                      <Circle className="w-4 h-4 text-stone-400 shrink-0" />
+                      <Circle className="w-4 h-4 text-ink-soft shrink-0" />
                     )}
                     <span>{stage.titleFa}</span>
                   </span>
-                  <span className="text-xs font-mono font-bold px-1.5 py-0.5 rounded bg-white border border-stone-200 text-stone-700">
+                  <span className="text-xs font-mono font-bold px-1.5 py-0.5 rounded bg-surface border border-line text-ink">
                     {stageDoneCount}/{stageTotal} ({stagePct}٪)
                   </span>
                 </div>
-                <p className="text-xs text-stone-500 truncate">
+                <p className="text-xs text-ink-soft truncate">
                   {stage.subtitleFa}
                 </p>
-                <div className="w-full h-1.5 bg-stone-200 rounded-full overflow-hidden">
+                <div className="w-full h-1.5 bg-line rounded-full overflow-hidden">
                   <div
                     className={`h-full transition-all ${
                       isStageCompleted
-                        ? 'bg-emerald-600'
+                        ? 'bg-emerald-700'
                         : isStageActive
-                        ? 'bg-rose-700'
-                        : 'bg-amber-500'
+                        ? 'bg-wine'
+                        : 'bg-amber-600'
                     }`}
                     style={{ width: `${stagePct}%` }}
                   />
@@ -994,7 +955,7 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
                 {idx < arr.length - 1 && (
                   <span
                     aria-hidden="true"
-                    className="hidden sm:inline-block absolute -left-2.5 top-1/2 -translate-y-1/2 text-stone-400 text-xs font-bold z-10"
+                    className="hidden sm:inline-block absolute -left-2.5 top-1/2 -translate-y-1/2 text-ink-soft text-xs font-bold z-10"
                   >
                     ←
                   </span>
@@ -1004,20 +965,6 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
           })}
         </div>
       </div>
-
-      {/* Collapsible Flexible Protocol Parameter Studio directly inside Pillar 1 */}
-      {showFlexibleCustomizer && (
-        <FlexibleProtocolCustomizerBar defaultExpanded={true} />
-      )}
-
-      {/* Unified Right Now Action Center («همین الان») at the top of Pillar 1 */}
-      <RightNowActionCenter
-        key={rightNowRefreshKey}
-        activeTankId={quickTank}
-        onTankChange={(tId) => setQuickTank(tId)}
-        onOpenQuickLogModal={() => setIsQuickLogModalOpen(true)}
-        onDataChanged={() => setRightNowRefreshKey((k) => k + 1)}
-      />
 
       {/* 10-Second Wet-Hands Daily Logger Modal */}
       <QuickTenSecondLogModal
@@ -1032,41 +979,41 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
 
       {/* Interactive Day-0 Event Anchor & Cellar Multi-Mode Timer System */}
       {showTimerHub && (
-        <div className="bg-stone-900 text-stone-100 rounded-2xl border-2 border-emerald-700/80 shadow-xl p-4 sm:p-5 space-y-6">
+        <div className="bg-surface text-ink rounded-2xl border border-line shadow-sm p-4 sm:p-5 space-y-6">
           {/* Header */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-stone-800 pb-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-line pb-3">
             <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 flex items-center justify-center shrink-0">
+              <div className="w-9 h-9 rounded-xl bg-wine/10 border border-wine/30 text-wine flex items-center justify-center shrink-0">
                 <Timer className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-sm sm:text-base font-bold text-white">
-                  ⏱️ سیستم زمان‌بندی شناور و تایمرهای منعطف کارگاهی
+                <h3 className="text-sm sm:text-base font-bold text-ink">
+                  سیستم زمان‌بندی شناور و تایمرهای منعطف کارگاهی
                 </h3>
-                <p className="text-xs text-stone-400">
-                  تنظیم زمان‌بندی شناور روز صفر بر اساس لحظه واقعی پایان کراش + تایمرهای هوشمند چندحالته با قابلیت تغییر زمان، تایمر سفارشی و حالت اضافه time (Overtime)
+                <p className="text-xs text-ink-soft">
+                  تنظیم زمان‌بندی شناور روز صفر بر اساس لحظه واقعی پایان کراش + تایمرهای هوشمند چندحالته با قابلیت تغییر زمان، تایمر سفارشی و حالت اضافه زمان (Overtime)
                 </p>
               </div>
             </div>
             <button
               type="button"
               onClick={() => setShowTimerHub(false)}
-              className="text-xs text-stone-400 hover:text-white self-end sm:self-center cursor-pointer px-2.5 py-1 rounded-lg bg-stone-800"
+              className="text-xs text-ink-soft hover:text-ink self-end sm:self-center cursor-pointer px-2.5 py-1 rounded-lg bg-paper border border-line"
             >
               بستن پنل زمان‌بندی
             </button>
           </div>
 
           {/* 1. DYNAMIC EVENT-DRIVEN ANCHOR TIME & SHIFTED CLOCK SCHEDULE */}
-          <div className="bg-stone-950/90 rounded-xl border border-amber-500/40 p-4 space-y-4">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-stone-800 pb-3">
+          <div className="bg-paper rounded-xl border border-line p-4 space-y-4">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-line pb-3">
               <div className="flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-amber-400 shrink-0" />
+                <MapPin className="w-4 h-4 text-wine shrink-0" />
                 <div>
-                  <h4 className="text-xs sm:text-sm font-bold text-amber-300">
+                  <h4 className="text-xs sm:text-sm font-bold text-ink">
                     ثبت لحظه واقعی پایان کراش / شروع مرجع زمان‌بندی روز صفر
                   </h4>
-                  <p className="text-xs text-stone-400">
+                  <p className="text-xs text-ink-soft">
                     محاسبه خودکار و پویای زمان‌بندی مایلستون‌های روز صفر بر اساس ساعت واقعی پایان کراش کارگاه شما
                   </p>
                 </div>
@@ -1076,30 +1023,30 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
                 <button
                   type="button"
                   onClick={setCurrentTimeAsAnchor}
-                  className="px-3 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 shadow-sm"
+                  className="px-3 py-1.5 rounded-lg bg-wine hover:opacity-95 text-white text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 shadow-xs"
                 >
                   <Clock className="w-3.5 h-3.5" />
                   <span>ثبت ساعت فعلی به عنوان لحظه واقعی اتمام کراش / شروع زمانبندی روز صفر</span>
                 </button>
 
-                <div className="flex items-center gap-1.5 bg-stone-800 border border-stone-700 px-2.5 py-1 rounded-lg">
-                  <span className="text-xs text-stone-300 font-bold">ساعت مرجع دستی:</span>
+                <div className="flex items-center gap-1.5 bg-surface border border-line px-2.5 py-1 rounded-lg">
+                  <span className="text-xs text-ink font-bold">ساعت مرجع دستی:</span>
                   <input
                     type="time"
                     value={anchorTime}
                     onChange={(e) => setAnchorTime(e.target.value)}
-                    className="bg-stone-900 border border-stone-600 text-amber-300 font-mono text-xs font-bold rounded px-2 py-0.5 focus:outline-none focus:border-amber-400"
+                    className="bg-paper border border-line text-ink font-mono text-xs font-bold rounded px-2 py-0.5 focus:outline-none focus:border-wine"
                   />
                 </div>
               </div>
             </div>
 
             {/* Adjustable Offsets */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-stone-900/80 p-3 rounded-lg border border-stone-800 text-xs">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-surface p-3 rounded-lg border border-line text-xs">
               <div className="flex items-center justify-between gap-2">
-                <label className="text-stone-300 font-bold flex items-center gap-1">
+                <label className="text-ink font-bold flex items-center gap-1">
                   <span>ماسراسیون سرد رُزه تا سانیه:</span>
-                  <span className="text-amber-300 font-mono">({saigneeOffsetHours} ساعت)</span>
+                  <span className="text-wine font-mono">({saigneeOffsetHours} ساعت)</span>
                 </label>
                 <div className="flex items-center gap-1">
                   <input
@@ -1109,15 +1056,15 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
                     step="0.25"
                     value={saigneeOffsetHours}
                     onChange={(e) => setSaigneeOffsetHours(Number(e.target.value))}
-                    className="w-24 accent-amber-500 cursor-pointer"
+                    className="w-24 accent-wine cursor-pointer"
                   />
                 </div>
               </div>
 
               <div className="flex items-center justify-between gap-2">
-                <label className="text-stone-300 font-bold flex items-center gap-1">
+                <label className="text-ink font-bold flex items-center gap-1">
                   <span>استراحت آنزیم تا تست الکل و تانن:</span>
-                  <span className="text-amber-300 font-mono">({enzymeOffsetHours} ساعت)</span>
+                  <span className="text-wine font-mono">({enzymeOffsetHours} ساعت)</span>
                 </label>
                 <div className="flex items-center gap-1">
                   <input
@@ -1127,7 +1074,7 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
                     step="0.5"
                     value={enzymeOffsetHours}
                     onChange={(e) => setEnzymeOffsetHours(Number(e.target.value))}
-                    className="w-24 accent-amber-500 cursor-pointer"
+                    className="w-24 accent-wine cursor-pointer"
                   />
                 </div>
               </div>
@@ -1141,18 +1088,18 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
                   onClick={() => setCurrentStepId(ms.stepId)}
                   className={`p-2.5 rounded-lg border text-right transition-all cursor-pointer ${
                     currentStepId === ms.stepId
-                      ? 'bg-amber-950/80 border-amber-400 ring-1 ring-amber-400'
-                      : 'bg-stone-900 border-stone-800 hover:border-stone-700'
+                      ? 'bg-surface border-wine ring-1 ring-wine/30'
+                      : 'bg-surface border-line hover:bg-paper'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-xs font-bold text-stone-400">گام {ms.stepId}</span>
-                    <span className="text-xs font-mono font-bold text-emerald-400 bg-stone-950 px-2 py-0.5 rounded border border-emerald-900">
+                    <span className="text-xs font-bold text-ink-soft">گام {ms.stepId}</span>
+                    <span className="text-xs font-mono font-bold text-wine bg-paper px-2 py-0.5 rounded border border-line">
                       {ms.clockTime}
                     </span>
                   </div>
-                  <h5 className="text-xs font-bold text-white truncate">{ms.title}</h5>
-                  <p className="text-xs text-amber-300/90 mt-0.5 font-mono">{ms.offsetLabel}</p>
+                  <h5 className="text-xs font-bold text-ink truncate">{ms.title}</h5>
+                  <p className="text-xs text-ink-soft mt-0.5 font-mono">{ms.offsetLabel}</p>
                 </div>
               ))}
             </div>
@@ -1162,9 +1109,9 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
           <div className="space-y-3">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div className="flex items-center gap-2">
-                <Zap className="w-4 h-4 text-emerald-400" />
-                <h4 className="text-xs sm:text-sm font-bold text-white">
-                  ⏱️ تایمرهای هوشمند چندحالته ایستگاه‌ها (دارای کنترل زنده و زمان اضافه Overtime)
+                <Zap className="w-4 h-4 text-wine" />
+                <h4 className="text-xs sm:text-sm font-bold text-ink">
+                  تایمرهای هوشمند چندحالته ایستگاه‌ها (دارای کنترل زنده و زمان اضافه Overtime)
                 </h4>
               </div>
 
@@ -1175,7 +1122,7 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
                   value={newCustomTitle}
                   onChange={(e) => setNewCustomTitle(e.target.value)}
                   placeholder="عنوان تایمر سفارشی..."
-                  className="bg-stone-800 border border-stone-700 text-xs text-white rounded-lg px-2.5 py-1 focus:outline-none focus:border-emerald-500 w-36"
+                  className="bg-paper border border-line text-xs text-ink rounded-lg px-2.5 py-1 focus:outline-none focus:border-wine w-36"
                 />
                 <input
                   type="number"
@@ -1184,14 +1131,14 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
                   value={newCustomMins}
                   onChange={(e) => setNewCustomMins(Number(e.target.value))}
                   placeholder="دقیقه"
-                  className="bg-stone-800 border border-stone-700 text-xs text-amber-300 font-mono font-bold rounded-lg px-2 py-1 focus:outline-none focus:border-emerald-500 w-16 text-center"
+                  className="bg-paper border border-line text-xs text-ink font-mono font-bold rounded-lg px-2 py-1 focus:outline-none focus:border-wine w-16 text-center"
                 />
                 <button
                   type="submit"
-                  className="px-3 py-1 rounded-lg bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-bold transition-all cursor-pointer flex items-center gap-1"
+                  className="px-3 py-1 rounded-lg bg-wine hover:opacity-95 text-white text-xs font-bold transition-all cursor-pointer flex items-center gap-1"
                 >
                   <Plus className="w-3.5 h-3.5" />
-                  <span>+ ساخت تایمر/کرنومتر سفارشی کارگاه</span>
+                  <span>ساخت تایمر/کرنومتر سفارشی کارگاه</span>
                 </button>
               </form>
             </div>
@@ -1216,63 +1163,63 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
                     key={t.id}
                     className={`p-3.5 rounded-xl border transition-all flex flex-col justify-between gap-3 ${
                       isOvertime
-                        ? 'bg-rose-950/90 border-rose-500 ring-2 ring-rose-500/50'
+                        ? 'bg-red-50 border-danger ring-1 ring-danger/30'
                         : isJustFinished
-                        ? 'bg-emerald-950/90 border-emerald-400 ring-2 ring-emerald-500/50'
+                        ? 'bg-emerald-50 border-emerald-400'
                         : isRunning
-                        ? 'bg-amber-950/70 border-amber-400'
+                        ? 'bg-amber-50 border-amber-300'
                         : isLinkedToCurrent
-                        ? 'bg-stone-800/95 border-rose-500'
-                        : 'bg-stone-800/70 border-stone-700'
+                        ? 'bg-paper border-wine'
+                        : 'bg-paper border-line'
                     }`}
                   >
                     <div className="space-y-1">
                       <div className="flex items-center justify-between gap-1.5">
-                        <span className="text-xs font-bold px-2 py-0.5 rounded bg-stone-900 text-amber-300 border border-stone-700">
+                        <span className="text-xs font-bold px-2 py-0.5 rounded bg-surface text-ink border border-line">
                           گام {t.stepIds.join(' و ')} • {isStopwatch ? 'کرنومتر باز' : `${currentDurationMins} دقیقه`}
                         </span>
                         {t.isCustom ? (
                           <button
                             type="button"
                             onClick={() => handleDeleteCustomTimer(t.id)}
-                            className="text-stone-400 hover:text-rose-400 text-xs p-0.5 cursor-pointer"
+                            className="text-ink-soft hover:text-danger text-xs p-0.5 cursor-pointer"
                             title="حذف تایمر سفارشی"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
                           </button>
                         ) : (
-                          <span className="text-xs text-stone-400 bg-stone-900/80 px-1.5 py-0.5 rounded">
+                          <span className="text-xs text-ink-soft bg-surface px-1.5 py-0.5 rounded border border-line">
                             {t.flexibleWindow}
                           </span>
                         )}
                       </div>
-                      <h4 className="text-xs font-bold text-white leading-snug pt-0.5">{t.title}</h4>
-                      <p className="text-xs text-stone-400 leading-relaxed">{t.stationNote}</p>
+                      <h4 className="text-xs font-bold text-ink leading-snug pt-0.5">{t.title}</h4>
+                      <p className="text-xs text-ink-soft leading-relaxed">{t.stationNote}</p>
                     </div>
 
                     <div className="space-y-2 pt-1">
                       {/* Timer Display */}
-                      <div className="flex items-baseline justify-between bg-stone-950 p-2 rounded-lg border border-stone-800">
+                      <div className="flex items-baseline justify-between bg-surface p-2 rounded-lg border border-line">
                         {isStopwatch ? (
                           <div className="flex items-center justify-between w-full">
-                            <span className="text-xs text-stone-400">زمان صرف‌شده (کرنومتر):</span>
-                            <span className="font-mono tabular-nums text-lg font-bold text-amber-300">
+                            <span className="text-xs text-ink-soft">زمان صرف‌شده (کرنومتر):</span>
+                            <span className="font-mono tabular-nums text-lg font-bold text-ink">
                               {formatSecondsMMSS(elapsed)}
                             </span>
                           </div>
                         ) : isOvertime ? (
                           <div className="flex items-center justify-between w-full">
-                            <span className="text-xs font-bold text-rose-400 animate-pulse">
+                            <span className="text-xs font-bold text-danger">
                               موعد پیشنهادی فرا رسید!
                             </span>
-                            <span className="font-mono tabular-nums text-base font-bold text-rose-300">
+                            <span className="font-mono tabular-nums text-base font-bold text-danger">
                               +{formatSecondsMMSS(overtimeSecs)} گذشته
                             </span>
                           </div>
                         ) : (
                           <div className="flex items-center justify-between w-full">
-                            <span className="text-xs text-stone-400">زمان باقی‌مانده:</span>
-                            <span className={`font-mono tabular-nums text-lg font-bold ${remaining === 0 ? 'text-emerald-400' : 'text-emerald-300'}`}>
+                            <span className="text-xs text-ink-soft">زمان باقی‌مانده:</span>
+                            <span className="font-mono tabular-nums text-lg font-bold text-ink">
                               {formatSecondsMMSS(remaining)}
                             </span>
                           </div>
@@ -1283,14 +1230,14 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
                       {!isStopwatch && (
                         <div className="space-y-1.5">
                           <div className="flex items-center gap-1 justify-between text-xs">
-                            <span className="text-stone-400">تغییر زمان:</span>
+                            <span className="text-ink-soft">تغییر زمان:</span>
                             <div className="flex items-center gap-1">
                               {[-15, -5, 5, 15, 30].map((delta) => (
                                 <button
                                   key={delta}
                                   type="button"
                                   onClick={() => adjustTimerMinutes(t.id, delta)}
-                                  className="px-1.5 py-0.5 rounded bg-stone-900 hover:bg-stone-700 text-stone-300 text-xs font-mono cursor-pointer border border-stone-700"
+                                  className="px-1.5 py-0.5 rounded bg-surface hover:bg-paper text-ink text-xs font-mono cursor-pointer border border-line"
                                 >
                                   {delta > 0 ? `+${delta}m` : `${delta}m`}
                                 </button>
@@ -1299,14 +1246,14 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
                           </div>
 
                           <div className="flex items-center justify-between gap-1">
-                            <span className="text-xs text-stone-400">تنظیم دقیق دقیقه:</span>
+                            <span className="text-xs text-ink-soft">تنظیم دقیق دقیقه:</span>
                             <input
                               type="number"
                               min="1"
                               max="1440"
                               value={currentDurationMins}
                               onChange={(e) => setTimerExactMinutes(t.id, Number(e.target.value))}
-                              className="w-16 bg-stone-900 border border-stone-700 rounded px-1.5 py-0.5 text-xs font-mono text-amber-300 font-bold text-center focus:outline-none focus:border-amber-400"
+                              className="w-16 bg-surface border border-line rounded px-1.5 py-0.5 text-xs font-mono text-ink font-bold text-center focus:outline-none focus:border-wine"
                             />
                           </div>
                         </div>
@@ -1319,7 +1266,7 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
                             type="button"
                             onClick={() => setTimerExactMinutes(t.id, 20)}
                             className={`flex-1 py-1 rounded text-xs font-bold cursor-pointer border ${
-                              currentDurationMins === 20 ? 'bg-amber-600 text-white border-amber-400' : 'bg-stone-900 text-stone-400 border-stone-800'
+                              currentDurationMins === 20 ? 'bg-wine text-white border-wine' : 'bg-surface text-ink-soft border-line'
                             }`}
                           >
                             آب‌دهی (۲۰m)
@@ -1328,7 +1275,7 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
                             type="button"
                             onClick={() => setTimerExactMinutes(t.id, 8)}
                             className={`flex-1 py-1 rounded text-xs font-bold cursor-pointer border ${
-                              currentDurationMins === 8 ? 'bg-amber-600 text-white border-amber-400' : 'bg-stone-900 text-stone-400 border-stone-800'
+                              currentDurationMins === 8 ? 'bg-wine text-white border-wine' : 'bg-surface text-ink-soft border-line'
                             }`}
                           >
                             هم‌دمایی (۸m)
@@ -1343,8 +1290,8 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
                           onClick={() => toggleTimerRun(t.id)}
                           className={`flex-1 py-1.5 px-2.5 rounded-lg text-xs font-bold cursor-pointer flex items-center justify-center gap-1 transition-all ${
                             isRunning
-                              ? 'bg-amber-600 hover:bg-amber-500 text-white'
-                              : 'bg-emerald-700 hover:bg-emerald-600 text-white'
+                              ? 'bg-amber-600 hover:bg-amber-700 text-white'
+                              : 'bg-wine hover:opacity-95 text-white'
                           }`}
                         >
                           {isRunning ? (
@@ -1362,7 +1309,7 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
                         <button
                           type="button"
                           onClick={() => resetTimer(t.id)}
-                          className="py-1.5 px-2.5 rounded-lg bg-stone-700 hover:bg-stone-600 text-stone-200 text-xs font-bold cursor-pointer flex items-center gap-1"
+                          className="py-1.5 px-2.5 rounded-lg bg-surface hover:bg-paper border border-line text-ink text-xs font-bold cursor-pointer flex items-center gap-1"
                           title="ریست تایمر"
                         >
                           <RotateCcw className="w-3 h-3" />
@@ -1379,24 +1326,24 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
       )}
 
       {/* Active Step Status Dashboard */}
-      <div className="bg-stone-900 text-stone-100 rounded-2xl border border-stone-800 shadow-lg p-5 sm:p-6 space-y-4">
+      <div className="bg-surface text-ink rounded-2xl border border-line shadow-sm p-5 sm:p-6 space-y-4">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="space-y-1">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="bg-rose-900/90 text-rose-200 border border-rose-700 text-xs font-bold px-2.5 py-0.5 rounded-full">
+              <span className="bg-wine text-white text-xs font-bold px-2.5 py-0.5 rounded-full">
                 ایستگاه فعال کارگاه
               </span>
-              <span className="bg-stone-800 text-amber-300 border border-stone-700 text-xs font-bold px-2.5 py-0.5 rounded-full">
+              <span className="bg-paper text-ink border border-line text-xs font-bold px-2.5 py-0.5 rounded-full">
                 {currentStep.phaseName}
               </span>
             </div>
-            <h3 className="text-lg sm:text-xl font-bold text-white flex items-center gap-2 pt-1 flex-wrap">
+            <h3 className="text-lg sm:text-xl font-bold text-ink flex items-center gap-2 pt-1 flex-wrap">
               <span>گام جاری شما:</span>
-              <span className="text-rose-400 font-mono">گام شماره {currentStep.id}</span>
-              <span className="text-stone-200 font-bold text-base sm:text-lg">({currentStep.title})</span>
+              <span className="text-wine font-mono">گام شماره {currentStep.id}</span>
+              <span className="text-ink-soft font-bold text-base sm:text-lg">({currentStep.title})</span>
             </h3>
-            <p className="text-xs text-stone-400">
-              موقعیت زمانی / تریگر هیدرومتر: <strong className="text-amber-300">{currentStep.timeOrTrigger}</strong>
+            <p className="text-xs text-ink-soft">
+              موقعیت زمانی / تریگر هیدرومتر: <strong className="text-ink">{currentStep.timeOrTrigger}</strong>
             </p>
           </div>
 
@@ -1405,17 +1352,17 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
             <button
               type="button"
               onClick={() => setIsQuickLogModalOpen(true)}
-              className="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 shadow-sm"
+              className="px-3.5 py-2 rounded-xl bg-paper hover:bg-surface border border-line text-ink text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 shadow-xs"
             >
-              <Plus className="w-3.5 h-3.5" />
-              <span>+ ثبت در این مرحله</span>
+              <Plus className="w-3.5 h-3.5 text-wine" />
+              <span>ثبت در این مرحله</span>
             </button>
 
             <button
               type="button"
               disabled={currentStepId <= 1}
               onClick={() => setCurrentStepId(currentStepId - 1)}
-              className="px-3 py-2 rounded-xl bg-stone-800 hover:bg-stone-700 disabled:opacity-30 text-stone-200 text-xs font-bold transition-all cursor-pointer flex items-center gap-1 border border-stone-700"
+              className="px-3 py-2 rounded-xl bg-paper hover:bg-surface disabled:opacity-30 text-ink text-xs font-bold transition-all cursor-pointer flex items-center gap-1 border border-line"
             >
               <ArrowRight className="w-3.5 h-3.5" />
               <span>گام قبلی</span>
@@ -1424,10 +1371,10 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
             <button
               type="button"
               onClick={() => toggleStepCompleted(currentStep.id)}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-2 shadow-md ${
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-2 shadow-xs ${
                 completedSteps.includes(currentStep.id)
-                  ? 'bg-emerald-600 hover:bg-emerald-700 text-white'
-                  : 'bg-rose-700 hover:bg-rose-800 text-white'
+                  ? 'bg-emerald-700 hover:bg-emerald-800 text-white'
+                  : 'bg-wine hover:opacity-95 text-white'
               }`}
             >
               <CheckCircle2 className="w-4 h-4" />
@@ -1438,7 +1385,7 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
               type="button"
               disabled={currentStepId >= totalStepsCount}
               onClick={() => setCurrentStepId(currentStepId + 1)}
-              className="px-3 py-2 rounded-xl bg-stone-800 hover:bg-stone-700 disabled:opacity-30 text-stone-200 text-xs font-bold transition-all cursor-pointer flex items-center gap-1 border border-stone-700"
+              className="px-3 py-2 rounded-xl bg-paper hover:bg-surface disabled:opacity-30 text-ink text-xs font-bold transition-all cursor-pointer flex items-center gap-1 border border-line"
             >
               <span>گام بعدی</span>
               <ArrowLeft className="w-3.5 h-3.5" />
@@ -1447,41 +1394,41 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
         </div>
 
         {/* Global Progress Bar */}
-        <div className="w-full bg-stone-800 h-2.5 rounded-full overflow-hidden border border-stone-700">
+        <div className="w-full bg-paper h-2.5 rounded-full overflow-hidden border border-line">
           <div
-            className="bg-gradient-to-r from-amber-500 via-rose-600 to-emerald-500 h-full transition-all duration-500 rounded-full"
+            className="bg-wine h-full transition-all duration-500 rounded-full"
             style={{ width: `${progressPercent}%` }}
           />
         </div>
       </div>
 
       {/* CURRENT ACTIVE STEP INSTRUCTION, CONTEXTUAL CALCULATOR DEEP-LINKS & QUICK LOGGING CARD */}
-      <div className="bg-white rounded-2xl border-2 border-rose-800/80 p-5 sm:p-6 shadow-md space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-stone-100 pb-3">
+      <div className="bg-surface rounded-2xl border border-line p-5 sm:p-6 shadow-sm space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-line pb-3">
           <div className="flex items-center gap-2">
-            <PlayCircle className="w-5 h-5 text-rose-700 shrink-0" />
-            <h3 className="text-base font-bold text-stone-900">
+            <PlayCircle className="w-5 h-5 text-wine shrink-0" />
+            <h3 className="text-base font-bold text-ink">
               دستورالعمل اجرایی کامل گام فعلی شما (گام {currentStep.id}): {currentStep.title}
             </h3>
           </div>
-          <span className="text-xs font-bold px-3 py-1 rounded-full bg-amber-100 text-amber-900 border border-amber-200 shrink-0">
+          <span className="text-xs font-bold px-3 py-1 rounded-full bg-paper text-ink border border-line shrink-0">
             دمای مجاز: {currentStep.targetTemp}
           </span>
         </div>
 
-        <div className="space-y-3 text-xs sm:text-sm text-stone-800 leading-relaxed">
-          <div className="bg-stone-50 p-4 rounded-xl border border-stone-200">
-            <strong className="text-stone-900 block font-bold mb-1.5 flex items-center gap-1.5">
+        <div className="space-y-3 text-xs sm:text-sm text-ink leading-relaxed">
+          <div className="bg-paper p-4 rounded-xl border border-line">
+            <strong className="text-ink block font-bold mb-1.5 flex items-center gap-1.5">
               <CheckSquare className="w-4 h-4 text-emerald-700" />
               <span>اقدام عملیاتی دقیق این مرحله:</span>
             </strong>
-            <p className="text-stone-800 font-medium leading-relaxed">
+            <p className="text-ink font-medium leading-relaxed">
               {currentStep.keyAction}
             </p>
           </div>
 
           {activeStepDynamicSummary && (
-            <div className="bg-emerald-50/90 border-2 border-emerald-400 p-3.5 rounded-xl text-xs text-emerald-950 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+            <div className="bg-emerald-50/90 border border-emerald-300 p-3.5 rounded-xl text-xs text-emerald-950 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
               <div className="flex items-start gap-2">
                 <Sparkles className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5" />
                 <div>
@@ -1491,27 +1438,20 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
                   <span className="font-bold text-emerald-900 leading-relaxed">{activeStepDynamicSummary}</span>
                 </div>
               </div>
-              <button
-                type="button"
-                onClick={() => setShowFlexibleCustomizer((prev) => !prev)}
-                className="px-3 py-1.5 rounded-lg bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-bold shrink-0 cursor-pointer self-start sm:self-center"
-              >
-                {showFlexibleCustomizer ? 'بستن تنظیمات ضرایب' : 'تغییر وزن/ضرایب'}
-              </button>
             </div>
           )}
 
           {activeStepTimers.length > 0 && (
-            <div className="bg-stone-900 text-white p-3.5 rounded-xl border border-amber-500/60 space-y-2.5">
+            <div className="bg-paper text-ink p-3.5 rounded-xl border border-line space-y-2.5">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-amber-300 flex items-center gap-1.5">
-                  <Timer className="w-4 h-4 text-amber-400" />
+                <span className="text-xs font-bold text-ink flex items-center gap-1.5">
+                  <Timer className="w-4 h-4 text-wine" />
                   <span>تایمر عملیاتی ویژه گام {currentStep.id}:</span>
                 </span>
                 <button
                   type="button"
                   onClick={() => setShowTimerHub(true)}
-                  className="text-xs text-stone-300 hover:text-white underline cursor-pointer"
+                  className="text-xs text-wine hover:underline font-bold cursor-pointer"
                 >
                   مشاهده تمام تایمرهای کارگاه
                 </button>
@@ -1527,14 +1467,14 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
                   return (
                     <div
                       key={t.id}
-                      className="bg-stone-800/90 p-3 rounded-lg border border-stone-700 flex items-center justify-between gap-3"
+                      className="bg-surface p-3 rounded-lg border border-line flex items-center justify-between gap-3"
                     >
                       <div>
-                        <div className="text-xs font-bold text-white">{t.title}</div>
-                        <div className="text-xs text-stone-400 mt-0.5">{t.stationNote}</div>
+                        <div className="text-xs font-bold text-ink">{t.title}</div>
+                        <div className="text-xs text-ink-soft mt-0.5">{t.stationNote}</div>
                       </div>
                       <div className="flex items-center gap-2 shrink-0">
-                        <span className={`font-mono tabular-nums text-base font-bold ${isOvertime ? 'text-rose-400' : 'text-amber-300'}`}>
+                        <span className={`font-mono tabular-nums text-base font-bold ${isOvertime ? 'text-danger' : 'text-ink'}`}>
                           {t.mode === 'stopwatch'
                             ? formatSecondsMMSS(elapsed)
                             : isOvertime
@@ -1545,7 +1485,7 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
                           type="button"
                           onClick={() => toggleTimerRun(t.id)}
                           className={`px-2.5 py-1.5 rounded-lg text-xs font-bold cursor-pointer ${
-                            isRunning ? 'bg-amber-600 text-white' : 'bg-emerald-700 text-white'
+                            isRunning ? 'bg-amber-600 text-white' : 'bg-wine text-white'
                           }`}
                         >
                           {isRunning ? 'توقف' : 'شروع'}
@@ -1553,7 +1493,7 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
                         <button
                           type="button"
                           onClick={() => resetTimer(t.id)}
-                          className="p-1.5 rounded-lg bg-stone-700 text-stone-200 hover:bg-stone-600 cursor-pointer"
+                          className="p-1.5 rounded-lg bg-paper text-ink border border-line hover:bg-surface cursor-pointer"
                           title="ریست"
                         >
                           <RotateCcw className="w-3.5 h-3.5" />
@@ -1567,10 +1507,10 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
           )}
 
           {currentStep.criticalWarning && (
-            <div className="bg-rose-50 border border-rose-200 p-3.5 rounded-xl text-xs text-rose-900 flex items-start gap-2">
-              <ShieldAlert className="w-4 h-4 text-rose-700 shrink-0 mt-0.5" />
+            <div className="bg-red-50 border border-danger/30 p-3.5 rounded-xl text-xs text-ink flex items-start gap-2">
+              <ShieldAlert className="w-4 h-4 text-danger shrink-0 mt-0.5" />
               <div>
-                <strong className="font-bold block text-rose-950 mb-0.5">هشدار و نکته خط قرمز کارگاهی:</strong>
+                <strong className="font-bold block text-danger mb-0.5">هشدار و نکته خط قرمز کارگاهی:</strong>
                 <span>{currentStep.criticalWarning}</span>
               </div>
             </div>
@@ -1578,12 +1518,12 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
 
           {/* CONTEXTUAL LAB / CALCULATOR DEEP-LINK BUTTONS FOR THIS STEP */}
           {activeStepLabTools.length > 0 && (
-            <div className="bg-indigo-50/80 border border-indigo-200 p-3.5 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div className="flex items-center gap-2 text-xs text-indigo-950">
-                <FlaskConical className="w-4 h-4 text-indigo-700 shrink-0" />
+            <div className="bg-paper border border-line p-3.5 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="flex items-center gap-2 text-xs text-ink">
+                <FlaskConical className="w-4 h-4 text-wine shrink-0" />
                 <div>
                   <strong className="font-bold block">ابزار مهندسی و دستورالعمل آزمایشگاهی (SOP) مرتبط با گام {currentStep.id}:</strong>
-                  <span className="text-xs text-indigo-800">
+                  <span className="text-xs text-ink-soft">
                     جهت محاسبه دقیق دوز یا مشاهده روش گام‌به‌گام آزمایش این مرحله کلیک کنید
                   </span>
                 </div>
@@ -1594,7 +1534,7 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
                     key={tool.testId}
                     type="button"
                     onClick={() => handleOpenLabTool(tool.testId, 'calculators-sops')}
-                    className="px-3.5 py-2 rounded-xl bg-indigo-900 hover:bg-indigo-800 text-white text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 shadow-xs"
+                    className="px-3.5 py-2 rounded-xl bg-wine hover:opacity-95 text-white text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 shadow-xs"
                   >
                     <span>{tool.label}</span>
                   </button>
@@ -1869,11 +1809,11 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
       </div>
 
       {/* FILTER & SEARCH BAR FOR ALL 46 STEPS */}
-      <div className="bg-white p-4 sm:p-5 rounded-2xl border border-stone-200/80 shadow-xs space-y-3">
+      <div className="bg-surface p-4 sm:p-5 rounded-2xl border border-line shadow-xs space-y-3">
         <div className="flex flex-col md:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <Layers className="w-4 h-4 text-stone-700" />
-            <h3 className="text-xs sm:text-sm font-bold text-stone-900">
+            <Layers className="w-4 h-4 text-wine" />
+            <h3 className="text-xs sm:text-sm font-bold text-ink">
               لیست جامع تمامی ۴۶ گام پروسه از صفر تا صد
             </h3>
           </div>
@@ -1884,7 +1824,7 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="جستجو در مراحل، دوزها یا دماها..."
-              className="bg-stone-50 border border-stone-300 text-xs rounded-lg pr-3 pl-3 py-1.5 text-stone-800 focus:outline-none focus:border-rose-700 flex-1 md:w-52"
+              className="bg-paper border border-line text-xs rounded-lg pr-3 pl-3 py-1.5 text-ink focus:outline-none focus:border-wine flex-1 md:w-52"
             />
 
             <div className="flex items-center gap-1 flex-wrap">
@@ -1903,8 +1843,8 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
                   onClick={() => setFilterPhase(p.id as number | 'all')}
                   className={`px-2.5 py-1 rounded-md text-xs font-bold transition-all cursor-pointer ${
                     filterPhase === p.id
-                      ? 'bg-stone-900 text-white'
-                      : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
+                      ? 'bg-wine text-white'
+                      : 'bg-paper text-ink-soft border border-line hover:bg-surface'
                   }`}
                 >
                   {p.label}
@@ -1927,47 +1867,47 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
                 key={step.id}
                 className={`p-3.5 rounded-xl border transition-all flex flex-col lg:flex-row lg:items-center justify-between gap-3 ${
                   isActive
-                    ? 'bg-rose-50/80 border-rose-500 shadow-sm ring-2 ring-rose-200'
+                    ? 'bg-paper border-wine shadow-xs ring-1 ring-wine/30'
                     : isCompleted
                     ? 'bg-emerald-50/40 border-emerald-200/80 opacity-90'
-                    : 'bg-white border-stone-200/80 hover:border-stone-300'
+                    : 'bg-surface border-line hover:bg-paper'
                 }`}
               >
                 <div className="flex items-start gap-3">
                   <button
                     type="button"
                     onClick={() => toggleStepCompleted(step.id)}
-                    className="mt-0.5 cursor-pointer text-stone-400 hover:text-emerald-600 transition-colors"
+                    className="mt-0.5 cursor-pointer text-ink-soft hover:text-emerald-700 transition-colors"
                     title={isCompleted ? 'علامت‌گذاری به عنوان انجام نشده' : 'علامت‌گذاری به عنوان انجام شده'}
                   >
                     {isCompleted ? (
-                      <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+                      <CheckCircle2 className="w-5 h-5 text-emerald-700" />
                     ) : (
-                      <Circle className="w-5 h-5 text-stone-300" />
+                      <Circle className="w-5 h-5 text-ink-soft" />
                     )}
                   </button>
 
                   <div className="space-y-1">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-mono text-xs font-bold text-rose-900 bg-rose-100 px-2 py-0.2 rounded">
+                      <span className="font-mono text-xs font-bold text-wine bg-paper border border-line px-2 py-0.5 rounded">
                         گام {step.id}
                       </span>
                       <h4
                         onClick={() => handleSelectStep(step.id)}
-                        className="text-xs sm:text-sm font-bold text-stone-900 hover:text-rose-800 cursor-pointer"
+                        className="text-xs sm:text-sm font-bold text-ink hover:text-wine cursor-pointer"
                       >
                         {step.title}
                       </h4>
                       {isActive && (
-                        <span className="text-xs bg-rose-700 text-white font-bold px-2 py-0.2 rounded-full">
+                        <span className="text-xs bg-wine text-white font-bold px-2 py-0.5 rounded-full">
                           موقعیت فعلی شما
                         </span>
                       )}
                     </div>
-                    <p className="text-xs text-stone-600 leading-relaxed">
-                      موقعیت/تریگر: <strong className="text-stone-800">{step.timeOrTrigger}</strong> • دما: <strong className="text-stone-800">{step.targetTemp}</strong>
+                    <p className="text-xs text-ink-soft leading-relaxed">
+                      موقعیت/تریگر: <strong className="text-ink">{step.timeOrTrigger}</strong> • دما: <strong className="text-ink">{step.targetTemp}</strong>
                     </p>
-                    <p className="text-xs text-stone-700 leading-relaxed font-normal">
+                    <p className="text-xs text-ink leading-relaxed font-normal">
                       {step.keyAction}
                     </p>
                     {stepDynSummary && (
@@ -1984,7 +1924,7 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
                       key={tool.testId}
                       type="button"
                       onClick={() => handleOpenLabTool(tool.testId, 'calculators-sops')}
-                      className="px-2.5 py-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-900 border border-indigo-200 text-xs font-bold transition-all cursor-pointer flex items-center gap-1"
+                      className="px-2.5 py-1.5 rounded-lg bg-paper hover:bg-surface text-ink border border-line text-xs font-bold transition-all cursor-pointer flex items-center gap-1"
                     >
                       <span>{tool.shortLabel}</span>
                     </button>
@@ -1996,10 +1936,10 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
                       handleSelectStep(step.id);
                       setIsQuickLogModalOpen(true);
                     }}
-                    className="px-2.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-all cursor-pointer flex items-center gap-1 shadow-xs"
+                    className="px-2.5 py-1.5 rounded-lg bg-paper hover:bg-surface border border-line text-ink text-xs font-bold transition-all cursor-pointer flex items-center gap-1 shadow-xs"
                   >
-                    <Plus className="w-3.5 h-3.5" />
-                    <span>+ ثبت در این مرحله</span>
+                    <Plus className="w-3.5 h-3.5 text-wine" />
+                    <span>ثبت در این مرحله</span>
                   </button>
 
                   <button
@@ -2007,8 +1947,8 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
                     onClick={() => handleSelectStep(step.id)}
                     className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1 ${
                       isActive
-                        ? 'bg-rose-800 text-white'
-                        : 'bg-stone-100 hover:bg-stone-200 text-stone-800'
+                        ? 'bg-wine text-white'
+                        : 'bg-paper hover:bg-surface border border-line text-ink'
                     }`}
                   >
                     <span>{isActive ? 'نمایش کامل' : 'انتخاب گام'}</span>
@@ -2019,7 +1959,7 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
           })}
 
           {filteredSteps.length === 0 && (
-            <p className="text-xs text-stone-500 py-6 text-center">
+            <p className="text-xs text-ink-soft py-6 text-center">
               هیچ گامی با عبارت جستجو یا فیلتر فعلی یافت نشد.
             </p>
           )}
@@ -2030,17 +1970,17 @@ export const ProcessRoadmapTracker: React.FC<ProcessRoadmapTrackerProps> = ({
       <button
         type="button"
         onClick={() => setShowTimerHub((prev) => !prev)}
-        className={`fixed bottom-20 left-4 z-30 md:bottom-6 px-4 py-2.5 rounded-2xl border-2 text-xs font-bold shadow-2xl transition-all cursor-pointer flex items-center gap-2 no-print ${
+        className={`fixed bottom-20 left-4 z-30 md:bottom-6 px-4 py-2.5 rounded-2xl border text-xs font-bold shadow-lg transition-all cursor-pointer flex items-center gap-2 no-print ${
           activeTimerCount > 0
-            ? 'bg-emerald-700 text-white border-emerald-300 ring-4 ring-emerald-500/30 animate-pulse'
-            : 'bg-stone-900/95 text-stone-100 border-stone-700 hover:bg-stone-800'
+            ? 'bg-wine text-white border-wine'
+            : 'bg-surface text-ink border-line hover:bg-paper'
         }`}
       >
+        <Timer className="w-4 h-4 shrink-0" />
         <span>
-          {'⏱ ' +
-            (activeTimerCount > 0
-              ? activeTimerCount + ' تایمر فعال'
-              : 'تایمرهای کارگاهی')}
+          {activeTimerCount > 0
+            ? activeTimerCount + ' تایمر فعال'
+            : 'تایمرهای کارگاهی'}
         </span>
       </button>
     </div>

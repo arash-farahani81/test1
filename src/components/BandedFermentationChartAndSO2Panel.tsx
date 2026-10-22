@@ -343,15 +343,15 @@ export const BandedFermentationChartAndSO2Panel: React.FC<
   return (
     <div className="space-y-4 font-['Vazirmatn',sans-serif]">
       {/* Layer Toggle Chips */}
-      <div className="flex items-center gap-2 flex-wrap bg-stone-100 p-2 rounded-2xl border border-stone-200">
-        <span className="text-xs font-bold text-stone-600 px-1">لایه‌های نمایش:</span>
+      <div className="flex items-center gap-2 flex-wrap bg-surface p-2 rounded-xl border border-line">
+        <span className="text-xs font-bold text-ink-soft px-1">لایه‌های نمایش:</span>
         <button
           type="button"
           onClick={() => toggleLayer('sg')}
           className={`min-h-[44px] px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
             visibleLayers.includes('sg')
-              ? 'bg-rose-700 text-white shadow-sm'
-              : 'bg-white text-stone-700 border border-stone-300 hover:bg-stone-50'
+              ? 'bg-wine text-white shadow-xs'
+              : 'bg-paper text-ink border border-line hover:bg-stone-200/60'
           }`}
         >
           <Activity className="w-4 h-4" />
@@ -365,8 +365,8 @@ export const BandedFermentationChartAndSO2Panel: React.FC<
           onClick={() => toggleLayer('temp')}
           className={`min-h-[44px] px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
             visibleLayers.includes('temp')
-              ? 'bg-rose-700 text-white shadow-sm'
-              : 'bg-white text-stone-700 border border-stone-300 hover:bg-stone-50'
+              ? 'bg-wine text-white shadow-xs'
+              : 'bg-paper text-ink border border-line hover:bg-stone-200/60'
           }`}
         >
           <Thermometer className="w-4 h-4" />
@@ -380,8 +380,8 @@ export const BandedFermentationChartAndSO2Panel: React.FC<
           onClick={() => toggleLayer('so2')}
           className={`min-h-[44px] px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
             visibleLayers.includes('so2')
-              ? 'bg-rose-700 text-white shadow-sm'
-              : 'bg-white text-stone-700 border border-stone-300 hover:bg-stone-50'
+              ? 'bg-wine text-white shadow-xs'
+              : 'bg-paper text-ink border border-line hover:bg-stone-200/60'
           }`}
         >
           <FlaskConical className="w-4 h-4" />
@@ -398,19 +398,19 @@ export const BandedFermentationChartAndSO2Panel: React.FC<
       {visibleLayers.includes('so2') && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Card 1: Nominal Added SO2 Stacked Bar (افزودهشده — محاسبهای) */}
-        <div className="bg-stone-900 text-stone-100 rounded-2xl border border-stone-800 p-4 shadow-sm space-y-3">
+        <div className="bg-surface text-ink rounded-xl border border-line p-4 shadow-xs space-y-3">
           <div className="flex items-center justify-between gap-2 flex-wrap">
             <div className="flex items-center gap-2">
-              <FlaskConical className="w-4 h-4 text-amber-400 shrink-0" />
-              <h4 className="text-xs sm:text-sm font-bold text-white">
+              <FlaskConical className="w-4 h-4 text-wine shrink-0" />
+              <h4 className="text-xs sm:text-sm font-bold text-ink">
                 ۱. بودجه تجمعی سولفیت کل (افزوده‌شده — محاسبه‌ای)
               </h4>
             </div>
             <span
               className={`px-2.5 py-0.5 rounded-full text-xs font-mono font-bold ${
                 so2Ledger.isOverBudget
-                  ? 'bg-rose-500/20 text-rose-300 border border-rose-500/50'
-                  : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
+                  ? 'bg-red-50 text-danger border border-red-200'
+                  : 'bg-emerald-50 text-emerald-800 border border-emerald-200'
               }`}
             >
               {so2Ledger.estimatedTotalSO2MgL} / {so2Ledger.legalCeilingMgL} mg/L
@@ -419,7 +419,7 @@ export const BandedFermentationChartAndSO2Panel: React.FC<
 
           {/* Segmented Horizontal Progress Bar up to legalCeilingMgL */}
           <div className="space-y-1.5">
-            <div className="h-4 w-full bg-stone-800 rounded-full overflow-hidden flex border border-stone-700 relative">
+            <div className="h-4 w-full bg-paper rounded-full overflow-hidden flex border border-line relative">
               {so2Ledger.stageBreakdown.map((stage, idx) => {
                 const widthPct = Math.min(
                   100,
@@ -435,7 +435,7 @@ export const BandedFermentationChartAndSO2Panel: React.FC<
                     key={stage.id}
                     style={{ width: `${widthPct}%` }}
                     title={`${stage.stageTitle}: +${stage.contributedMgL} mg/L (${stage.formulaText})`}
-                    className={`${colorClass} h-full border-r border-stone-950/60 transition-all`}
+                    className={`${colorClass} h-full border-r border-white/60 transition-all`}
                   />
                 );
               })}
@@ -448,37 +448,37 @@ export const BandedFermentationChartAndSO2Panel: React.FC<
                   }%`
                 }}
                 title={`تولید درون‌زای مخمر: +${so2Ledger.endogenousYeastMgL} mg/L`}
-                className="bg-stone-500 h-full"
+                className="bg-stone-400 h-full"
               />
             </div>
 
-            <div className="flex items-center justify-between text-xs text-stone-400">
+            <div className="flex items-center justify-between text-xs text-ink-soft">
               <span>
                 مجموع KMS افزوده‌شده: {so2Ledger.addedFromKmsMgL} mg/L + مخمر درون‌زا:{' '}
                 {so2Ledger.endogenousYeastMgL} mg/L
               </span>
-              <span className="text-emerald-300 font-bold">
+              <span className="text-emerald-800 font-bold">
                 باقی‌مانده تا سقف OIV: {so2Ledger.remainingBudgetMgL} mg/L
               </span>
             </div>
           </div>
 
           {/* Transparent Per-Stage Formula Breakdown */}
-          <div className="bg-stone-950/80 border border-stone-800 rounded-xl p-2.5 space-y-1 max-h-28 overflow-y-auto text-xs">
+          <div className="bg-paper border border-line rounded-xl p-2.5 space-y-1 max-h-28 overflow-y-auto text-xs">
             {so2Ledger.stageBreakdown.length === 0 ? (
-              <div className="text-stone-400">
+              <div className="text-ink-soft">
                 هنوز تزریق سولفیت (KMS) واقعی برای این مخزن ثبت نشده است.
               </div>
             ) : (
               so2Ledger.stageBreakdown.map((st, idx) => (
                 <div
                   key={st.id}
-                  className="flex items-center justify-between gap-2 text-stone-300"
+                  className="flex items-center justify-between gap-2 text-ink"
                 >
                   <span className="truncate">
                     {idx + 1}. {st.stageTitle}:
                   </span>
-                  <span className="font-mono text-amber-300 shrink-0">
+                  <span className="font-mono text-wine font-bold shrink-0">
                     {st.formulaText}
                   </span>
                 </div>
@@ -487,8 +487,8 @@ export const BandedFermentationChartAndSO2Panel: React.FC<
           </div>
 
           {/* Mandatory Honest Scientific Label */}
-          <p className="text-xs text-stone-400 leading-relaxed flex items-start gap-1.5">
-            <Info className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" />
+          <p className="text-xs text-ink-soft leading-relaxed flex items-start gap-1.5">
+            <Info className="w-3.5 h-3.5 text-wine shrink-0 mt-0.5" />
             <span>
               تخمین حداکثر سولفیت افزوده‌شده؛ مقدار واقعی در شراب کمتر است (بخشی به استالدئید و آنتوسیانین متصل می‌شود).
             </span>
@@ -496,11 +496,11 @@ export const BandedFermentationChartAndSO2Panel: React.FC<
         </div>
 
         {/* Card 2: Measured Free SO2 Gauge vs Continuous pH Target */}
-        <div className="bg-stone-900 text-stone-100 rounded-2xl border border-stone-800 p-4 shadow-sm space-y-3">
+        <div className="bg-surface text-ink rounded-xl border border-line p-4 shadow-xs space-y-3">
           <div className="flex items-center justify-between gap-2 flex-wrap">
             <div className="flex items-center gap-2">
-              <Gauge className="w-4 h-4 text-emerald-400 shrink-0" />
-              <h4 className="text-xs sm:text-sm font-bold text-white">
+              <Gauge className="w-4 h-4 text-emerald-700 shrink-0" />
+              <h4 className="text-xs sm:text-sm font-bold text-ink">
                 ۲. SO₂ آزاد اندازه‌گیری‌شده در برابر هدف پیوسته pH ({currentPH.toFixed(2)})
               </h4>
             </div>
@@ -508,8 +508,8 @@ export const BandedFermentationChartAndSO2Panel: React.FC<
               <span
                 className={`px-2.5 py-0.5 rounded-full text-xs font-bold ${
                   latestMeasuredFreeSO2.value >= continuousSo2Target.min
-                    ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
-                    : 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
+                    ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+                    : 'bg-amber-50 text-amber-800 border border-amber-200'
                 }`}
               >
                 {latestMeasuredFreeSO2.value >= continuousSo2Target.min
@@ -517,26 +517,26 @@ export const BandedFermentationChartAndSO2Panel: React.FC<
                   : 'نیازمند شارژ KMS'}
               </span>
             ) : (
-              <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-stone-800 text-stone-300 border border-stone-700">
+              <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-paper text-ink-soft border border-line">
                 اندازه‌گیری نشده
               </span>
             )}
           </div>
 
           {/* Continuous Henderson-Hasselbalch Target Window */}
-          <div className="bg-stone-950/90 border border-stone-800 rounded-xl p-3 space-y-2">
+          <div className="bg-paper border border-line rounded-xl p-3 space-y-2">
             <div className="flex items-center justify-between text-xs">
-              <span className="text-stone-300">
+              <span className="text-ink-soft">
                 پنجره هدف پیوسته برای pH = {currentPH.toFixed(2)}:
               </span>
-              <span className="font-mono font-bold text-emerald-300">
+              <span className="font-mono font-bold text-emerald-800">
                 {continuousSo2Target.min} تا {continuousSo2Target.max} mg/L (هدف بهینه:{' '}
                 {continuousSo2Target.target} mg/L)
               </span>
             </div>
 
             {/* Visual Target Band Gauge (0 to 80 mg/L scale) */}
-            <div className="h-3.5 w-full bg-stone-800 rounded-full relative overflow-hidden border border-stone-700">
+            <div className="h-3.5 w-full bg-stone-200/80 rounded-full relative overflow-hidden border border-line">
               <div
                 style={{
                   left: `${Math.min(100, (continuousSo2Target.min / 80) * 100)}%`,
@@ -545,7 +545,7 @@ export const BandedFermentationChartAndSO2Panel: React.FC<
                     ((continuousSo2Target.max - continuousSo2Target.min) / 80) * 100
                   )}%`
                 }}
-                className="absolute top-0 bottom-0 bg-emerald-500/35 border-x border-emerald-400"
+                className="absolute top-0 bottom-0 bg-emerald-500/35 border-x border-emerald-600"
                 title="پنجره ایمن سولفیت آزاد"
               />
               {latestMeasuredFreeSO2 && (
@@ -553,24 +553,24 @@ export const BandedFermentationChartAndSO2Panel: React.FC<
                   style={{
                     left: `${Math.min(98, Math.max(2, (latestMeasuredFreeSO2.value / 80) * 100))}%`
                   }}
-                  className="absolute top-0 bottom-0 w-2 bg-amber-400 rounded-full shadow"
+                  className="absolute top-0 bottom-0 w-2 bg-wine rounded-full shadow"
                   title={`مقدار اندازه‌گیری‌شده: ${latestMeasuredFreeSO2.value} mg/L`}
                 />
               )}
             </div>
 
-            <div className="flex items-center justify-between text-xs text-stone-400 flex-wrap gap-2">
+            <div className="flex items-center justify-between text-xs text-ink-soft flex-wrap gap-2">
               {latestMeasuredFreeSO2 ? (
                 <>
                   <span>
                     آخرین قرائت ({latestMeasuredFreeSO2.sourceFa} —{' '}
                     {latestMeasuredFreeSO2.dateFa}):{' '}
-                    <strong className="text-white font-mono">
+                    <strong className="text-ink font-mono">
                       {latestMeasuredFreeSO2.value} mg/L
                     </strong>
                   </span>
                   {molecularSO2 !== null && (
-                    <span className="font-mono text-amber-300">
+                    <span className="font-mono text-wine font-bold">
                       SO₂ مولکولی فعال: {molecularSO2.toFixed(2)} mg/L
                     </span>
                   )}
@@ -583,7 +583,7 @@ export const BandedFermentationChartAndSO2Panel: React.FC<
             </div>
           </div>
 
-          <div className="text-xs font-mono text-stone-400">
+          <div className="text-xs font-mono text-ink-soft">
             فرمول پیوسته هندرسون-هاسلباخ: {continuousSo2Target.formulaText}
           </div>
         </div>
@@ -594,12 +594,12 @@ export const BandedFermentationChartAndSO2Panel: React.FC<
       {/* PART B: BANDED FERMENTATION SVG CHART, MILESTONES & TEMP STRIP      */}
       {/* =================================================================== */}
       {(visibleLayers.includes('sg') || visibleLayers.includes('temp')) && (
-      <div className="bg-white border border-stone-200 rounded-2xl p-4 shadow-sm space-y-3">
+      <div className="bg-surface border border-line rounded-xl p-4 shadow-xs space-y-3">
         {/* Top Row: 3 Simple Status Pills + 1-Sentence Reason (Idea 3) */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-stone-200">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-line">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-xs font-bold text-stone-900 flex items-center gap-1.5">
-              <Activity className="w-4 h-4 text-rose-700" />
+            <span className="text-xs font-bold text-ink flex items-center gap-1.5">
+              <Activity className="w-4 h-4 text-wine" />
               <span>نمودار باند مرجع تخمیر، نشانگرهای تغذیه و مخروط پیش‌بینی خشکی</span>
             </span>
 
@@ -644,7 +644,7 @@ export const BandedFermentationChartAndSO2Panel: React.FC<
             </span>
           </div>
 
-          <div className="text-xs font-bold text-stone-700 bg-stone-100 px-3 py-1.5 rounded-xl border border-stone-200">
+          <div className="text-xs font-bold text-ink bg-paper px-3 py-1.5 rounded-xl border border-line">
             {contextualOneSentenceReasonFa}
           </div>
         </div>
@@ -655,7 +655,7 @@ export const BandedFermentationChartAndSO2Panel: React.FC<
         <div className="w-full overflow-x-auto">
           <svg
             viewBox={`0 0 ${svgWidth} ${svgHeight}`}
-            className="w-full h-auto min-w-[540px] bg-stone-50/70 rounded-xl border border-stone-200"
+            className="w-full h-auto min-w-[540px] bg-paper/60 rounded-xl border border-line"
             role="img"
             aria-label="نمودار باند سلامت تخمیر و نشانگرهای تغذیه"
           >
@@ -801,7 +801,7 @@ export const BandedFermentationChartAndSO2Panel: React.FC<
         </div>
 
         {/* Legend & Prediction Range Badge */}
-        <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-stone-600">
+        <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-ink-soft">
           <div className="flex items-center gap-3 flex-wrap">
             <span className="flex items-center gap-1">
               <span className="w-3 h-3 rounded-xs bg-emerald-500/30 border border-emerald-600 inline-block" />
@@ -811,7 +811,7 @@ export const BandedFermentationChartAndSO2Panel: React.FC<
               <span className="w-3 h-1 bg-rose-700 inline-block" />
               <span>منحنی واقعی مخزن</span>
             </span>
-            <span className="text-stone-500">
+            <span className="text-ink-soft">
               (روی نشانگرهای دایره‌ای روی منحنی کلیک کنید تا جزئیات دوز را ببینید)
             </span>
           </div>
@@ -825,22 +825,22 @@ export const BandedFermentationChartAndSO2Panel: React.FC<
 
         {/* Clicked Milestone Detail Popover Card */}
         {selectedMilestone && (
-          <div className="bg-stone-900 text-stone-100 rounded-xl p-3 border border-stone-700 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+          <div className="bg-paper text-ink rounded-xl p-3 border border-line flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
             <div>
               <div className="flex items-center gap-2">
-                <span className="px-2 py-0.5 rounded bg-amber-500 text-stone-950 font-bold text-xs">
+                <span className="px-2 py-0.5 rounded bg-wine text-white font-bold text-xs">
                   {selectedMilestone.stateBadgeFa}
                 </span>
-                <span className="font-bold text-white">
+                <span className="font-bold text-ink">
                   {selectedMilestone.titleFa}
                 </span>
                 {selectedMilestone.triggerSG !== undefined && (
-                  <span className="font-mono text-stone-400">
+                  <span className="font-mono text-ink-soft">
                     (SG = {selectedMilestone.triggerSG.toFixed(3)})
                   </span>
                 )}
               </div>
-              <div className="text-stone-300 mt-1">
+              <div className="text-ink-soft mt-1">
                 {selectedMilestone.tankRows.find((r) => r.tankId === tankId)
                   ?.doseAmountTextFa ?? selectedMilestone.howToExecuteFa}
               </div>
@@ -848,7 +848,7 @@ export const BandedFermentationChartAndSO2Panel: React.FC<
             <button
               type="button"
               onClick={() => setSelectedMilestoneId(null)}
-              className="text-stone-400 hover:text-white text-xs self-end sm:self-center cursor-pointer"
+              className="text-ink-soft hover:text-ink text-xs self-end sm:self-center cursor-pointer"
             >
               بستن ×
             </button>

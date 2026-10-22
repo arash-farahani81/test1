@@ -60,7 +60,6 @@ import {
   useFlexibleProtocol,
   getEffectiveProtocolPlanForBatch
 } from '../data/masterProtocolConfig.ts';
-import { FlexibleProtocolCustomizerBar } from './FlexibleProtocolCustomizerBar.tsx';
 import {
   getSmartAdditivePresets,
   getSmartDailyStagePresets,
@@ -1066,22 +1065,22 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
     <div className="space-y-6 font-['Vazirmatn',sans-serif]">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-stone-900 text-white px-5 py-2.5 rounded-full shadow-2xl text-xs font-bold flex items-center gap-2 border border-stone-700">
-          <Sparkles className="w-4 h-4 text-emerald-400" />
+        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-surface text-ink px-5 py-2.5 rounded-full shadow-lg text-xs font-bold flex items-center gap-2 border border-line">
+          <Sparkles className="w-4 h-4 text-emerald-700" />
           <span>{toastMessage}</span>
         </div>
       )}
 
       {/* 10-Second Soft-Delete Undo Banner */}
       {undoDeletedRecord && (
-        <div className="bg-amber-900 text-white px-4 py-2.5 rounded-xl border border-amber-500 shadow-md flex items-center justify-between gap-3 text-xs">
+        <div className="bg-amber-50 text-amber-950 px-4 py-2.5 rounded-xl border border-amber-300 shadow-xs flex items-center justify-between gap-3 text-xs font-bold">
           <span>
             {undoDeletedRecord.label} حذف شد. تا ۱۰ ثانیه امکان بازگردانی وجود دارد.
           </span>
           <button
             type="button"
             onClick={handleRestoreDeletedRecord}
-            className="px-3 py-1 rounded-lg bg-amber-400 hover:bg-amber-300 text-stone-950 font-bold cursor-pointer flex items-center gap-1"
+            className="px-3 py-1 rounded-lg bg-surface hover:bg-paper border border-amber-300 text-amber-950 font-bold cursor-pointer flex items-center gap-1"
           >
             <RotateCcw className="w-3.5 h-3.5" />
             <span>بازگردانی (Undo)</span>
@@ -1092,21 +1091,21 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
       {/* ===================================================================== */}
       {/* ZONE A: CONTROL BAR, TANK SWITCHER, QUICK MODALS & 5 KPI CARDS        */}
       {/* ===================================================================== */}
-      <div className="bg-stone-900 text-white p-5 rounded-2xl shadow-xl space-y-4">
+      <div className="bg-surface text-ink p-5 rounded-2xl border border-line shadow-sm space-y-4">
         <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4">
           <div className="space-y-1">
             <div className="flex items-center gap-2 flex-wrap">
-              <h2 className="text-lg sm:text-xl font-bold text-stone-100">
+              <h2 className="text-base sm:text-lg font-bold text-ink">
                 پایش روزانه، نمودارهای سینتیک و دفتر کل ثبت‌های کارگاه
               </h2>
-              <span className="text-xs text-stone-400">·</span>
-              <span className="text-xs font-bold text-emerald-400">
+              <span className="text-xs text-ink-soft">·</span>
+              <span className="text-xs font-bold text-emerald-800">
                 {realLogs.length > 0
                   ? `داده‌های واقعی فعال (${realLogs.length} لاگ در ${tankLabel})`
                   : 'نمایش منحنی الگوی مرجع ایده‌آل (منتظر اولین ثبت واقعی)'}
               </span>
             </div>
-            <p className="text-xs text-stone-400">
+            <p className="text-xs text-ink-soft">
               پایش همزمان وزن مخصوص (SG)، دمای کلاهک و pH همراه با تشخیص خودکار نقاط تریگر تغذیه (SNA) و دفتر کل ۴ تبی مخزن
             </p>
           </div>
@@ -1115,38 +1114,38 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
             <button
               type="button"
               onClick={handleOpenAddModal}
-              className="px-3.5 py-2 bg-rose-800 hover:bg-rose-700 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm cursor-pointer transition-colors whitespace-nowrap"
+              className="px-3.5 py-2 bg-wine hover:opacity-95 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-xs cursor-pointer transition-colors whitespace-nowrap"
             >
               <Plus className="w-4 h-4" />
-              <span>+ ثبت لاگ روزانه تخمیر</span>
+              <span>ثبت لاگ روزانه تخمیر</span>
             </button>
 
             <button
               type="button"
               onClick={handleOpenAddChemicalModal}
-              className="px-3.5 py-2 bg-amber-800 hover:bg-amber-700 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm cursor-pointer transition-colors whitespace-nowrap"
+              className="px-3.5 py-2 bg-paper hover:bg-surface border border-line text-ink rounded-xl text-xs font-bold flex items-center gap-1.5 cursor-pointer transition-colors whitespace-nowrap"
             >
-              <Beaker className="w-3.5 h-3.5" />
-              <span>+ ثبت افزودنی شیمیایی</span>
+              <Beaker className="w-3.5 h-3.5 text-wine" />
+              <span>ثبت افزودنی شیمیایی</span>
             </button>
 
             <button
               type="button"
               onClick={handleOpenAddLabModal}
-              className="px-3.5 py-2 bg-emerald-800 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm cursor-pointer transition-colors whitespace-nowrap"
+              className="px-3.5 py-2 bg-paper hover:bg-surface border border-line text-ink rounded-xl text-xs font-bold flex items-center gap-1.5 cursor-pointer transition-colors whitespace-nowrap"
             >
-              <FlaskConical className="w-3.5 h-3.5" />
-              <span>+ ثبت تست آزمایشگاه</span>
+              <FlaskConical className="w-3.5 h-3.5 text-wine" />
+              <span>ثبت تست آزمایشگاه</span>
             </button>
 
             {onNavigateToTestingGuide && (
               <button
                 type="button"
                 onClick={() => onNavigateToTestingGuide()}
-                className="px-3 py-2 bg-stone-800 hover:bg-stone-700 text-amber-300 rounded-xl text-xs font-bold flex items-center gap-1.5 border border-stone-700 cursor-pointer transition-colors whitespace-nowrap"
+                className="px-3 py-2 bg-paper hover:bg-surface text-ink rounded-xl text-xs font-bold flex items-center gap-1.5 border border-line cursor-pointer transition-colors whitespace-nowrap"
                 title="مشاهده راهنمای گام‌به‌گام انجام تست‌ها و ماشین‌حساب‌های آزمایشگاهی"
               >
-                <BookOpen className="w-3.5 h-3.5 text-amber-400" />
+                <BookOpen className="w-3.5 h-3.5 text-wine" />
                 <span>آزمایشگاه و ماشین‌حساب‌ها</span>
               </button>
             )}
@@ -1154,20 +1153,20 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
             <button
               type="button"
               onClick={handleExportDocx}
-              className="px-3 py-2 bg-stone-800 hover:bg-stone-700 text-rose-200 rounded-xl text-xs font-bold flex items-center gap-1.5 border border-stone-700 cursor-pointer transition-colors whitespace-nowrap"
+              className="px-3 py-2 bg-paper hover:bg-surface text-ink rounded-xl text-xs font-bold flex items-center gap-1.5 border border-line cursor-pointer transition-colors whitespace-nowrap"
               title="خروجی گزارش جامع با فرمت Word (DOCX)"
             >
-              <FileText className="w-3.5 h-3.5 text-rose-400" />
+              <FileText className="w-3.5 h-3.5 text-wine" />
               <span>گزارش Word (DOCX)</span>
             </button>
 
             <button
               type="button"
               onClick={handleExportCSV}
-              className="px-3 py-2 bg-stone-800 hover:bg-stone-700 text-stone-200 rounded-xl text-xs font-semibold flex items-center gap-1.5 border border-stone-700 cursor-pointer whitespace-nowrap"
+              className="px-3 py-2 bg-paper hover:bg-surface text-ink rounded-xl text-xs font-semibold flex items-center gap-1.5 border border-line cursor-pointer whitespace-nowrap"
               title="خروجی فایل اکسل با فرمت CSV"
             >
-              <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-400" />
+              <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-700" />
               <span>اکسل (CSV)</span>
             </button>
 
@@ -1175,33 +1174,18 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
               <button
                 type="button"
                 onClick={handleClearRealLogs}
-                className="px-3 py-2 bg-rose-950/80 hover:bg-rose-900 text-rose-200 rounded-xl text-xs font-semibold flex items-center gap-1.5 border border-rose-800 cursor-pointer whitespace-nowrap"
+                className="px-3 py-2 bg-red-50 hover:bg-red-100 text-danger rounded-xl text-xs font-semibold flex items-center gap-1.5 border border-danger/30 cursor-pointer whitespace-nowrap"
                 title="پاک‌سازی داده‌های واقعی این مخزن و بازگشت به منحنی ایده‌آل"
               >
-                <Trash2 className="w-3.5 h-3.5 text-rose-400" />
+                <Trash2 className="w-3.5 h-3.5" />
                 <span>پاک‌سازی لاگ‌های واقعی</span>
               </button>
             )}
 
             <button
               type="button"
-              onClick={() => setShowFlexibleCustomizer((prev) => !prev)}
-              className={`px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 border cursor-pointer whitespace-nowrap ${
-                showFlexibleCustomizer || isModifiedFromIdeal
-                  ? 'bg-amber-500/20 border-amber-400 text-amber-200'
-                  : 'bg-stone-800 hover:bg-stone-700 text-stone-300 border-stone-700'
-              }`}
-              title="تنظیمات مقیاس و ضرایب پروتکل"
-            >
-              <Sliders className="w-3.5 h-3.5 text-amber-400" />
-              <span>مقیاس و ضرایب پروتکل ({flexParams.grapeWeightKg}kg)</span>
-              {showFlexibleCustomizer ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
-            </button>
-
-            <button
-              type="button"
               onClick={handleResetData}
-              className="px-2.5 py-2 bg-stone-800 hover:bg-stone-700 text-stone-400 hover:text-stone-200 rounded-xl text-xs font-semibold flex items-center gap-1 border border-stone-700 cursor-pointer whitespace-nowrap"
+              className="px-2.5 py-2 bg-paper hover:bg-surface text-ink-soft hover:text-ink rounded-xl text-xs font-semibold flex items-center gap-1 border border-line cursor-pointer whitespace-nowrap"
               title="بازنشانی کل داده‌ها"
             >
               <RotateCcw className="w-3.5 h-3.5" />
@@ -1211,9 +1195,9 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
         </div>
 
         {/* Tank Selector Tabs & Display Mode Filter */}
-        <div className="flex items-center justify-between gap-2 pt-3 border-t border-stone-800 flex-wrap">
+        <div className="flex items-center justify-between gap-2 pt-3 border-t border-line flex-wrap">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-xs text-stone-400 ml-1">انتخاب مخزن پایش:</span>
+            <span className="text-xs text-ink-soft ml-1">انتخاب مخزن پایش:</span>
             <button
               type="button"
               onClick={() => {
@@ -1223,12 +1207,12 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
               }}
               className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap ${
                 tankId === 'tank-a'
-                  ? 'bg-rose-800 text-white shadow-xs'
-                  : 'bg-stone-800 text-stone-300 hover:text-white border border-stone-700'
+                  ? 'bg-wine text-white shadow-xs'
+                  : 'bg-paper text-ink hover:bg-surface border border-line'
               }`}
             >
               <span>مخزن قرمز A (بچ اول {flexPlan.volumes.redLiquidFermentPerTankL}L)</span>
-              <span className="text-xs bg-stone-900/60 px-1.5 py-0.5 rounded font-mono tabular-nums">
+              <span className="text-xs bg-black/10 px-1.5 py-0.5 rounded font-mono tabular-nums">
                 {logs.filter((l) => l.tankId === 'tank-a').length}
               </span>
             </button>
@@ -1242,12 +1226,12 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
                 }}
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap ${
                   tankId === 'tank-b'
-                    ? 'bg-rose-800 text-white shadow-xs'
-                    : 'bg-stone-800 text-stone-300 hover:text-white border border-stone-700'
+                    ? 'bg-wine text-white shadow-xs'
+                    : 'bg-paper text-ink hover:bg-surface border border-line'
                 }`}
               >
                 <span>مخزن قرمز B (بچ دوم {flexPlan.volumes.redLiquidFermentPerTankL}L)</span>
-                <span className="text-xs bg-stone-900/60 px-1.5 py-0.5 rounded font-mono tabular-nums">
+                <span className="text-xs bg-black/10 px-1.5 py-0.5 rounded font-mono tabular-nums">
                   {logs.filter((l) => l.tankId === 'tank-b').length}
                 </span>
               </button>
@@ -1261,20 +1245,20 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
               }}
               className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap ${
                 tankId === 'tank-rose'
-                  ? 'bg-rose-800 text-white shadow-xs'
-                  : 'bg-stone-800 text-stone-300 hover:text-white border border-stone-700'
+                  ? 'bg-wine text-white shadow-xs'
+                  : 'bg-paper text-ink hover:bg-surface border border-line'
               }`}
             >
               <span>مخزن شراب رُزه ({flexPlan.volumes.roseClarifiedFermentL}L)</span>
-              <span className="text-xs bg-stone-900/60 px-1.5 py-0.5 rounded font-mono tabular-nums">
+              <span className="text-xs bg-black/10 px-1.5 py-0.5 rounded font-mono tabular-nums">
                 {logs.filter((l) => l.tankId === 'tank-rose').length}
               </span>
             </button>
           </div>
 
           {/* Display Mode Filters */}
-          <div className="flex items-center gap-1 bg-stone-800/80 p-1 rounded-xl border border-stone-700 text-xs">
-            <span className="text-stone-400 px-2 text-xs font-semibold flex items-center gap-1">
+          <div className="flex items-center gap-1 bg-paper p-1 rounded-xl border border-line text-xs">
+            <span className="text-ink-soft px-2 text-xs font-semibold flex items-center gap-1">
               <Filter className="w-3 h-3" />
               <span>فیلتر نمایش:</span>
             </span>
@@ -1282,7 +1266,7 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
               type="button"
               onClick={() => setLogDisplayMode('all')}
               className={`px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer whitespace-nowrap ${
-                logDisplayMode === 'all' ? 'bg-rose-800 text-white' : 'text-stone-400 hover:text-stone-200'
+                logDisplayMode === 'all' ? 'bg-wine text-white' : 'text-ink-soft hover:text-ink'
               }`}
             >
               همه ({allTankLogs.length})
@@ -1291,7 +1275,7 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
               type="button"
               onClick={() => setLogDisplayMode('real')}
               className={`px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer whitespace-nowrap ${
-                logDisplayMode === 'real' ? 'bg-emerald-800 text-white' : 'text-stone-400 hover:text-stone-200'
+                logDisplayMode === 'real' ? 'bg-wine text-white' : 'text-ink-soft hover:text-ink'
               }`}
             >
               فقط واقعی من ({realLogs.length})
@@ -1300,7 +1284,7 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
               type="button"
               onClick={() => setLogDisplayMode('benchmark')}
               className={`px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer whitespace-nowrap ${
-                logDisplayMode === 'benchmark' ? 'bg-indigo-800 text-white' : 'text-stone-400 hover:text-stone-200'
+                logDisplayMode === 'benchmark' ? 'bg-wine text-white' : 'text-ink-soft hover:text-ink'
               }`}
             >
               فقط مرجع ایده‌آل ({benchmarkLogs.length})
@@ -1309,101 +1293,96 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
         </div>
       </div>
 
-      {/* Collapsible Flexible Protocol Customizer Bar */}
-      {showFlexibleCustomizer && (
-        <FlexibleProtocolCustomizerBar defaultExpanded={true} />
-      )}
-
       {/* 5 KPI Cards */}
       {latestLog && (
         <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
-          <div className="bg-white p-4 rounded-2xl border border-stone-200 shadow-xs flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-800 flex items-center justify-center shrink-0">
+          <div className="bg-surface p-4 rounded-2xl border border-line shadow-xs flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-paper text-wine border border-line flex items-center justify-center shrink-0">
               <TrendingDown className="w-5 h-5" />
             </div>
             <div>
-              <p className="text-xs text-stone-500 font-semibold">وزن مخصوص و بریکس</p>
+              <p className="text-xs text-ink-soft font-semibold">وزن مخصوص و بریکس</p>
               <div className="flex items-baseline gap-1.5">
-                <span className="text-lg sm:text-xl font-bold text-stone-900 font-mono tabular-nums">
+                <span className="text-lg sm:text-xl font-bold text-ink font-mono tabular-nums">
                   {latestLog.sg}
                 </span>
-                <span className="text-xs text-stone-600 font-mono tabular-nums">({latestLog.brix}°Bx)</span>
+                <span className="text-xs text-ink-soft font-mono tabular-nums">({latestLog.brix}°Bx)</span>
               </div>
             </div>
           </div>
 
-          <div className="bg-white p-4 rounded-2xl border border-stone-200 shadow-xs flex items-center gap-3">
+          <div className="bg-surface p-4 rounded-2xl border border-line shadow-xs flex items-center gap-3">
             <div
-              className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
+              className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border ${
                 latestLog.tempCap >= 29.5
-                  ? 'bg-rose-100 text-rose-700'
+                  ? 'bg-red-50 text-danger border-danger/30'
                   : latestLog.tempCap >= 28.5
-                  ? 'bg-amber-100 text-amber-800'
-                  : 'bg-blue-50 text-blue-700'
+                  ? 'bg-amber-50 text-amber-800 border-amber-300'
+                  : 'bg-paper text-ink border-line'
               }`}
             >
               <Thermometer className="w-5 h-5" />
             </div>
             <div>
-              <p className="text-xs text-stone-500 font-semibold">دمای فعلی کلاهک</p>
+              <p className="text-xs text-ink-soft font-semibold">دمای فعلی کلاهک</p>
               <div className="flex items-baseline gap-1.5">
                 <span
                   className={`text-lg sm:text-xl font-bold font-mono tabular-nums ${
-                    latestLog.tempCap >= 28.5 ? 'text-rose-700' : 'text-stone-900'
+                    latestLog.tempCap >= 28.5 ? 'text-danger' : 'text-ink'
                   }`}
                 >
                   {latestLog.tempCap}°C
                 </span>
-                <span className="text-xs text-stone-500 font-mono tabular-nums">(اتاق: {latestLog.tempRoom}°)</span>
+                <span className="text-xs text-ink-soft font-mono tabular-nums">(اتاق: {latestLog.tempRoom}°)</span>
               </div>
             </div>
           </div>
 
-          <div className="bg-white p-4 rounded-2xl border border-stone-200 shadow-xs flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center shrink-0">
+          <div className="bg-surface p-4 rounded-2xl border border-line shadow-xs flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-paper text-wine border border-line flex items-center justify-center shrink-0">
               <Droplets className="w-5 h-5" />
             </div>
             <div>
-              <p className="text-xs text-stone-500 font-semibold">شاخص اسیدیته pH</p>
+              <p className="text-xs text-ink-soft font-semibold">شاخص اسیدیته pH</p>
               <div className="flex items-baseline gap-1.5">
-                <span className="text-lg sm:text-xl font-bold text-purple-900 font-mono tabular-nums">
+                <span className="text-lg sm:text-xl font-bold text-ink font-mono tabular-nums">
                   {latestLog.ph}
                 </span>
-                <span className="text-xs text-stone-500 font-mono tabular-nums">
+                <span className="text-xs text-ink-soft font-mono tabular-nums">
                   (هدف: {targetOptimalPH})
                 </span>
               </div>
             </div>
           </div>
 
-          <div className="bg-white p-4 rounded-2xl border border-stone-200 shadow-xs flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center shrink-0">
+          <div className="bg-surface p-4 rounded-2xl border border-line shadow-xs flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200 flex items-center justify-center shrink-0">
               <Activity className="w-5 h-5" />
             </div>
             <div>
-              <p className="text-xs text-stone-500 font-semibold">پیشرفت تخمیر</p>
+              <p className="text-xs text-ink-soft font-semibold">پیشرفت تخمیر</p>
               <div className="flex items-baseline gap-1.5">
                 <span className="text-lg sm:text-xl font-bold text-emerald-900 font-mono tabular-nums">
                   {currentProgress}٪
                 </span>
-                <span className="text-xs text-stone-500">
+                <span className="text-xs text-ink-soft">
                   {currentProgress >= 100 ? 'کاملاً خشک' : 'فعال'}
                 </span>
               </div>
             </div>
           </div>
 
-          <div className="bg-white p-4 rounded-2xl border border-stone-200 shadow-xs flex items-center gap-3 col-span-2 lg:col-span-1">
-            <div className="w-10 h-10 rounded-xl bg-rose-50 text-rose-800 flex items-center justify-center shrink-0">
+          <div className="bg-surface p-4 rounded-2xl border border-line shadow-xs flex items-center gap-3 col-span-2 lg:col-span-1">
+            <div className="w-10 h-10 rounded-xl bg-paper text-wine border border-line flex items-center justify-center shrink-0">
               <Zap className="w-5 h-5" />
             </div>
             <div>
-              <p className="text-xs text-stone-500 font-semibold">الکل تقریبی حاصله</p>
+              <p className="text-xs text-ink-soft font-semibold">الکل تقریبی حاصله</p>
               <div className="flex items-baseline gap-1.5">
-                <span className="text-lg sm:text-xl font-bold text-rose-900 font-mono tabular-nums">
+                <span className="text-lg sm:text-xl font-bold text-wine font-mono tabular-nums">
                   {currentABV}٪
                 </span>
-                <span className="text-xs text-stone-500">ABV</span>
+                <span className="text-xs text-ink-soft">ABV</span>
               </div>
             </div>
           </div>
@@ -1423,23 +1402,23 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
         );
         const isCaution = so2Ledger.remainingBudgetMgL < 25 && !so2Ledger.isOverBudget;
         return (
-          <div className="bg-stone-900 text-white p-3.5 rounded-2xl border border-stone-800 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div className="bg-surface text-ink p-3.5 rounded-2xl border border-line shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-xl bg-rose-900/80 text-rose-300 flex items-center justify-center shrink-0 border border-rose-700/50">
+              <div className="w-8 h-8 rounded-xl bg-paper text-wine flex items-center justify-center shrink-0 border border-line">
                 <FlaskConical className="w-4 h-4" />
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h4 className="font-bold text-xs sm:text-sm text-stone-100">
+                  <h4 className="font-bold text-xs sm:text-sm text-ink">
                     دفتر کل سولفیت تجمعی (Live OIV Total SO₂ Ledger)
                   </h4>
                   <span
                     className={`text-xs font-bold px-2 py-0.5 rounded-full ${
                       so2Ledger.isOverBudget
-                        ? 'bg-rose-500/20 text-rose-300 border border-rose-500/40'
+                        ? 'bg-red-50 text-danger border border-danger/30'
                         : isCaution
-                        ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
-                        : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
+                        ? 'bg-amber-50 text-amber-900 border border-amber-300'
+                        : 'bg-emerald-50 text-emerald-900 border border-emerald-300'
                     }`}
                   >
                     {so2Ledger.isOverBudget
@@ -1449,31 +1428,31 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
                       : 'محدوده ایمن OIV'}
                   </span>
                 </div>
-                <p className="text-xs text-stone-400 mt-0.5">
+                <p className="text-xs text-ink-soft mt-0.5">
                   حجم مبنا: {so2RefVolL} لیتر | سقف قانونی OIV: {so2Ledger.legalCeilingMgL} mg/L (نرخ پیوند و تبخیر تخمینی: {Math.round(so2Ledger.estimatedBoundAndVolatilizedRatio * 100)}٪)
                 </p>
-                <p className="text-xs text-stone-400/90 mt-0.5">
+                <p className="text-xs text-ink-soft mt-0.5">
                   {so2Ledger.accountingBasisFa}
                 </p>
               </div>
             </div>
 
             <div className="flex items-center gap-2 sm:gap-4 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0 text-xs font-mono tabular-nums">
-              <div className="bg-stone-800/90 px-3 py-1.5 rounded-xl border border-stone-700 text-right shrink-0">
-                <span className="text-xs text-stone-400 block font-sans">تزریق KMS</span>
-                <strong className="text-amber-300 font-bold">{so2Ledger.addedFromKmsMgL} mg/L</strong>
+              <div className="bg-paper px-3 py-1.5 rounded-xl border border-line text-right shrink-0">
+                <span className="text-xs text-ink-soft block font-sans">تزریق KMS</span>
+                <strong className="text-ink font-bold">{so2Ledger.addedFromKmsMgL} mg/L</strong>
               </div>
-              <div className="bg-stone-800/90 px-3 py-1.5 rounded-xl border border-stone-700 text-right shrink-0">
-                <span className="text-xs text-stone-400 block font-sans">درون‌زای مخمر</span>
-                <strong className="text-stone-300 font-bold">{so2Ledger.endogenousYeastMgL} mg/L</strong>
+              <div className="bg-paper px-3 py-1.5 rounded-xl border border-line text-right shrink-0">
+                <span className="text-xs text-ink-soft block font-sans">درون‌زای مخمر</span>
+                <strong className="text-ink font-bold">{so2Ledger.endogenousYeastMgL} mg/L</strong>
               </div>
-              <div className="bg-stone-800/90 px-3 py-1.5 rounded-xl border border-stone-700 text-right shrink-0">
-                <span className="text-xs text-stone-400 block font-sans">کل تجمعی</span>
-                <strong className="text-rose-300 font-bold">{so2Ledger.estimatedTotalSO2MgL} mg/L</strong>
+              <div className="bg-paper px-3 py-1.5 rounded-xl border border-line text-right shrink-0">
+                <span className="text-xs text-ink-soft block font-sans">کل تجمعی</span>
+                <strong className="text-wine font-bold">{so2Ledger.estimatedTotalSO2MgL} mg/L</strong>
               </div>
-              <div className="bg-stone-800/90 px-3 py-1.5 rounded-xl border border-stone-700 text-right shrink-0">
-                <span className="text-xs text-stone-400 block font-sans">حاشیه باقی‌مانده</span>
-                <strong className="text-emerald-400 font-bold">{so2Ledger.remainingBudgetMgL} mg/L</strong>
+              <div className="bg-paper px-3 py-1.5 rounded-xl border border-line text-right shrink-0">
+                <span className="text-xs text-ink-soft block font-sans">حاشیه باقی‌مانده</span>
+                <strong className="text-emerald-800 font-bold">{so2Ledger.remainingBudgetMgL} mg/L</strong>
               </div>
             </div>
           </div>
@@ -1485,22 +1464,22 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
         <div
           className={`p-4 rounded-2xl border flex items-start gap-3.5 transition-all ${
             recommendation.level === 'danger'
-              ? 'bg-rose-50 border-rose-500 text-rose-950 shadow-sm'
+              ? 'bg-red-50 border-danger text-ink shadow-xs'
               : recommendation.level === 'warning'
-              ? 'bg-amber-50 border-amber-400 text-amber-950'
+              ? 'bg-amber-50 border-amber-300 text-amber-950'
               : recommendation.level === 'success'
-              ? 'bg-emerald-50 border-emerald-400 text-emerald-950'
-              : 'bg-white border-stone-200 text-stone-800'
+              ? 'bg-emerald-50 border-emerald-300 text-emerald-950'
+              : 'bg-surface border-line text-ink'
           }`}
         >
           {recommendation.level === 'danger' ? (
-            <ShieldAlert className="w-6 h-6 text-rose-700 shrink-0 mt-0.5" />
+            <ShieldAlert className="w-6 h-6 text-danger shrink-0 mt-0.5" />
           ) : recommendation.level === 'warning' ? (
             <AlertTriangle className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
           ) : recommendation.level === 'success' ? (
             <CheckCircle2 className="w-5 h-5 text-emerald-700 shrink-0 mt-0.5" />
           ) : (
-            <Compass className="w-5 h-5 text-stone-600 shrink-0 mt-0.5" />
+            <Compass className="w-5 h-5 text-ink-soft shrink-0 mt-0.5" />
           )}
           <div className="text-xs sm:text-sm space-y-1">
             <strong className="font-bold block">{recommendation.title}</strong>
@@ -1516,14 +1495,14 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
 
       {/* 10-Second Undo Banner for Chemical Additions (Idea 11) */}
       {undoAdditionId && (
-        <div className="bg-stone-900 text-white border-2 border-emerald-500 rounded-2xl p-3 shadow-lg flex items-center justify-between gap-3">
-          <span className="text-xs font-bold text-emerald-300">
+        <div className="bg-surface text-ink border border-emerald-300 rounded-2xl p-3 shadow-xs flex items-center justify-between gap-3">
+          <span className="text-xs font-bold text-emerald-900">
             افزودنی شیمیایی با موفقیت ثبت شد. در صورت اشتباه می‌توانید تا ۱۰ ثانیه آن را بازگردانی کنید.
           </span>
           <button
             type="button"
             onClick={handleUndoRecentAddition}
-            className="px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 text-xs font-bold flex items-center gap-1.5 cursor-pointer"
+            className="px-3.5 py-1.5 rounded-xl bg-amber-100 hover:bg-amber-200 border border-amber-300 text-amber-950 text-xs font-bold flex items-center gap-1.5 cursor-pointer"
           >
             <RotateCcw className="w-3.5 h-3.5" />
             <span>افزودنی ثبت شد — بازگردانی (۱۰ ثانیه)</span>
@@ -1552,31 +1531,31 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
         const prediction = predictFermentationCompletion(operationalTankLogs, tankId, targetSGChoice, simTemp);
 
         return (
-          <div className="bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden space-y-0">
+          <div className="bg-surface rounded-xl border border-line shadow-xs overflow-hidden space-y-0">
             {/* Header: Title, Health Score Badge, and Expand/Collapse All Button */}
-            <div className="bg-stone-900 text-white p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="bg-paper text-ink border-b border-line p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-rose-500/20 text-rose-400 border border-rose-500/30 flex items-center justify-center shrink-0">
+                <div className="w-9 h-9 rounded-xl bg-surface text-wine border border-line flex items-center justify-center shrink-0">
                   <Sparkles className="w-5 h-5" />
                 </div>
                 <div>
                   <div className="flex items-center gap-2 flex-wrap">
-                    <h3 className="font-bold text-white text-sm sm:text-base">
+                    <h3 className="font-bold text-ink text-sm sm:text-base">
                       کارت وضعیت جامع مخزن ({tankLabel})
                     </h3>
                     {analysis && (
                       <span className={`text-xs font-bold px-2.5 py-0.5 rounded-full border ${
                         analysis.statusColor === 'emerald'
-                          ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
+                          ? 'bg-emerald-50 text-emerald-900 border-emerald-300'
                           : analysis.statusColor === 'amber'
-                          ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
-                          : 'bg-rose-500/20 text-rose-300 border-rose-500/40'
+                          ? 'bg-amber-50 text-amber-900 border-amber-300'
+                          : 'bg-red-50 text-danger border-danger'
                       }`}>
                         {analysis.statusBadge} ({analysis.healthScore}٪)
                       </span>
                     )}
                   </div>
-                  <p className="text-xs text-stone-400 mt-0.5">
+                  <p className="text-xs text-ink-soft mt-0.5">
                     تشخیص بیوشیمیایی لاگ فعال، تطبیق با الگوی ایده‌آل و پیش‌بینی سینتیک اتمام تخمیر
                   </p>
                 </div>
@@ -1585,23 +1564,23 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
               <button
                 type="button"
                 onClick={() => setShowAllDetails(!showAllDetails)}
-                className="text-xs font-bold text-stone-200 hover:text-white bg-stone-800 hover:bg-stone-700 px-3 py-1.5 rounded-xl border border-stone-700 transition-colors cursor-pointer self-start sm:self-center shrink-0 flex items-center gap-1.5"
+                className="text-xs font-bold text-ink bg-surface hover:bg-paper px-3 py-1.5 rounded-xl border border-line transition-colors cursor-pointer self-start sm:self-center shrink-0 flex items-center gap-1.5"
               >
                 {showAllDetails ? (
                   <>
-                    <ChevronUp className="w-3.5 h-3.5 text-rose-400" />
+                    <ChevronUp className="w-3.5 h-3.5 text-wine" />
                     <span>بستن همه بخش‌ها</span>
                   </>
                 ) : (
                   <>
-                    <ChevronDown className="w-3.5 h-3.5 text-emerald-400" />
+                    <ChevronDown className="w-3.5 h-3.5 text-ink-soft" />
                     <span>نمایش یکجای هر ۳ بخش</span>
                   </>
                 )}
               </button>
             </div>
 
-            <div className="divide-y divide-stone-200">
+            <div className="divide-y divide-line">
               {/* ----------------------------------------------------------- */}
               {/* ROW 1: DIAGNOSIS (تشخیص و عیب‌یابی لاگ انتخابی)              */}
               {/* ----------------------------------------------------------- */}
@@ -1785,14 +1764,14 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
                           <p className="leading-relaxed">{benchmarkComparison.comparisonDetails}</p>
                         </div>
 
-                        <div className="bg-indigo-950 text-white p-3 rounded-xl space-y-1">
-                          <strong className="font-bold block text-amber-300">راهکار انطباق کامل با الگو:</strong>
-                          <p className="leading-relaxed text-indigo-100">{benchmarkComparison.actionableGuidance}</p>
+                        <div className="bg-paper text-ink p-3 rounded-xl border border-line space-y-1">
+                          <strong className="font-bold block text-wine">راهکار انطباق کامل با الگو:</strong>
+                          <p className="leading-relaxed text-ink">{benchmarkComparison.actionableGuidance}</p>
                         </div>
                       </>
                     ) : (
-                      <div className="bg-stone-50 p-4 rounded-xl border border-stone-200 text-stone-700 space-y-1 leading-relaxed">
-                        <strong className="text-stone-900 block">هنوز داده واقعی ثبت نشده است</strong>
+                      <div className="bg-paper p-4 rounded-xl border border-line text-ink-soft space-y-1 leading-relaxed">
+                        <strong className="text-ink block">هنوز داده واقعی ثبت نشده است</strong>
                         <p>{benchmarkComparison.comparisonDetails}</p>
                       </div>
                     )}
@@ -1807,42 +1786,42 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
                 <button
                   type="button"
                   onClick={() => toggleStatusRow('prediction')}
-                  className="w-full text-right p-4 sm:p-4.5 flex items-center justify-between gap-3 bg-stone-50/80 hover:bg-stone-100 transition-colors cursor-pointer"
+                  className="w-full text-right p-4 sm:p-4.5 flex items-center justify-between gap-3 bg-paper/70 hover:bg-paper transition-colors cursor-pointer"
                 >
                   <div className="flex items-center gap-2.5 flex-wrap">
                     <span className="w-2 h-2 rounded-full bg-emerald-600" />
-                    <strong className="text-stone-900 font-bold text-xs sm:text-sm">
+                    <strong className="text-ink font-bold text-xs sm:text-sm">
                       ۳. پیش‌بینی زمان پایان تخمیر (Prediction)
                     </strong>
-                    <span className="text-stone-500 text-xs">
+                    <span className="text-ink-soft text-xs">
                       {prediction.kineticStatusFa}
                     </span>
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
-                    <span className="font-mono tabular-nums font-bold bg-stone-900 text-emerald-300 text-xs px-2.5 py-0.5 rounded-lg">
+                    <span className="font-mono tabular-nums font-bold bg-surface text-ink border border-line text-xs px-2.5 py-0.5 rounded-lg">
                       {prediction.estimatedRemainingDays <= 0 ? 'تکمیل شده' : `${prediction.estimatedRemainingDays} روز باقی‌مانده`}
                     </span>
                     {isRowExpanded('prediction') ? (
-                      <ChevronUp className="w-4 h-4 text-stone-500" />
+                      <ChevronUp className="w-4 h-4 text-ink-soft" />
                     ) : (
-                      <ChevronDown className="w-4 h-4 text-stone-500" />
+                      <ChevronDown className="w-4 h-4 text-ink-soft" />
                     )}
                   </div>
                 </button>
 
                 {isRowExpanded('prediction') && (
-                  <div className="p-4 sm:p-5 space-y-3.5 text-xs bg-white">
-                    <div className="flex items-center justify-between gap-2 bg-stone-900 text-white p-3 rounded-xl flex-wrap">
+                  <div className="p-4 sm:p-5 space-y-3.5 text-xs bg-surface">
+                    <div className="flex items-center justify-between gap-2 bg-paper text-ink border border-line p-3 rounded-xl flex-wrap">
                       <div className="flex items-center gap-1.5">
-                        <Timer className="w-4 h-4 text-rose-400" />
+                        <Timer className="w-4 h-4 text-wine" />
                         <span className="font-bold">هدف نقطه پایانی تخمیر:</span>
                       </div>
-                      <div className="flex items-center gap-1 bg-stone-800 p-1 rounded-lg text-xs">
+                      <div className="flex items-center gap-1 bg-surface p-1 rounded-lg border border-line text-xs">
                         <button
                           type="button"
                           onClick={() => setTargetSGChoice(tankId === 'tank-rose' ? 0.991 : 0.993)}
                           className={`px-2 py-0.5 rounded font-bold cursor-pointer ${
-                            targetSGChoice <= 1.000 ? 'bg-rose-700 text-white' : 'text-stone-400'
+                            targetSGChoice <= 1.000 ? 'bg-wine text-white' : 'text-ink-soft'
                           }`}
                         >
                           خشکی ({tankId === 'tank-rose' ? '0.991' : '0.993'})
@@ -1851,7 +1830,7 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
                           type="button"
                           onClick={() => setTargetSGChoice(1.008)}
                           className={`px-2 py-0.5 rounded font-bold cursor-pointer ${
-                            targetSGChoice === 1.008 ? 'bg-rose-700 text-white' : 'text-stone-400'
+                            targetSGChoice === 1.008 ? 'bg-wine text-white' : 'text-ink-soft'
                           }`}
                         >
                           پرسینگ (1.008)
@@ -2575,23 +2554,23 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
       {/* ===================================================================== */}
       {/* ZONE C: 4-TAB UNIFIED TANK LOGBOOK («دفتر کل ثبت‌های مخزن و کارگاه»)  */}
       {/* ===================================================================== */}
-      <div className="bg-white p-5 sm:p-6 rounded-2xl border border-stone-200 shadow-sm space-y-5">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-stone-200 pb-4">
+      <div className="bg-surface p-5 sm:p-6 rounded-xl border border-line shadow-xs space-y-5">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-line pb-4">
           <div>
             <div className="flex items-center gap-3 flex-wrap">
-              <h3 className="font-bold text-stone-900 text-base sm:text-lg">
+              <h3 className="font-bold text-ink text-base sm:text-lg">
                 دفتر کل ثبت‌های مخزن و کارگاه (Unified Tank Logbook)
               </h3>
               <button
                 type="button"
                 onClick={() => ui.setActiveFiveTab('more')}
-                className="text-xs font-bold text-rose-800 bg-rose-50 hover:bg-rose-100 border border-rose-200 px-2.5 py-1 rounded-lg transition-colors cursor-pointer flex items-center gap-1"
+                className="text-xs font-bold text-wine bg-paper hover:bg-surface border border-line px-2.5 py-1 rounded-lg transition-colors cursor-pointer flex items-center gap-1"
               >
                 <FileText className="w-3.5 h-3.5" />
                 <span>مشاهده و چاپ چک‌لیست‌های مستر پروتکل (تب «بیشتر»)</span>
               </button>
             </div>
-            <p className="text-xs text-stone-500 mt-0.5">
+            <p className="text-xs text-ink-soft mt-0.5">
               دسترسی یکپارچه به ۴ بخش ثبت‌ها، افزودنی‌ها، آزمایش‌ها و چشایی و عکس‌ها
             </p>
           </div>
@@ -2601,17 +2580,17 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
             <button
               type="button"
               onClick={() => setLogbookTab('daily-logs')}
-              className={`px-3 py-2.5 rounded-xl font-bold flex items-center justify-between gap-2 cursor-pointer transition-all whitespace-nowrap ${
+              className={`px-3 py-2.5 rounded-xl font-bold flex items-center justify-between gap-2 cursor-pointer transition-all whitespace-nowrap border ${
                 logbookTab === 'daily-logs'
-                  ? 'bg-stone-900 text-white shadow-xs'
-                  : 'bg-stone-100 text-stone-700 hover:bg-stone-200'
+                  ? 'bg-wine text-white border-wine shadow-xs'
+                  : 'bg-paper text-ink border-line hover:bg-surface'
               }`}
             >
               <span className="flex items-center gap-1.5">
-                <Activity className="w-3.5 h-3.5 text-rose-500" />
+                <Activity className="w-3.5 h-3.5" />
                 <span>۱. لاگ‌شیت پایش روزانه</span>
               </span>
-              <span className="font-mono tabular-nums text-xs px-1.5 py-0.5 rounded bg-black/20">
+              <span className="font-mono tabular-nums text-xs px-1.5 py-0.5 rounded bg-black/15">
                 {currentTankLogs.length}
               </span>
             </button>
@@ -2619,17 +2598,17 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
             <button
               type="button"
               onClick={() => setLogbookTab('chemical-additions')}
-              className={`px-3 py-2.5 rounded-xl font-bold flex items-center justify-between gap-2 cursor-pointer transition-all whitespace-nowrap ${
+              className={`px-3 py-2.5 rounded-xl font-bold flex items-center justify-between gap-2 cursor-pointer transition-all whitespace-nowrap border ${
                 logbookTab === 'chemical-additions'
-                  ? 'bg-stone-900 text-white shadow-xs'
-                  : 'bg-stone-100 text-stone-700 hover:bg-stone-200'
+                  ? 'bg-wine text-white border-wine shadow-xs'
+                  : 'bg-paper text-ink border-line hover:bg-surface'
               }`}
             >
               <span className="flex items-center gap-1.5">
-                <Beaker className="w-3.5 h-3.5 text-amber-500" />
+                <Beaker className="w-3.5 h-3.5" />
                 <span>۲. افزودنی‌های شیمیایی</span>
               </span>
-              <span className="font-mono tabular-nums text-xs px-1.5 py-0.5 rounded bg-black/20">
+              <span className="font-mono tabular-nums text-xs px-1.5 py-0.5 rounded bg-black/15">
                 {displayedAdditions.length}
               </span>
             </button>
@@ -2637,17 +2616,17 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
             <button
               type="button"
               onClick={() => setLogbookTab('lab-analyses')}
-              className={`px-3 py-2.5 rounded-xl font-bold flex items-center justify-between gap-2 cursor-pointer transition-all whitespace-nowrap ${
+              className={`px-3 py-2.5 rounded-xl font-bold flex items-center justify-between gap-2 cursor-pointer transition-all whitespace-nowrap border ${
                 logbookTab === 'lab-analyses'
-                  ? 'bg-stone-900 text-white shadow-xs'
-                  : 'bg-stone-100 text-stone-700 hover:bg-stone-200'
+                  ? 'bg-wine text-white border-wine shadow-xs'
+                  : 'bg-paper text-ink border-line hover:bg-surface'
               }`}
             >
               <span className="flex items-center gap-1.5">
-                <FlaskConical className="w-3.5 h-3.5 text-emerald-500" />
+                <FlaskConical className="w-3.5 h-3.5" />
                 <span>۳. تست‌های آزمایشگاهی</span>
               </span>
-              <span className="font-mono tabular-nums text-xs px-1.5 py-0.5 rounded bg-black/20">
+              <span className="font-mono tabular-nums text-xs px-1.5 py-0.5 rounded bg-black/15">
                 {displayedLabAnalyses.length}
               </span>
             </button>
@@ -2655,17 +2634,17 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
             <button
               type="button"
               onClick={() => setLogbookTab('sensory-eval')}
-              className={`px-3 py-2.5 rounded-xl font-bold flex items-center justify-between gap-2 cursor-pointer transition-all whitespace-nowrap ${
+              className={`px-3 py-2.5 rounded-xl font-bold flex items-center justify-between gap-2 cursor-pointer transition-all whitespace-nowrap border ${
                 logbookTab === 'sensory-eval'
-                  ? 'bg-stone-900 text-white shadow-xs'
-                  : 'bg-stone-100 text-stone-700 hover:bg-stone-200'
+                  ? 'bg-wine text-white border-wine shadow-xs'
+                  : 'bg-paper text-ink border-line hover:bg-surface'
               }`}
             >
               <span className="flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                <Sparkles className="w-3.5 h-3.5" />
                 <span>۴. ارزیابی حسی و کنترل کیفیت</span>
               </span>
-              <span className="font-mono tabular-nums text-xs px-1.5 py-0.5 rounded bg-black/20">
+              <span className="font-mono tabular-nums text-xs px-1.5 py-0.5 rounded bg-black/15">
                 5 محور
               </span>
             </button>
@@ -2679,10 +2658,10 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
           <div className="space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
-                <h4 className="font-bold text-stone-900 text-sm">
+                <h4 className="font-bold text-ink text-sm">
                   جدول سوابق ثبت‌شده اندازه‌گیری‌های روزانه ({currentTankLogs.length} رکورد در نمای {tankLabel})
                 </h4>
-                <p className="text-xs text-stone-500">
+                <p className="text-xs text-ink-soft">
                   با کلیک روی هر سطر، نقطه مربوطه روی نمودار بالا و در پنل عیب‌یابی انتخاب می‌شود
                 </p>
               </div>
@@ -2691,44 +2670,44 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
                 <button
                   type="button"
                   onClick={handleOpenAddModal}
-                  className="px-3.5 py-1.5 rounded-xl bg-rose-800 hover:bg-rose-700 text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer"
+                  className="px-3.5 py-1.5 rounded-xl bg-wine hover:opacity-90 text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer"
                 >
                   <Plus className="w-3.5 h-3.5" />
-                  <span>+ ثبت لاگ روزانه جدید</span>
+                  <span>ثبت لاگ روزانه جدید</span>
                 </button>
                 <button
                   type="button"
                   onClick={handleExportDocx}
-                  className="px-3.5 py-1.5 rounded-xl bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer"
+                  className="px-3.5 py-1.5 rounded-xl bg-paper hover:bg-surface text-ink border border-line text-xs font-bold flex items-center gap-1.5 cursor-pointer"
                 >
-                  <FileText className="w-3.5 h-3.5 text-rose-300" />
+                  <FileText className="w-3.5 h-3.5 text-wine" />
                   <span>دانلود Word (DOCX)</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => window.print()}
-                  className="px-3 py-1.5 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-semibold flex items-center gap-1.5 cursor-pointer"
+                  className="px-3 py-1.5 rounded-xl bg-paper hover:bg-surface text-ink-soft border border-line text-xs font-semibold flex items-center gap-1.5 cursor-pointer"
                 >
-                  <Printer className="w-3.5 h-3.5 text-stone-600" />
+                  <Printer className="w-3.5 h-3.5 text-ink-soft" />
                   <span>چاپ فرم لاگ‌شیت</span>
                 </button>
               </div>
             </div>
 
-            <div className="border border-stone-300 rounded-xl overflow-hidden overflow-x-auto">
+            <div className="border border-line rounded-xl overflow-hidden overflow-x-auto">
               <table className="w-full text-right text-xs border-collapse">
-                <thead className="bg-stone-900 text-white font-bold">
+                <thead className="bg-paper text-ink font-bold border-b border-line">
                   <tr>
-                    <th className="py-2.5 px-3 w-28 text-center border-l border-stone-700">نوع رکورد</th>
-                    <th className="py-2.5 px-3 min-w-[120px] border-l border-stone-700">تاریخ و ساعت</th>
-                    <th className="py-2.5 px-3 min-w-[140px] border-l border-stone-700">مرحله / تریگر</th>
-                    <th className="py-2.5 px-3 w-20 text-center border-l border-stone-700">هیدرومتر (SG)</th>
-                    <th className="py-2.5 px-3 w-16 text-center border-l border-stone-700">بریکس</th>
-                    <th className="py-2.5 px-3 w-20 text-center border-l border-stone-700">دمای کلاهک</th>
-                    <th className="py-2.5 px-3 w-16 text-center border-l border-stone-700">دمای اتاق</th>
-                    <th className="py-2.5 px-3 w-16 text-center border-l border-stone-700">pH</th>
-                    <th className="py-2.5 px-3 w-24 text-center border-l border-stone-700">غوطه‌ورسازی</th>
-                    <th className="py-2.5 px-3 min-w-[200px] border-l border-stone-700">توضیحات و رویداد ویژه</th>
+                    <th className="py-2.5 px-3 w-28 text-center border-l border-line">نوع رکورد</th>
+                    <th className="py-2.5 px-3 min-w-[120px] border-l border-line">تاریخ و ساعت</th>
+                    <th className="py-2.5 px-3 min-w-[140px] border-l border-line">مرحله / تریگر</th>
+                    <th className="py-2.5 px-3 w-20 text-center border-l border-line">هیدرومتر (SG)</th>
+                    <th className="py-2.5 px-3 w-16 text-center border-l border-line">بریکس</th>
+                    <th className="py-2.5 px-3 w-20 text-center border-l border-line">دمای کلاهک</th>
+                    <th className="py-2.5 px-3 w-16 text-center border-l border-line">دمای اتاق</th>
+                    <th className="py-2.5 px-3 w-16 text-center border-l border-line">pH</th>
+                    <th className="py-2.5 px-3 w-24 text-center border-l border-line">غوطه‌ورسازی</th>
+                    <th className="py-2.5 px-3 min-w-[200px] border-l border-line">توضیحات و رویداد ویژه</th>
                     <th className="py-2.5 px-2.5 w-12 text-center no-print">حذف</th>
                   </tr>
                 </thead>
@@ -2868,10 +2847,10 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
                 <button
                   type="button"
                   onClick={handleOpenAddChemicalModal}
-                  className="px-3.5 py-1.5 rounded-xl bg-amber-800 hover:bg-amber-700 text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer"
+                  className="px-3.5 py-1.5 rounded-xl bg-wine hover:opacity-90 text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer"
                 >
                   <Plus className="w-3.5 h-3.5" />
-                  <span>+ ثبت افزودنی شیمیایی جدید</span>
+                  <span>ثبت افزودنی شیمیایی جدید</span>
                 </button>
               </div>
             </div>
@@ -2965,16 +2944,16 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
               );
             })()}
 
-            <div className="border border-stone-300 rounded-xl overflow-hidden overflow-x-auto">
+            <div className="border border-line rounded-xl overflow-hidden overflow-x-auto">
               <table className="w-full text-right text-xs border-collapse">
-                <thead className="bg-stone-900 text-white font-bold">
+                <thead className="bg-paper text-ink font-bold border-b border-line">
                   <tr>
-                    <th className="py-2.5 px-3 border-l border-stone-700">مخزن</th>
-                    <th className="py-2.5 px-3 border-l border-stone-700">تاریخ و ساعت</th>
-                    <th className="py-2.5 px-3 border-l border-stone-700">مرحله فرآیند</th>
-                    <th className="py-2.5 px-3 border-l border-stone-700">نام ترکیب / ماده</th>
-                    <th className="py-2.5 px-3 text-center border-l border-stone-700">مقدار و واحد</th>
-                    <th className="py-2.5 px-3 border-l border-stone-700">هدف انولوژیک و یادداشت اپراتور</th>
+                    <th className="py-2.5 px-3 border-l border-line">مخزن</th>
+                    <th className="py-2.5 px-3 border-l border-line">تاریخ و ساعت</th>
+                    <th className="py-2.5 px-3 border-l border-line">مرحله فرآیند</th>
+                    <th className="py-2.5 px-3 border-l border-line">نام ترکیب / ماده</th>
+                    <th className="py-2.5 px-3 text-center border-l border-line">مقدار و واحد</th>
+                    <th className="py-2.5 px-3 border-l border-line">هدف انولوژیک و یادداشت اپراتور</th>
                     <th className="py-2.5 px-2.5 w-12 text-center">حذف</th>
                   </tr>
                 </thead>
@@ -3066,24 +3045,24 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
                 <button
                   type="button"
                   onClick={handleOpenAddLabModal}
-                  className="px-3.5 py-1.5 rounded-xl bg-emerald-800 hover:bg-emerald-700 text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer"
+                  className="px-3.5 py-1.5 rounded-xl bg-wine hover:opacity-90 text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer"
                 >
                   <Plus className="w-3.5 h-3.5" />
-                  <span>+ ثبت نتیجه آزمایشگاه</span>
+                  <span>ثبت نتیجه آزمایشگاه</span>
                 </button>
               </div>
             </div>
 
-            <div className="border border-stone-300 rounded-xl overflow-hidden overflow-x-auto">
+            <div className="border border-line rounded-xl overflow-hidden overflow-x-auto">
               <table className="w-full text-right text-xs border-collapse">
-                <thead className="bg-stone-900 text-white font-bold">
+                <thead className="bg-paper text-ink font-bold border-b border-line">
                   <tr>
-                    <th className="py-2.5 px-3 border-l border-stone-700">مخزن</th>
-                    <th className="py-2.5 px-3 border-l border-stone-700">تاریخ آزمایش</th>
-                    <th className="py-2.5 px-3 border-l border-stone-700">نوع آزمون</th>
-                    <th className="py-2.5 px-3 border-l border-stone-700">پارامتر هدف</th>
-                    <th className="py-2.5 px-3 text-center border-l border-stone-700">مقدار اندازه‌گیری‌شده</th>
-                    <th className="py-2.5 px-3 border-l border-stone-700">اقدام اصلاحی و یادداشت</th>
+                    <th className="py-2.5 px-3 border-l border-line">مخزن</th>
+                    <th className="py-2.5 px-3 border-l border-line">تاریخ آزمایش</th>
+                    <th className="py-2.5 px-3 border-l border-line">نوع آزمون</th>
+                    <th className="py-2.5 px-3 border-l border-line">پارامتر هدف</th>
+                    <th className="py-2.5 px-3 text-center border-l border-line">مقدار اندازه‌گیری‌شده</th>
+                    <th className="py-2.5 px-3 border-l border-line">اقدام اصلاحی و یادداشت</th>
                     <th className="py-2.5 px-2.5 w-12 text-center">حذف</th>
                   </tr>
                 </thead>
@@ -3167,19 +3146,19 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
               <PhotoDiaryAndVintagePanel tankId={tankId} />
 
               <form onSubmit={handleSaveSensoryEvaluation} className="space-y-4 text-xs">
-                <div className="bg-stone-50 p-4 rounded-xl border border-stone-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="bg-paper p-4 rounded-xl border border-line flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
-                  <h4 className="font-bold text-stone-900 text-sm">
+                  <h4 className="font-bold text-ink text-sm">
                     فرم ارزیابی حسی و کنترل کیفیت ارگانولپتیک ({tankLabel})
                   </h4>
-                  <p className="text-stone-500 mt-0.5">
+                  <p className="text-ink-soft mt-0.5">
                     امتیازدهی ۵ محوره (۱ تا ۵) به همراه پایش زودهنگام عیوب فرار (H2S، استیک اسید، اکسیداسیون و برتانومایسس)
                   </p>
                 </div>
-                <div className="bg-stone-900 text-white px-4 py-2.5 rounded-xl flex items-center gap-3 shrink-0">
-                  <span className="text-stone-300">امتیاز کل ارگانولپتیک:</span>
+                <div className="bg-surface text-ink border border-line px-4 py-2.5 rounded-xl flex items-center gap-3 shrink-0">
+                  <span className="text-ink-soft">امتیاز کل ارگانولپتیک:</span>
                   <strong className={`text-lg font-mono tabular-nums font-bold ${
-                    finalOrganolepticScore >= 80 ? 'text-emerald-400' : finalOrganolepticScore >= 60 ? 'text-amber-400' : 'text-rose-400'
+                    finalOrganolepticScore >= 80 ? 'text-emerald-700' : finalOrganolepticScore >= 60 ? 'text-amber-700' : 'text-danger'
                   }`}>
                     {finalOrganolepticScore} / 100
                   </strong>
@@ -3194,10 +3173,10 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
                   { label: '۴. نرمی و ساختار تانن دهانی', val: sensoryTannin, setter: setSensoryTannin },
                   { label: '۵. هارمونی و کیفیت کلی', val: sensoryOverall, setter: setSensoryOverall }
                 ].map((axis, idx) => (
-                  <div key={idx} className="bg-white p-3.5 rounded-xl border border-stone-200 space-y-2">
+                  <div key={idx} className="bg-surface p-3.5 rounded-xl border border-line space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="font-bold text-stone-800">{axis.label}</span>
-                      <strong className="font-mono text-rose-800 font-bold">{axis.val} / 5</strong>
+                      <span className="font-bold text-ink">{axis.label}</span>
+                      <strong className="font-mono text-wine font-bold">{axis.val} / 5</strong>
                     </div>
                     <input
                       type="range"
@@ -3206,14 +3185,14 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
                       step="1"
                       value={axis.val}
                       onChange={(e) => axis.setter(Number(e.target.value))}
-                      className="w-full accent-rose-800 cursor-pointer"
+                      className="w-full accent-wine cursor-pointer"
                     />
                   </div>
                 ))}
               </div>
 
-              <div className="bg-rose-50/60 p-4 rounded-xl border border-rose-200 space-y-2.5">
-                <label className="font-bold text-rose-950 block">
+              <div className="bg-paper p-4 rounded-xl border border-line space-y-2.5">
+                <label className="font-bold text-ink block">
                   غربالگری عیوب بویایی و میکروبی (هر عیب ۱۵ امتیاز کسر می‌کند):
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
@@ -3228,7 +3207,7 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
                       <label
                         key={fault.id}
                         className={`p-2.5 rounded-lg border cursor-pointer transition-all flex items-start gap-2 ${
-                          checked ? 'bg-rose-900 text-white border-rose-950' : 'bg-white text-stone-800 border-stone-200'
+                          checked ? 'bg-wine text-white border-wine' : 'bg-surface text-ink border-line'
                         }`}
                       >
                         <input
@@ -3239,7 +3218,7 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
                         />
                         <div>
                           <div className="font-bold">{fault.id}</div>
-                          <div className={`text-xs mt-0.5 ${checked ? 'text-rose-200' : 'text-stone-500'}`}>
+                          <div className={`text-xs mt-0.5 ${checked ? 'text-white/85' : 'text-ink-soft'}`}>
                             {fault.hint}
                           </div>
                         </div>
@@ -3255,11 +3234,11 @@ export const FermentationTracker: React.FC<FermentationTrackerProps> = ({
                   value={sensoryNotes}
                   onChange={(e) => setSensoryNotes(e.target.value)}
                   placeholder="یادداشت تکمیلی چشایی (نت‌های گیلاس سیاه، انار، گسی تانن، پیشنهاد گلیسیرین روز ۸۵ و...)"
-                  className="flex-1 rounded-xl border border-stone-300 px-3.5 py-2.5 text-xs focus:border-rose-700 focus:outline-none"
+                  className="flex-1 rounded-xl border border-line bg-surface px-3.5 py-2.5 text-xs focus:border-wine focus:outline-none"
                 />
                 <button
                   type="submit"
-                  className="px-5 py-2.5 rounded-xl bg-rose-800 hover:bg-rose-900 text-white font-bold cursor-pointer flex items-center justify-center gap-2 shrink-0"
+                  className="px-5 py-2.5 rounded-xl bg-wine hover:opacity-90 text-white font-bold cursor-pointer flex items-center justify-center gap-2 shrink-0"
                 >
                   <CheckCircle2 className="w-4 h-4" />
                   <span>ثبت ارزیابی حسی در دیتابیس آزمایشگاه</span>

@@ -286,25 +286,25 @@ export const InteractiveLabWizardsPanel: React.FC<
   return (
     <section
       aria-label="ویزاردهای گام‌به‌گام آزمایشگاه کارگاهی"
-      className="bg-stone-900 text-stone-100 rounded-2xl border-2 border-amber-500/80 p-4 sm:p-5 shadow-lg space-y-4 font-['Vazirmatn',sans-serif]"
+      className="bg-surface text-ink rounded-xl border border-line p-4 sm:p-5 shadow-xs space-y-4 font-['Vazirmatn',sans-serif]"
     >
       {/* Top Bar: Title & Tank Selector */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 border-b border-stone-800 pb-3">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 border-b border-line pb-3">
         <div className="flex items-center gap-2.5">
-          <div className="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-400/50 text-amber-300 flex items-center justify-center shrink-0">
+          <div className="w-10 h-10 rounded-xl bg-paper border border-line text-wine flex items-center justify-center shrink-0">
             <FlaskConical className="w-5 h-5" />
           </div>
           <div>
-            <h3 className="text-sm sm:text-base font-bold text-white">
+            <h3 className="text-sm sm:text-base font-bold text-ink">
               ویزاردهای تعاملی و گام‌به‌گام آزمایشگاه (یک دستور در هر صفحه + تایمر نقطه پایان)
             </h3>
-            <p className="text-xs text-stone-400">
+            <p className="text-xs text-ink-soft">
               اجرای بدون خطای ۵ تست کلیدی با هشدارهای تداخل رنگ قرمز و اسید اسکوربیک و ثبت مستقیم در دفتر آزمایشگاه
             </p>
           </div>
         </div>
 
-        <div className="flex items-center gap-1.5 bg-stone-800 p-1 rounded-xl border border-stone-700 self-start lg:self-auto">
+        <div className="flex items-center gap-1.5 bg-paper p-1 rounded-xl border border-line self-start lg:self-auto">
           {(
             [
               ['tank-a', 'مخزن قرمز A'],
@@ -323,8 +323,8 @@ export const InteractiveLabWizardsPanel: React.FC<
               }}
               className={`px-3 py-1.5 rounded-lg text-xs font-bold cursor-pointer transition-all ${
                 tankId === tId
-                  ? 'bg-rose-700 text-white'
-                  : 'text-stone-300 hover:text-white'
+                  ? 'bg-wine text-white'
+                  : 'text-ink-soft hover:text-ink'
               }`}
             >
               {label}
@@ -342,8 +342,8 @@ export const InteractiveLabWizardsPanel: React.FC<
             onClick={() => handleSelectWizard(w.id)}
             className={`px-3 py-2 rounded-xl text-xs font-bold whitespace-nowrap border cursor-pointer transition-all ${
               activeWizard === w.id
-                ? 'bg-amber-500 text-stone-950 border-amber-300 shadow-sm'
-                : 'bg-stone-800 text-stone-300 border-stone-700 hover:bg-stone-700'
+                ? 'bg-wine text-white border-wine shadow-xs'
+                : 'bg-paper text-ink border-line hover:bg-stone-200/60'
             }`}
           >
             {w.labelFa}
@@ -352,8 +352,8 @@ export const InteractiveLabWizardsPanel: React.FC<
       </div>
 
       {/* Step Progress Header */}
-      <div className="flex items-center justify-between bg-stone-950/80 border border-stone-800 rounded-xl px-3.5 py-2 text-xs">
-        <span className="font-bold text-amber-300">
+      <div className="flex items-center justify-between bg-paper border border-line rounded-xl px-3.5 py-2 text-xs">
+        <span className="font-bold text-ink">
           {currentWizardMeta.labelFa} — گام {step} از{' '}
           {currentWizardMeta.totalSteps}
         </span>
@@ -366,10 +366,10 @@ export const InteractiveLabWizardsPanel: React.FC<
                 onClick={() => setStep(sNum)}
                 className={`w-6 h-6 rounded-full text-xs font-mono font-bold cursor-pointer ${
                   step === sNum
-                    ? 'bg-amber-400 text-stone-950'
+                    ? 'bg-wine text-white'
                     : step > sNum
                     ? 'bg-emerald-700 text-white'
-                    : 'bg-stone-800 text-stone-400'
+                    : 'bg-surface border border-line text-ink-soft'
                 }`}
               >
                 {sNum}
@@ -380,8 +380,8 @@ export const InteractiveLabWizardsPanel: React.FC<
       </div>
 
       {savedBannerText && (
-        <div className="bg-emerald-950 border border-emerald-500 text-emerald-200 rounded-xl p-3 text-xs font-bold flex items-center gap-2">
-          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+        <div className="bg-emerald-50 border border-emerald-300 text-emerald-900 rounded-xl p-3 text-xs font-bold flex items-center gap-2">
+          <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
           <span>{savedBannerText}</span>
         </div>
       )}
@@ -390,20 +390,21 @@ export const InteractiveLabWizardsPanel: React.FC<
       {/* WIZARD 1: RIPPER FREE SO2 (5 STEPS)                                 */}
       {/* =================================================================== */}
       {activeWizard === 'ripper_so2' && (
-        <div className="bg-stone-950 border border-stone-800 rounded-2xl p-4 space-y-3">
+        <div className="bg-paper border border-line rounded-xl p-4 space-y-3">
           {step === 1 && (
             <div className="space-y-3">
-              <h4 className="text-sm font-bold text-white">
+              <h4 className="text-sm font-bold text-ink">
                 گام ۱: برداشت دقیق ۲۵ میلی‌لیتر نمونه شراب صاف و بررسی تداخل‌ها
               </h4>
-              <p className="text-xs text-stone-300 leading-relaxed">
+              <p className="text-xs text-ink-soft leading-relaxed">
                 با پیپت حباب‌دار دقیقاً <strong>25.0 mL</strong> نمونه شراب صاف را داخل ارلن‌مایر ۲۵۰ میلی‌لیتری بریزید. برای مشاهده بهتر تغییر رنگ در شراب قرمز، یک کاغذ سفید و چراغ قوه زیر ارلن قرار دهید.
               </p>
-              <label className="flex items-center gap-2 text-xs font-bold text-amber-300 cursor-pointer pt-1">
+              <label className="flex items-center gap-2 text-xs font-bold text-ink cursor-pointer pt-1">
                 <input
                   type="checkbox"
                   checked={hasAscorbic}
                   onChange={(e) => setHasAscorbic(e.target.checked)}
+                  className="accent-[#6e1f2f]"
                 />
                 <span>
                   آیا به این مخزن اسید اسکوربیک (ویتامین C) اضافه کرده‌اید؟ (تداخل مثبت با ید)
@@ -414,10 +415,10 @@ export const InteractiveLabWizardsPanel: React.FC<
 
           {step === 2 && (
             <div className="space-y-2">
-              <h4 className="text-sm font-bold text-white">
+              <h4 className="text-sm font-bold text-ink">
                 گام ۲: افزودن ۵ میلی‌لیتر محلول اسیدی‌کننده
               </h4>
-              <p className="text-xs text-stone-300 leading-relaxed">
+              <p className="text-xs text-ink-soft leading-relaxed">
                 <strong>5 mL</strong> اسید سولفوریک ۱:۳ (یا محلول غلیظ اسید سیتریک/تارتاریک آزمایشگاهی) به نمونه اضافه کنید تا pH محیط زیر ۱.۰ قفل شود و فقط سولفیت آزاد وارد واکنش گردد.
               </p>
             </div>
@@ -425,10 +426,10 @@ export const InteractiveLabWizardsPanel: React.FC<
 
           {step === 3 && (
             <div className="space-y-2">
-              <h4 className="text-sm font-bold text-white">
+              <h4 className="text-sm font-bold text-ink">
                 گام ۳: افزودن ۲ میلی‌لیتر معرف نشاسته ۱٪ (Starch Indicator)
               </h4>
-              <p className="text-xs text-stone-300 leading-relaxed">
+              <p className="text-xs text-ink-soft leading-relaxed">
                 <strong>2 mL</strong> محلول نشاسته ۱٪ تازه به ارلن اضافه کرده و به آرامی بچرخانید. بلافاصله تیتراسیون گام ۴ را شروع کنید تا SO₂ آزاد در هوا متصاعد نشود.
               </p>
             </div>
@@ -436,20 +437,20 @@ export const InteractiveLabWizardsPanel: React.FC<
 
           {step === 4 && (
             <div className="space-y-3">
-              <h4 className="text-sm font-bold text-white">
+              <h4 className="text-sm font-bold text-ink">
                 گام ۴: تیتراسیون قطره‌قطره با ید 0.02N و تایمر پایداری ۱۵ ثانیه‌ای نقطه پایان
               </h4>
-              <p className="text-xs text-stone-300 leading-relaxed">
+              <p className="text-xs text-ink-soft leading-relaxed">
                 محلول ید <strong>0.02 N</strong> را قطره‌قطره از بورت اضافه کنید تا رنگ آبی/بنفش تیره در شراب ظاهر شود. به محض دیدن تغییر رنگ، تایمر ۱۵ ثانیه‌ای زیر را بزنید؛ اگر رنگ تا ۱۵ ثانیه محو نشد، نقطه پایان قطعی است!
               </p>
-              <div className="bg-stone-900 border border-stone-700 rounded-xl p-3 flex flex-wrap items-center justify-between gap-3">
+              <div className="bg-surface border border-line rounded-xl p-3 flex flex-wrap items-center justify-between gap-3">
                 <div className="flex items-center gap-2.5">
-                  <Timer className="w-5 h-5 text-amber-400" />
-                  <span className="text-base font-mono font-bold text-white">
+                  <Timer className="w-5 h-5 text-wine" />
+                  <span className="text-base font-mono font-bold text-ink">
                     {ripperTimerSec} ثانیه
                   </span>
                   {ripperTimerSec === 0 && (
-                    <span className="px-2.5 py-0.5 rounded-full bg-emerald-500 text-stone-950 text-xs font-bold">
+                    <span className="px-2.5 py-0.5 rounded-full bg-emerald-600 text-white text-xs font-bold">
                       نقطه پایان ۱۵ ثانیه‌ای تأیید شد </span>
                   )}
                 </div>
@@ -460,7 +461,7 @@ export const InteractiveLabWizardsPanel: React.FC<
                       if (ripperTimerSec === 0) setRipperTimerSec(15);
                       setRipperTimerRunning((r) => !r);
                     }}
-                    className="min-h-[44px] px-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 text-xs font-bold flex items-center gap-1.5 cursor-pointer"
+                    className="min-h-[44px] px-4 rounded-xl bg-wine hover:opacity-90 text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer"
                   >
                     {ripperTimerRunning ? (
                       <>
@@ -480,7 +481,7 @@ export const InteractiveLabWizardsPanel: React.FC<
                       setRipperTimerRunning(false);
                       setRipperTimerSec(15);
                     }}
-                    className="min-h-[44px] px-3 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-300 text-xs font-bold flex items-center gap-1 cursor-pointer"
+                    className="min-h-[44px] px-3 rounded-xl bg-paper border border-line hover:bg-stone-200/60 text-ink text-xs font-bold flex items-center gap-1 cursor-pointer"
                   >
                     <RotateCcw className="w-3.5 h-3.5" />
                     <span>ریست</span>
@@ -492,13 +493,13 @@ export const InteractiveLabWizardsPanel: React.FC<
 
           {step === 5 && (
             <div className="space-y-3">
-              <h4 className="text-sm font-bold text-white">
+              <h4 className="text-sm font-bold text-ink">
                 گام ۵: ثبت میلی‌لیتر ید مصرفی، بررسی قابلیت اعتماد روش و ذخیره در دفتر آزمایشگاه
               </h4>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div className="bg-stone-900 border border-stone-700 rounded-xl p-3 space-y-2">
-                  <label className="block text-xs font-bold text-amber-300">
+                <div className="bg-surface border border-line rounded-xl p-3 space-y-2">
+                  <label className="block text-xs font-bold text-ink-soft">
                     حجم ید 0.02N مصرف‌شده (mL):
                   </label>
                   <div className="flex items-center gap-2">
@@ -509,7 +510,7 @@ export const InteractiveLabWizardsPanel: React.FC<
                           Math.max(0, Math.round((v - 0.05) * 100) / 100)
                         )
                       }
-                      className="min-h-[44px] px-3 rounded-xl bg-stone-800 text-white font-mono font-bold text-xs cursor-pointer"
+                      className="min-h-[44px] px-3 rounded-xl bg-paper border border-line text-ink font-mono font-bold text-xs cursor-pointer"
                     >
                       -0.05
                     </button>
@@ -522,22 +523,22 @@ export const InteractiveLabWizardsPanel: React.FC<
                           Math.max(0, Number.parseFloat(e.target.value) || 0)
                         )
                       }
-                      className="flex-1 min-h-[44px] bg-stone-950 border border-stone-600 rounded-xl text-center font-mono font-bold text-base text-white"
+                      className="flex-1 min-h-[44px] bg-paper border border-line rounded-xl text-center font-mono font-bold text-base text-ink"
                     />
                     <button
                       type="button"
                       onClick={() =>
                         setIodineMl((v) => Math.round((v + 0.05) * 100) / 100)
                       }
-                      className="min-h-[44px] px-3 rounded-xl bg-stone-800 text-white font-mono font-bold text-xs cursor-pointer"
+                      className="min-h-[44px] px-3 rounded-xl bg-paper border border-line text-ink font-mono font-bold text-xs cursor-pointer"
                     >
                       +0.05
                     </button>
                   </div>
                 </div>
 
-                <div className="bg-stone-900 border border-stone-700 rounded-xl p-3 space-y-2">
-                  <label className="block text-xs font-bold text-emerald-300">
+                <div className="bg-surface border border-line rounded-xl p-3 space-y-2">
+                  <label className="block text-xs font-bold text-ink-soft">
                     pH فعلی نمونه (برای هدف پیوسته SO₂):
                   </label>
                   <input
@@ -547,28 +548,28 @@ export const InteractiveLabWizardsPanel: React.FC<
                     onChange={(e) =>
                       setRipperPH(Number.parseFloat(e.target.value) || 3.52)
                     }
-                    className="w-full min-h-[44px] bg-stone-950 border border-stone-600 rounded-xl text-center font-mono font-bold text-base text-white"
+                    className="w-full min-h-[44px] bg-paper border border-line rounded-xl text-center font-mono font-bold text-base text-ink"
                   />
                 </div>
               </div>
 
               {/* Result Box */}
-              <div className="bg-stone-900 border border-emerald-600/70 rounded-xl p-3 text-xs space-y-1">
+              <div className="bg-surface border border-line rounded-xl p-3 text-xs space-y-1">
                 <div className="flex items-center justify-between flex-wrap gap-2">
                   <span>
                     سولفیت آزاد (Free SO₂ = V × 25.6):{' '}
-                    <strong className="font-mono text-base text-emerald-300">
+                    <strong className="font-mono text-base text-emerald-800">
                       {ripperFreeSO2} mg/L
                     </strong>
                   </span>
                   <span>
                     SO₂ مولکولی فعال:{' '}
-                    <strong className="font-mono text-amber-300">
+                    <strong className="font-mono text-wine">
                       {ripperMolecularSO2.toFixed(2)} mg/L
                     </strong>
                   </span>
                 </div>
-                <div className="text-stone-300">
+                <div className="text-ink-soft">
                   پنجره هدف پیوسته برای pH {ripperPH.toFixed(2)}: از{' '}
                   <strong>{ripperTargetWindow.min}</strong> تا{' '}
                   <strong>{ripperTargetWindow.max} mg/L</strong> (بهینه:{' '}
@@ -578,16 +579,16 @@ export const InteractiveLabWizardsPanel: React.FC<
 
               {/* Method Reliability Warnings (Idea 7) */}
               {!isRose && (
-                <div className="bg-amber-950/90 border border-amber-500 rounded-xl p-2.5 text-xs text-amber-200 flex items-center gap-2">
-                  <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
+                <div className="bg-amber-50 border border-amber-300 rounded-xl p-2.5 text-xs text-amber-900 flex items-center gap-2">
+                  <AlertTriangle className="w-4 h-4 text-amber-700 shrink-0" />
                   <span>
                     در شراب قرمز رنگ نقطهٔ پایان را می‌پوشاند؛ عدد را با احتیاط ببینید (قابلیت اعتماد روش: پایین در قرمز).
                   </span>
                 </div>
               )}
               {hasAscorbic && (
-                <div className="bg-rose-950 border border-rose-500 rounded-xl p-2.5 text-xs font-bold text-rose-200 flex items-center gap-2">
-                  <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0" />
+                <div className="bg-red-50 border border-red-300 rounded-xl p-2.5 text-xs font-bold text-danger flex items-center gap-2">
+                  <AlertTriangle className="w-4 h-4 text-danger shrink-0" />
                   <span>اگر اسکوربیک اسید زده‌اید، عدد بالاتر از واقع است.</span>
                 </div>
               )}
@@ -595,7 +596,7 @@ export const InteractiveLabWizardsPanel: React.FC<
               <button
                 type="button"
                 onClick={handleSaveRipperRecord}
-                className="w-full min-h-[46px] rounded-xl bg-emerald-500 hover:bg-emerald-400 text-stone-950 text-xs sm:text-sm font-bold flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full min-h-[46px] rounded-xl bg-wine hover:opacity-90 text-white text-xs sm:text-sm font-bold flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Save className="w-4 h-4" />
                 <span>ثبت در دفتر آزمایشگاه</span>
@@ -609,40 +610,40 @@ export const InteractiveLabWizardsPanel: React.FC<
       {/* WIZARD 2: PH CALIBRATION & MEASUREMENT (4 STEPS)                    */}
       {/* =================================================================== */}
       {activeWizard === 'ph_meter' && (
-        <div className="bg-stone-950 border border-stone-800 rounded-2xl p-4 space-y-3 text-xs">
+        <div className="bg-paper border border-line rounded-xl p-4 space-y-3 text-xs">
           {step === 1 && (
             <div className="space-y-2">
-              <h4 className="text-sm font-bold text-white">
+              <h4 className="text-sm font-bold text-ink">
                 گام ۱: شستشوی الکترود با آب مقطر و محلول استوک اسید سیتریک ۲٪
               </h4>
-              <p className="text-stone-300 leading-relaxed">
+              <p className="text-ink-soft leading-relaxed">
                 حباب شیشه‌ای الکترود pHمتر را با آب مقطر بشویید، در صورت وجود رسوب تارتارات ۵ دقیقه در محلول استوک شماره ۴ (اسید سیتریک ۲٪) قرار دهید و با دستمال بدون پرز خشک کنید.
               </p>
             </div>
           )}
           {step === 2 && (
             <div className="space-y-2">
-              <h4 className="text-sm font-bold text-white">
+              <h4 className="text-sm font-bold text-ink">
                 گام ۲: کالیبراسیون نقطه اول در بافر مرجع pH 7.00 (در دمای ۲۰°C)
               </h4>
-              <p className="text-stone-300 leading-relaxed">
+              <p className="text-ink-soft leading-relaxed">
                 الکترود را در ظرف کوچک حاوی بافر <strong>pH 7.00</strong> قرار دهید، ۳۰ ثانیه صبر کنید تا عدد تثبیت شود و دکمه CAL نقطه اول را فشار دهید.
               </p>
             </div>
           )}
           {step === 3 && (
             <div className="space-y-2">
-              <h4 className="text-sm font-bold text-white">
+              <h4 className="text-sm font-bold text-ink">
                 گام ۳: کالیبراسیون نقطه دوم در بافر pH 4.01 و تأیید شیب الکترود
               </h4>
-              <p className="text-stone-300 leading-relaxed">
+              <p className="text-ink-soft leading-relaxed">
                 پس از آبکشی با آب مقطر، الکترود را در بافر <strong>pH 4.01</strong> قرار دهید. شیب کالیبراسیون (Slope) باید بین <strong>95% تا 102%</strong> باشد.
               </p>
             </div>
           )}
           {step === 4 && (
             <div className="space-y-3">
-              <h4 className="text-sm font-bold text-white">
+              <h4 className="text-sm font-bold text-ink">
                 گام ۴: قرائت pH نمونه شراب در ۲۰°C و ثبت در دفتر آزمایشگاه
               </h4>
               <div className="flex items-center gap-2 max-w-xs">
@@ -651,7 +652,7 @@ export const InteractiveLabWizardsPanel: React.FC<
                   onClick={() =>
                     setMeasuredPH((p) => Math.round((p - 0.01) * 100) / 100)
                   }
-                  className="min-h-[44px] px-3.5 rounded-xl bg-stone-800 text-white font-mono font-bold cursor-pointer"
+                  className="min-h-[44px] px-3.5 rounded-xl bg-surface border border-line text-ink font-mono font-bold cursor-pointer"
                 >
                   -0.01
                 </button>
@@ -662,14 +663,14 @@ export const InteractiveLabWizardsPanel: React.FC<
                   onChange={(e) =>
                     setMeasuredPH(Number.parseFloat(e.target.value) || 3.52)
                   }
-                  className="flex-1 min-h-[44px] bg-stone-900 border border-stone-600 rounded-xl text-center font-mono font-bold text-base text-white"
+                  className="flex-1 min-h-[44px] bg-surface border border-line rounded-xl text-center font-mono font-bold text-base text-ink"
                 />
                 <button
                   type="button"
                   onClick={() =>
                     setMeasuredPH((p) => Math.round((p + 0.01) * 100) / 100)
                   }
-                  className="min-h-[44px] px-3.5 rounded-xl bg-stone-800 text-white font-mono font-bold cursor-pointer"
+                  className="min-h-[44px] px-3.5 rounded-xl bg-surface border border-line text-ink font-mono font-bold cursor-pointer"
                 >
                   +0.01
                 </button>
@@ -677,7 +678,7 @@ export const InteractiveLabWizardsPanel: React.FC<
               <button
                 type="button"
                 onClick={handleSavePhRecord}
-                className="w-full min-h-[46px] rounded-xl bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-bold flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full min-h-[46px] rounded-xl bg-wine hover:opacity-90 text-white font-bold flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Save className="w-4 h-4" />
                 <span>ثبت در دفتر آزمایشگاه</span>
@@ -691,40 +692,40 @@ export const InteractiveLabWizardsPanel: React.FC<
       {/* WIZARD 3: TA TITRATION (4 STEPS)                                    */}
       {/* =================================================================== */}
       {activeWizard === 'ta_titration' && (
-        <div className="bg-stone-950 border border-stone-800 rounded-2xl p-4 space-y-3 text-xs">
+        <div className="bg-paper border border-line rounded-xl p-4 space-y-3 text-xs">
           {step === 1 && (
             <div className="space-y-2">
-              <h4 className="text-sm font-bold text-white">
+              <h4 className="text-sm font-bold text-ink">
                 گام ۱: گاززدایی کامل نمونه از CO₂ و برداشت ۵ میلی‌لیتر
               </h4>
-              <p className="text-stone-300 leading-relaxed">
+              <p className="text-ink-soft leading-relaxed">
                 نمونه شراب را به مدت ۲ دقیقه به شدت تکان دهید (یا حرارت ملایم دهید و به ۲۰°C برگردانید) تا گاز کربنیک محلول خارج شود؛ سپس دقیقاً <strong>5.0 mL</strong> برداشت کنید.
               </p>
             </div>
           )}
           {step === 2 && (
             <div className="space-y-2">
-              <h4 className="text-sm font-bold text-white">
+              <h4 className="text-sm font-bold text-ink">
                 گام ۲: رقیق‌سازی با آب مقطر خنثی و آماده‌سازی pHمتر (نقطه پایان pH = 8.20)
               </h4>
-              <p className="text-stone-300 leading-relaxed">
+              <p className="text-ink-soft leading-relaxed">
                 ۵۰ میلی‌لیتر آب مقطر خنثی به بشر اضافه کنید و الکترود pHمتر کالیبره‌شده را داخل آن قرار دهید تا نقطه پایان دقیق <strong>pH = 8.20</strong> بدون خطای دید رنگ قرمز مشخص شود.
               </p>
             </div>
           )}
           {step === 3 && (
             <div className="space-y-2">
-              <h4 className="text-sm font-bold text-white">
+              <h4 className="text-sm font-bold text-ink">
                 گام ۳: تیتراسیون با محلول سود استاندارد 0.1N (NaOH)
               </h4>
-              <p className="text-stone-300 leading-relaxed">
+              <p className="text-ink-soft leading-relaxed">
                 محلول NaOH 0.1N را قطره‌قطره اضافه کرده و هم بزنید تا نمایشگر pHمتر دقیقاً روی <strong>8.20</strong> ثابت بماند.
               </p>
             </div>
           )}
           {step === 4 && (
             <div className="space-y-3">
-              <h4 className="text-sm font-bold text-white">
+              <h4 className="text-sm font-bold text-ink">
                 گام ۴: ورود حجم سود مصرفی (هر ۱ میلی‌لیتر = ۱.۵ گرم بر لیتر اسید تارتاریک)
               </h4>
               <div className="flex items-center gap-2 max-w-xs">
@@ -735,7 +736,7 @@ export const InteractiveLabWizardsPanel: React.FC<
                       Math.max(0, Math.round((v - 0.1) * 10) / 10)
                     )
                   }
-                  className="min-h-[44px] px-3.5 rounded-xl bg-stone-800 text-white font-mono font-bold cursor-pointer"
+                  className="min-h-[44px] px-3.5 rounded-xl bg-surface border border-line text-ink font-mono font-bold cursor-pointer"
                 >
                   -0.1
                 </button>
@@ -746,25 +747,25 @@ export const InteractiveLabWizardsPanel: React.FC<
                   onChange={(e) =>
                     setNaohMl(Math.max(0, Number.parseFloat(e.target.value) || 0))
                   }
-                  className="flex-1 min-h-[44px] bg-stone-900 border border-stone-600 rounded-xl text-center font-mono font-bold text-base text-white"
+                  className="flex-1 min-h-[44px] bg-surface border border-line rounded-xl text-center font-mono font-bold text-base text-ink"
                 />
                 <button
                   type="button"
                   onClick={() =>
                     setNaohMl((v) => Math.round((v + 0.1) * 10) / 10)
                   }
-                  className="min-h-[44px] px-3.5 rounded-xl bg-stone-800 text-white font-mono font-bold cursor-pointer"
+                  className="min-h-[44px] px-3.5 rounded-xl bg-surface border border-line text-ink font-mono font-bold cursor-pointer"
                 >
                   +0.1
                 </button>
               </div>
-              <div className="bg-stone-900 border border-emerald-600/60 rounded-xl p-3 font-bold text-emerald-300">
+              <div className="bg-surface border border-line rounded-xl p-3 font-bold text-emerald-800">
                 اسیدیته قابل تیتراسیون محاسبه‌شده: TA = {calculatedTA} g/L (معادل اسید تارتاریک)
               </div>
               <button
                 type="button"
                 onClick={handleSaveTaRecord}
-                className="w-full min-h-[46px] rounded-xl bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-bold flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full min-h-[46px] rounded-xl bg-wine hover:opacity-90 text-white font-bold flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Save className="w-4 h-4" />
                 <span>ثبت در دفتر آزمایشگاه</span>
@@ -778,40 +779,40 @@ export const InteractiveLabWizardsPanel: React.FC<
       {/* WIZARD 4: MALIC ACID CHROMATOGRAPHY (4 STEPS)                       */}
       {/* =================================================================== */}
       {activeWizard === 'mlf_chromatography' && (
-        <div className="bg-stone-950 border border-stone-800 rounded-2xl p-4 space-y-3 text-xs">
+        <div className="bg-paper border border-line rounded-xl p-4 space-y-3 text-xs">
           {step === 1 && (
             <div className="space-y-2">
-              <h4 className="text-sm font-bold text-white">
+              <h4 className="text-sm font-bold text-ink">
                 گام ۱: لکه‌گذاری استانداردهای تارتاریک، مالیک، لاکتیک و نمونه شراب روی کاغذ کروماتوگرافی
               </h4>
-              <p className="text-stone-300 leading-relaxed">
+              <p className="text-ink-soft leading-relaxed">
                 با لوله مویین روی خط مبدأ کاغذ کروماتوگرافی، قطره‌های کوچکی از محلول‌های استاندارد اسید مالیک، لاکتیک و نمونه شراب مخزن را لکه‌گذاری کرده و اجازه دهید خشک شوند.
               </p>
             </div>
           )}
           {step === 2 && (
             <div className="space-y-2">
-              <h4 className="text-sm font-bold text-white">
+              <h4 className="text-sm font-bold text-ink">
                 گام ۲: قرار دادن کاغذ در تانک حلال کروماتوگرافی (Elution)
               </h4>
-              <p className="text-stone-300 leading-relaxed">
+              <p className="text-ink-soft leading-relaxed">
                 کاغذ را به صورت استوانه‌ای در جار حاوی حلال کروماتوگرافی قرار داده و درب ظرف را ببندید تا جبهه حلال تا ۲ سانتی‌متری لبه بالایی صعود کند.
               </p>
             </div>
           )}
           {step === 3 && (
             <div className="space-y-2">
-              <h4 className="text-sm font-bold text-white">
+              <h4 className="text-sm font-bold text-ink">
                 گام ۳: خشک کردن کاغذ در فضای دارای تهویه تا ظهور لکه‌های زرد روی زمینه آبی
               </h4>
-              <p className="text-stone-300 leading-relaxed">
+              <p className="text-ink-soft leading-relaxed">
                 کاغذ را خارج کرده و در محیط دارای تهویه آویزان کنید تا بخار اسید فرمیک خارج شده و لکه‌های زرد اسیدی روی زمینه آبی بروموکرزول ظاهر شوند.
               </p>
             </div>
           )}
           {step === 4 && (
             <div className="space-y-3">
-              <h4 className="text-sm font-bold text-white">
+              <h4 className="text-sm font-bold text-ink">
                 گام ۴: تفسیر لکه اسید مالیک و ثبت در دروازه ایمنی بطری‌گیری
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
@@ -828,8 +829,8 @@ export const InteractiveLabWizardsPanel: React.FC<
                     onClick={() => setMalicResult(val)}
                     className={`p-3 rounded-xl border font-bold cursor-pointer ${
                       malicResult === val
-                        ? 'bg-emerald-600 text-white border-emerald-400'
-                        : 'bg-stone-900 text-stone-300 border-stone-700'
+                        ? 'bg-wine text-white border-wine'
+                        : 'bg-surface text-ink border-line hover:bg-stone-200/60'
                     }`}
                   >
                     {label}
@@ -839,7 +840,7 @@ export const InteractiveLabWizardsPanel: React.FC<
               <button
                 type="button"
                 onClick={handleSaveMalicRecord}
-                className="w-full min-h-[46px] rounded-xl bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-bold flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full min-h-[46px] rounded-xl bg-wine hover:opacity-90 text-white font-bold flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Save className="w-4 h-4" />
                 <span>ثبت در دفتر آزمایشگاه</span>
@@ -853,20 +854,20 @@ export const InteractiveLabWizardsPanel: React.FC<
       {/* WIZARD 5: HYDROMETER TEMP CORRECTION (3 STEPS)                      */}
       {/* =================================================================== */}
       {activeWizard === 'hydrometer_temp' && (
-        <div className="bg-stone-950 border border-stone-800 rounded-2xl p-4 space-y-3 text-xs">
+        <div className="bg-paper border border-line rounded-xl p-4 space-y-3 text-xs">
           {step === 1 && (
             <div className="space-y-2">
-              <h4 className="text-sm font-bold text-white">
+              <h4 className="text-sm font-bold text-ink">
                 گام ۱: چرخاندن هیدرومتر در استوانه مدرج برای جداسازی حباب‌های CO₂
               </h4>
-              <p className="text-stone-300 leading-relaxed">
+              <p className="text-ink-soft leading-relaxed">
                 پیش از قرائت عدد، هیدرومتر را یک دور در استوانه بچرخانید تا حباب‌های گاز CO₂ چسبیده به بدنه جدا شوند و خطای شناوری کاذب ایجاد نکنند؛ سپس از زیر منیسک مایع قرائت کنید.
               </p>
             </div>
           )}
           {step === 2 && (
             <div className="space-y-2">
-              <h4 className="text-sm font-bold text-white">
+              <h4 className="text-sm font-bold text-ink">
                 گام ۲: انتخاب دمای کالیبراسیون هیدرومتر شما (۲۰°C یا ۱۵.۵°C)
               </h4>
               <div className="flex items-center gap-2">
@@ -877,8 +878,8 @@ export const InteractiveLabWizardsPanel: React.FC<
                     onClick={() => setHydroCalTemp(cal)}
                     className={`px-4 py-2 rounded-xl font-mono font-bold border cursor-pointer ${
                       hydroCalTemp === cal
-                        ? 'bg-amber-500 text-stone-950 border-amber-300'
-                        : 'bg-stone-900 text-stone-300 border-stone-700'
+                        ? 'bg-wine text-white border-wine'
+                        : 'bg-surface text-ink border-line'
                     }`}
                   >
                     کالیبراسیون {cal} °C
@@ -889,12 +890,12 @@ export const InteractiveLabWizardsPanel: React.FC<
           )}
           {step === 3 && (
             <div className="space-y-3">
-              <h4 className="text-sm font-bold text-white">
+              <h4 className="text-sm font-bold text-ink">
                 گام ۳: ورود SG خوانده‌شده و دمای نمونه در استوانه
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div className="bg-stone-900 border border-stone-700 rounded-xl p-3 space-y-1.5">
-                  <label className="block font-bold text-amber-300">
+                <div className="bg-surface border border-line rounded-xl p-3 space-y-1.5">
+                  <label className="block font-bold text-ink-soft">
                     SG خوانده‌شده:
                   </label>
                   <input
@@ -906,11 +907,11 @@ export const InteractiveLabWizardsPanel: React.FC<
                         Number.parseFloat(e.target.value) || 1.083
                       )
                     }
-                    className="w-full min-h-[44px] bg-stone-950 border border-stone-600 rounded-xl text-center font-mono font-bold text-base text-white"
+                    className="w-full min-h-[44px] bg-paper border border-line rounded-xl text-center font-mono font-bold text-base text-ink"
                   />
                 </div>
-                <div className="bg-stone-900 border border-stone-700 rounded-xl p-3 space-y-1.5">
-                  <label className="block font-bold text-emerald-300">
+                <div className="bg-surface border border-line rounded-xl p-3 space-y-1.5">
+                  <label className="block font-bold text-ink-soft">
                     دمای نمونه در استوانه (°C):
                   </label>
                   <input
@@ -922,19 +923,19 @@ export const InteractiveLabWizardsPanel: React.FC<
                         Number.parseFloat(e.target.value) || 20
                       )
                     }
-                    className="w-full min-h-[44px] bg-stone-950 border border-stone-600 rounded-xl text-center font-mono font-bold text-base text-white"
+                    className="w-full min-h-[44px] bg-paper border border-line rounded-xl text-center font-mono font-bold text-base text-ink"
                   />
                 </div>
               </div>
 
-              <div className="bg-stone-900 border border-emerald-600/70 rounded-xl p-3 font-bold text-emerald-300">
+              <div className="bg-surface border border-line rounded-xl p-3 font-bold text-emerald-800">
                 SG واقعی اصلاح‌شده: {hydroCorrected.trueSG.toFixed(4)} (تصحیح:{' '}
                 {hydroCorrected.delta >= 0 ? '+' : ''}
                 {hydroCorrected.delta.toFixed(4)})
               </div>
 
               {hydroCorrected.isAbove32CWarning && (
-                <div className="bg-amber-950 border border-amber-500 rounded-xl p-2.5 text-amber-200 font-bold">
+                <div className="bg-amber-50 border border-amber-300 rounded-xl p-2.5 text-amber-900 font-bold">
                   {hydroCorrected.warningFa}
                 </div>
               )}
@@ -942,7 +943,7 @@ export const InteractiveLabWizardsPanel: React.FC<
               <button
                 type="button"
                 onClick={handleSaveHydroRecord}
-                className="w-full min-h-[46px] rounded-xl bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-bold flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full min-h-[46px] rounded-xl bg-wine hover:opacity-90 text-white font-bold flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Save className="w-4 h-4" />
                 <span>ثبت در دفتر آزمایشگاه</span>
@@ -958,7 +959,7 @@ export const InteractiveLabWizardsPanel: React.FC<
           type="button"
           disabled={step <= 1}
           onClick={() => setStep((s) => Math.max(1, s - 1))}
-          className="px-4 py-2 rounded-xl bg-stone-800 hover:bg-stone-700 disabled:opacity-40 text-stone-200 text-xs font-bold flex items-center gap-1.5 cursor-pointer"
+          className="px-4 py-2 rounded-xl bg-paper border border-line hover:bg-stone-200/60 disabled:opacity-40 text-ink text-xs font-bold flex items-center gap-1.5 cursor-pointer"
         >
           <ArrowRight className="w-4 h-4" />
           <span>گام قبل</span>
@@ -970,7 +971,7 @@ export const InteractiveLabWizardsPanel: React.FC<
             onClick={() =>
               setStep((s) => Math.min(currentWizardMeta.totalSteps, s + 1))
             }
-            className="px-5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 text-xs font-bold flex items-center gap-1.5 cursor-pointer"
+            className="px-5 py-2 rounded-xl bg-wine hover:opacity-90 text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer"
           >
             <span>گام بعد</span>
             <ArrowLeft className="w-4 h-4" />
